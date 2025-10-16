@@ -21,43 +21,6 @@ h1, h2, h3 {
     min-height: 1.2em;
 }
 
-.scrolling-text {
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    width: 100%;
-}
-
-.scrolling-text-content {
-    display: inline-block;
-    padding-left: 100%;
-    animation: scroll-left 15s linear infinite;
-    background: linear-gradient(90deg, #fef08a, #fde047, #facc15, #eab308, #f59e0b, #f97316, #ea580c);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: scroll-left 15s linear infinite, gradient-shift 8s linear infinite;
-}
-
-@keyframes gradient-shift {
-    0% {
-        background-position: 0% center;
-    }
-    100% {
-        background-position: 200% center;
-    }
-}
-
-@keyframes scroll-left {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
 @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: rgba(255, 255, 255, 0.75) }
@@ -456,5 +419,28 @@ h1, h2, h3 {
         box-shadow: 
             0 0 30px rgba(20, 184, 166, 0.6),
             0 0 60px rgba(20, 184, 166, 0.3);
+    }
+}
+
+/* Floating words animation */
+.subtle-float {
+    animation: subtleCircle 8s ease-in-out infinite;
+}
+
+@keyframes subtleCircle {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    25% {
+        transform: translate(3px, -3px);
+    }
+    50% {
+        transform: translate(0px, -5px);
+    }
+    75% {
+        transform: translate(-3px, -3px);
+    }
+    100% {
+        transform: translate(0px, 0px);
     }
 }

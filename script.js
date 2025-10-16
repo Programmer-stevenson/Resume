@@ -262,3 +262,28 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Fluid button animations
+const buttonLeft = document.querySelector('.button-float-left');
+const buttonRight = document.querySelector('.button-float-right');
+let timeLeft = 0;
+let timeRight = 0;
+
+function animateButtons() {
+    if (buttonLeft && buttonRight) {
+        timeLeft += 0.016; // ~60fps
+        timeRight += 0.016;
+        
+        // Smooth sine wave for fluid motion
+        const leftOffset = Math.sin(timeLeft * 1.5) * 15;
+        const rightOffset = Math.sin(timeRight * 1.5 + Math.PI) * 15; // Offset by PI for opposite direction
+        
+        buttonLeft.style.transform = `translateX(${leftOffset}px)`;
+        buttonRight.style.transform = `translateX(${rightOffset}px)`;
+    }
+    
+    requestAnimationFrame(animateButtons);
+}
+
+// Start button animation
+animateButtons();
