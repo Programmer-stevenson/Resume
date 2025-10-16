@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandon Stevenson - Interactive Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-teal-900 to-gray-900 text-white">
+    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50 fade-in">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold">BS</div>
+            <div class="flex gap-8">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden borealis-bg">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        
+        <div class="relative z-10 text-center px-6">
+            <div class="mb-6">
+                <div class="text-6xl md:text-8xl font-bold typewriter inline-block">
+                    Brandon Stevenson
+                </div>
+            </div>
+            <p class="text-2xl md:text-3xl text-teal-200 mb-4 fade-in scrolling-text max-w-2xl mx-auto">
+                <span class="scrolling-text-content">IT Professional • Aspiring Cloud Specialist • Developer • IT Professional • Aspiring Cloud Specialist • Developer • IT Professional • Aspiring Cloud Specialist • Developer • </span>
+            </p>
+            <p class="text-lg text-teal-300 max-w-2xl mx-auto mb-8 fade-in">
+                Building innovative solutions at the intersection of infrastructure and code
+            </p>
+            <div class="flex gap-6 justify-center fade-in">
+                <a href="#contact" class="bg-white text-teal-600 px-8 py-3 rounded-full font-semibold hover:bg-teal-100 transition-all hover:scale-105">
+                    Get In Touch
+                </a>
+                <a href="#projects" class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-teal-600 transition-all hover:scale-105">
+                    View Projects
+                </a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="about" class="min-h-screen py-20 px-6 bg-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-5xl font-bold mb-12">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="slide-in-left">
+                    <p class="text-xl text-gray-300 mb-6 leading-relaxed about-typewriter" id="about-text-1">
+                        I'm a detail-oriented IT professional with a passion for building scalable infrastructure and developing innovative software solutions.
+                    </p>
+                    <p class="text-lg text-gray-400 mb-6 leading-relaxed about-typewriter" id="about-text-2">
+                        Currently pursuing my Bachelor's in Cloud & Network Engineering while working as an IT Admin, I've successfully managed over 1,500+ devices and developed AI-powered applications.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Problem Solver</h3>
+                                <p class="text-gray-400">Turning complex challenges into elegant solutions</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Fast Learner</h3>
+                                <p class="text-gray-400">Always exploring new technologies and methodologies</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Team Player</h3>
+                                <p class="text-gray-400">Collaborative approach to achieving goals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="card-hover bg-gray-800 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                        <h3 class="text-2xl font-bold mb-3 text-teal-400">Education</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-lg">BS Cloud & Network Engineering</h4>
+                                <p class="text-gray-400">Western Governors University</p>
+                                <p class="text-sm text-teal-400">In Progress (75/120 credits)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">AAS Computing & IT</h4>
+                                <p class="text-gray-400">College of Southern Nevada</p>
+                                <p class="text-sm text-teal-400">Completed 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-gray-800 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                        <h3 class="text-2xl font-bold mb-3 text-teal-400">Core Competencies</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Cloud Infrastructure & DevOps</li>
+                            <li>• Full-Stack Development</li>
+                            <li>• IT Systems Administration</li>
+                            <li>• Database Design & Management</li>
+                            <li>• Network Engineering</li>
+                            <li>• Cybersecurity Best Practices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="min-h-screen py-20 px-6 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-5xl font-bold mb-12">Featured Projects</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="project-card p-8 rounded-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold">AI-Powered Chatbot</h3>
+                        <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Intelligent conversational AI leveraging natural language processing for context-aware interactions and intent recognition.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Python</span>
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">AI/ML</span>
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">NLP</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm mb-4">
+                        <li>Real-time conversational interface</li>
+                        <li>Context-aware response generation</li>
+                        <li>User intent classification</li>
+                        <li>Deployed production-ready application</li>
+                    </ul>
+                    <div class="flex gap-4">
+                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            View on LinkedIn
+                        </a>
+                        <a href="#" class="text-teal-400 hover:text-teal-300 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card p-8 rounded-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold">Infrastructure Automation</h3>
+                        <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Automated deployment and configuration management for 1,500+ devices using modern DevOps practices.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">PowerShell</span>
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Intune</span>
+                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Azure</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm">
+                        <li>Automated device enrollment and configuration</li>
+                        <li>Policy enforcement and compliance monitoring</li>
+                        <li>Reduced manual deployment time by 80%</li>
+                        <li>Enhanced security posture across fleet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="min-h-screen py-20 px-6 bg-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-5xl font-bold mb-12">Work Experience</h2>
+            
+            <div class="space-y-12">
+                <div class="experience-item border-l-4 border-teal-500 pl-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold">IT Specialist</h3>
+                            <p class="text-teal-400 font-semibold">MAC.BID</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-400">Las Vegas, NV</p>
+                            <p class="text-sm text-gray-500">Nov 2024 - Present</p>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400">
+                        <li>Administered software services through the Intune process for enterprise device management</li>
+                        <li>Delivered Tier 1/2 support across multiple OS platforms</li>
+                        <li>Managed Active Directory, Microsoft 365, and MDM solutions</li>
+                        <li>Coordinated vendor relationships and compliance initiatives</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item border-l-4 border-teal-500 pl-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold">IT Configurations Technician</h3>
+                            <p class="text-teal-400 font-semibold">CDW</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-400">Las Vegas, NV</p>
+                            <p class="text-sm text-gray-500">Apr 2023 - Nov 2024</p>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400">
+                        <li>Configured and imaged enterprise devices to client specifications</li>
+                        <li>Implemented security settings including encryption and antivirus</li>
+                        <li>Maintained quality assurance standards across all deployments</li>
+                        <li>Collaborated with teams to meet production goals</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item border-l-4 border-teal-500 pl-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold">General Manager</h3>
+                            <p class="text-teal-400 font-semibold">Burger King</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-400">Las Vegas, NV</p>
+                            <p class="text-sm text-gray-500">Mar 2014 - Apr 2017</p>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-gray-400">
+                        <li>Youngest GM promotion in region</li>
+                        <li>Led high-volume location generating $170K/month in sales</li>
+                        <li>Managed operations, team leadership, and performance optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="min-h-screen py-20 px-6 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-5xl font-bold mb-12">Technical Skills</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">Languages</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Python</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">JavaScript</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">SQL</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Java</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">C/C++</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Bash</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">Cloud & DevOps</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Azure</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Docker</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Ansible</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">vSphere</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">ESXi</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">Databases</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">MySQL</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">MS SQL Server</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Oracle</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">IT Management</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Microsoft 365</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Intune</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Active Directory</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">SharePoint</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">Tools & Platforms</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Jira</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">ServiceNow</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Salesforce</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30">
+                    <h3 class="text-2xl font-bold mb-4 text-teal-400">Operating Systems</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Linux</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">UNIX</span>
+                        <span class="skill-tag px-3 py-2 rounded-full text-sm">Windows Server</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="min-h-screen py-20 px-6 bg-gray-900 flex items-center">
+        <div class="max-w-6xl mx-auto w-full">
+            <h2 class="section-title text-5xl font-bold mb-12">Get In Touch</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <p class="text-xl text-gray-300 mb-8">
+                        I'm always open to discussing new opportunities, collaborations, or just connecting with fellow tech enthusiasts.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <a href="mailto:brandon.stevensen@outlook.com" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                </svg>
+                            </div>
+                            <span>brandon.stevensen@outlook.com</span>
+                        </a>
+
+                        <a href="tel:+17253142660" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                </svg>
+                            </div>
+                            <span>+1 (725) 314-2660</span>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </div>
+                            <span>LinkedIn Profile</span>
+                        </a>
+
+                        <div class="flex items-center gap-4 text-lg">
+                            <div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <span>Las Vegas, NV</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-teal-600 to-cyan-600 p-8 rounded-lg">
+                    <h3 class="text-3xl font-bold mb-4">Let's Build Something Amazing</h3>
+                    <p class="text-lg mb-6 text-teal-100">
+                        Whether you're looking for a dedicated IT professional, a cloud engineer, or a developer who can bring ideas to life, I'd love to hear from you.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>Available for full-time opportunities</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>Open to consulting projects</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>Interested in collaboration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-8 px-6 border-t border-teal-500 border-opacity-30">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-gray-400">© 2024 Brandon Stevenson. Built with passion and code.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
