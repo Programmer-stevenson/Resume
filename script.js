@@ -54,35 +54,61 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Typewriter effect with loop
+// ============================================
+// Typewriter Effect - Alternating Text Loop
+// ============================================
+// This creates a typing and deleting animation that cycles between multiple texts
 const typewriterElement = document.querySelector('.typewriter');
-const text = 'Brandon Stevenson';
+
+// Array of texts to cycle through
+const texts = ['Brandon Stevenson', 'Tech Professional'];
+
+// Current text index (which text in the array we're displaying)
+let textIndex = 0;
+
+// Whether we're currently deleting or typing
 let isDeleting = false;
+
+// Current character position in the text
 let charIndex = 0;
 
+/**
+ * Main typewriter animation function
+ * Handles typing, deleting, and switching between texts
+ */
 function typeWriter() {
-    if (!isDeleting && charIndex < text.length) {
-        // Typing
-        typewriterElement.textContent = text.substring(0, charIndex + 1);
+    // Get the current text we should be displaying
+    const currentText = texts[textIndex];
+    
+    if (!isDeleting && charIndex < currentText.length) {
+        // TYPING MODE: Add one character at a time
+        typewriterElement.textContent = currentText.substring(0, charIndex + 1);
         charIndex++;
-        setTimeout(typeWriter, 225);
-    } else if (!isDeleting && charIndex === text.length) {
-        // Wait 2 seconds before deleting
+        setTimeout(typeWriter, 225); // Typing speed: 225ms per character
+        
+    } else if (!isDeleting && charIndex === currentText.length) {
+        // PAUSE MODE: Finished typing, wait before deleting
         isDeleting = true;
-        setTimeout(typeWriter, 2000);
+        setTimeout(typeWriter, 2000); // Wait 2 seconds before deleting
+        
     } else if (isDeleting && charIndex > 0) {
-        // Deleting
-        typewriterElement.textContent = text.substring(0, charIndex - 1);
+        // DELETING MODE: Remove one character at a time
+        typewriterElement.textContent = currentText.substring(0, charIndex - 1);
         charIndex--;
-        setTimeout(typeWriter, 150);
+        setTimeout(typeWriter, 150); // Deleting speed: 150ms per character (faster than typing)
+        
     } else if (isDeleting && charIndex === 0) {
-        // Wait 1.5 seconds before typing again
+        // SWITCH MODE: Finished deleting, move to next text
         isDeleting = false;
-        setTimeout(typeWriter, 1500);
+        
+        // Move to next text in array, loop back to start when reaching the end
+        textIndex = (textIndex + 1) % texts.length;
+        
+        setTimeout(typeWriter, 1500); // Wait 1.5 seconds before typing next text
     }
 }
 
-// Start the typewriter effect
+// Initialize the typewriter effect when page loads
 if (typewriterElement) {
     typeWriter();
 }
