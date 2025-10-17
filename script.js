@@ -1,7 +1,6 @@
 // Hamburger Menu Functionality
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-const closeMenu = document.getElementById('closeMenu');
 const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 const body = document.body;
 
@@ -25,10 +24,6 @@ if (hamburger) {
             openMenu();
         }
     });
-}
-
-if (closeMenu) {
-    closeMenu.addEventListener('click', closeMenuFunc);
 }
 
 // Close menu when clicking on a link
