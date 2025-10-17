@@ -1149,4 +1149,109 @@ body.menu-open {
     .section-title {
         font-size: 4rem !important;
     }
+
+}
+/* ============================================
+   INFINITE SCROLLING TEXT
+   ============================================ */
+
+/* Scrolling text container */
+.scrolling-text-wrapper {
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+    margin: 0 auto 2rem;
+}
+
+/* Fade effect on edges for seamless look */
+.scrolling-text-wrapper::before,
+.scrolling-text-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.scrolling-text-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #000814 0%, transparent 100%);
+}
+
+.scrolling-text-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #000814 0%, transparent 100%);
+}
+
+/* Scrolling text track */
+.scrolling-text {
+    display: flex;
+    width: fit-content;
+    animation: scroll-left 20s linear infinite;
+}
+
+/* Each text item */
+.scroll-item {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 1.5rem;
+    color: #5eead4;
+    padding: 0 2rem;
+    font-weight: 500;
+}
+
+/* Separator bullet */
+.separator {
+    color: #14b8a6;
+    margin: 0 1.5rem;
+    font-size: 1.2rem;
+}
+
+/* Scrolling animation */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover (optional) */
+.scrolling-text-wrapper:hover .scrolling-text {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .scroll-item {
+        font-size: 1.125rem;
+        padding: 0 1rem;
+    }
+
+    .separator {
+        margin: 0 1rem;
+        font-size: 1rem;
+    }
+
+    .scrolling-text-wrapper::before,
+    .scrolling-text-wrapper::after {
+        width: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-item {
+        font-size: 1rem;
+        padding: 0 0.75rem;
+    }
+
+    .scrolling-text-wrapper {
+        max-width: 100%;
+    }
 }
