@@ -776,12 +776,24 @@ body.menu-open {
 
 /* Mobile button adjustments */
 @media (max-width: 640px) {
+    #home {
+        padding-top: 8rem !important;
+        padding-bottom: 4rem !important;
+    }
+    
+    .scrolling-text-wrapper {
+        margin-bottom: 1.5rem !important;
+        padding-bottom: 0 !important;
+        margin-top: 150px !important;
+    }
+    
     .borealis-bg .flex.gap-6 {
         flex-direction: column;
         align-items: center;
         gap: 1rem;
         width: 100%;
         padding: 0 1rem;
+        margin-top: 0 !important;
     }
     
     .borealis-bg .flex.gap-6 a {
@@ -789,8 +801,21 @@ body.menu-open {
         max-width: 280px;
         text-align: center;
     }
+    
+    .borealis-bg .text-base {
+        display: none !important;
+    }
 }
-
+/* Push down scrolling text and tagline on desktop/tablet */
+@media (min-width: 641px) {
+    .scrolling-text-wrapper {
+        margin-top: 160px;
+    }
+    
+    .borealis-bg .text-base {
+        margin-top: 230px;
+    }
+}
 /* ============================================
    4. PHONE VIEWPORT (320px - 767px)
    ============================================ */
@@ -1137,10 +1162,18 @@ body.menu-open {
    INFINITE SCROLLING TEXT
    ============================================ */
 
+/* ============================================
+   INFINITE SCROLLING TEXT
+   ============================================ */
+
+/* ============================================
+   INFINITE SCROLLING TEXT
+   ============================================ */
+
 /* Scrolling text container */
 .scrolling-text-wrapper {
     width: 100%;
-    max-width: 900px;
+    max-width: 450px;
     overflow: hidden;
     position: relative;
     padding: 1rem 0;
@@ -1161,12 +1194,12 @@ body.menu-open {
 
 .scrolling-text-wrapper::before {
     left: 0;
-    background: linear-gradient(to right, #000814 0%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 8, 20, 0) 0%, transparent 100%);
 }
 
 .scrolling-text-wrapper::after {
     right: 0;
-    background: linear-gradient(to left, #000814 0%, transparent 100%);
+    background: linear-gradient(to left, rgba(0, 8, 20, 0) 0%, transparent 100%);
 }
 
 /* Scrolling text track */
@@ -1211,6 +1244,10 @@ body.menu-open {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .scrolling-text-wrapper {
+        max-width: 450px;
+    }
+
     .scroll-item {
         font-size: 1.125rem;
         padding: 0 1rem;
@@ -1235,95 +1272,6 @@ body.menu-open {
 
     .scrolling-text-wrapper {
         max-width: 100%;
-    }
-}
-/* ===== MOBILE VIEWPORT FIXES ===== */
-/* Add these styles to your styles.css file */
-
-/* Fix for hero text cutoff on mobile */
-#home .text-4xl {
-    font-size: 2rem; /* Smaller on mobile */
-    line-height: 1.2;
-    word-break: break-word;
-    max-width: 100%;
-}
-
-@media (min-width: 640px) {
-    #home .text-4xl {
-        font-size: 3rem;
-    }
-}
-
-@media (min-width: 768px) {
-    #home .text-4xl {
-        font-size: 3.75rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    #home .text-4xl {
-        font-size: 6rem;
-    }
-}
-
-/* Ensure container has proper padding on mobile */
-#home .relative.z-10 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    max-width: 100%;
-}
-
-/* Fix scrolling text speed - slower animation */
-.scrolling-text-wrapper {
-    overflow: hidden;
-    width: 100%;
-    max-width: 100%;
-    position: relative;
-    margin: 2rem 0;
-}
-
-.scrolling-text {
-    display: flex;
-    white-space: nowrap;
-    animation: scroll 40s linear infinite; /* Changed from 20s to 40s - twice as slow */
-}
-
-.scroll-item {
-    display: inline-block;
-    padding: 0 2rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #5eead4;
-}
-
-.separator {
-    display: inline-block;
-    padding: 0 1rem;
-    color: #5eead4;
-}
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-/* Mobile specific adjustments */
-@media (max-width: 768px) {
-    .scrolling-text {
-        animation: scroll 30s linear infinite; /* Even slower on mobile */
-    }
-    
-    .scroll-item {
-        font-size: 1rem;
-        padding: 0 1.5rem;
-    }
-    
-    .separator {
-        padding: 0 0.75rem;
     }
 }
 
