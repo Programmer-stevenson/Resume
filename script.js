@@ -488,28 +488,32 @@ setTimeout(() => {
     const ringGeometry = new THREE.RingGeometry(120, 220, 32);
     
     function createRingTexture() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 256;
-        canvas.height = 256;
-        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
-        
-        const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
-        gradient.addColorStop(0, 'rgba(0,0,0,0)');
-        gradient.addColorStop(0.2, 'rgba(138,43,226,0.6)');
-        gradient.addColorStop(0.4, 'rgba(0,255,255,0.8)');
-        gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
-        gradient.addColorStop(0.8, 'rgba(255,0,0,0.7)');
-        gradient.addColorStop(1, 'rgba(0,0,0,0)');
-        
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, 256, 256);
-        
-        const texture = new THREE.CanvasTexture(canvas);
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
-        texture.generateMipmaps = false;
-        return texture;
-    }
+    const canvas = document.createElement('canvas');
+    canvas.width = 512; // Higher resolution helps
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
+    
+    // Clear to transparent
+    ctx.clearRect(0, 0, 512, 512);
+    
+    // Create gradient that matches ring geometry better
+    const gradient = ctx.createRadialGradient(256, 256, 120, 256, 256, 256);
+    gradient.addColorStop(0, 'rgba(0,0,0,0)'); // Transparent at inner edge
+    gradient.addColorStop(0.05, 'rgba(138,43,226,0.6)');
+    gradient.addColorStop(0.3, 'rgba(0,255,255,0.8)');
+    gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
+    gradient.addColorStop(0.85, 'rgba(255,0,0,0.7)');
+    gradient.addColorStop(1, 'rgba(0,0,0,0)');
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 512, 512);
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = true; // Enable mipmaps for mobile
+    return texture;
+}
     
     const ringTexture = createRingTexture();
     const ringMaterial = new THREE.MeshBasicMaterial({
