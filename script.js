@@ -54,37 +54,55 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Typewriter effect with loop
+// Optimized Typewriter effect with alternating text using requestAnimationFrame
 const typewriterElement = document.querySelector('.typewriter');
-const text = 'Brandon Stevenson';
+const texts = ['Brandon Stevenson', 'Tech Professional'];
+let textIndex = 0;
 let isDeleting = false;
 let charIndex = 0;
+let lastUpdate = 0;
+const typeSpeed = 150; // ms per character when typing
+const deleteSpeed = 75; // ms per character when deleting
+const pauseAfterComplete = 2000; // ms pause after completing a word
+const pauseBeforeType = 300; // ms pause before typing next word
 
-function typeWriter() {
-    if (!isDeleting && charIndex < text.length) {
-        // Typing
-        typewriterElement.textContent = text.substring(0, charIndex + 1);
-        charIndex++;
-        setTimeout(typeWriter, 225);
-    } else if (!isDeleting && charIndex === text.length) {
-        // Wait 2 seconds before deleting
-        isDeleting = true;
-        setTimeout(typeWriter, 2000);
-    } else if (isDeleting && charIndex > 0) {
-        // Deleting
-        typewriterElement.textContent = text.substring(0, charIndex - 1);
-        charIndex--;
-        setTimeout(typeWriter, 150);
-    } else if (isDeleting && charIndex === 0) {
-        // Wait 1.5 seconds before typing again
-        isDeleting = false;
-        setTimeout(typeWriter, 1500);
+function typeWriter(timestamp) {
+    const currentText = texts[textIndex];
+    const speed = isDeleting ? deleteSpeed : typeSpeed;
+    
+    if (timestamp - lastUpdate >= speed) {
+        if (!isDeleting && charIndex < currentText.length) {
+            // Typing
+            charIndex++;
+            typewriterElement.textContent = currentText.substring(0, charIndex);
+            lastUpdate = timestamp;
+        } else if (!isDeleting && charIndex === currentText.length) {
+            // Pause before deleting
+            if (timestamp - lastUpdate >= pauseAfterComplete) {
+                isDeleting = true;
+                lastUpdate = timestamp;
+            }
+        } else if (isDeleting && charIndex > 0) {
+            // Deleting
+            charIndex--;
+            typewriterElement.textContent = currentText.substring(0, charIndex);
+            lastUpdate = timestamp;
+        } else if (isDeleting && charIndex === 0) {
+            // Switch to next text
+            if (timestamp - lastUpdate >= pauseBeforeType) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                lastUpdate = timestamp;
+            }
+        }
     }
+    
+    requestAnimationFrame(typeWriter);
 }
 
 // Start the typewriter effect
 if (typewriterElement) {
-    typeWriter();
+    requestAnimationFrame(typeWriter);
 }
 
 // Aurora Particles Effect
