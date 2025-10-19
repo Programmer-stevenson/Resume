@@ -1237,3 +1237,138 @@ body.menu-open {
         max-width: 100%;
     }
 }
+/* ===== MOBILE VIEWPORT FIXES ===== */
+/* Add these styles to your styles.css file */
+
+/* Fix for hero text cutoff on mobile */
+#home .text-4xl {
+    font-size: 2rem; /* Smaller on mobile */
+    line-height: 1.2;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+@media (min-width: 640px) {
+    #home .text-4xl {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 768px) {
+    #home .text-4xl {
+        font-size: 3.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #home .text-4xl {
+        font-size: 6rem;
+    }
+}
+
+/* Ensure container has proper padding on mobile */
+#home .relative.z-10 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 100%;
+}
+
+/* Fix scrolling text speed - slower animation */
+.scrolling-text-wrapper {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.scrolling-text {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite; /* Changed from 20s to 40s - twice as slow */
+}
+
+.scroll-item {
+    display: inline-block;
+    padding: 0 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #5eead4;
+}
+
+.separator {
+    display: inline-block;
+    padding: 0 1rem;
+    color: #5eead4;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    .scrolling-text {
+        animation: scroll 30s linear infinite; /* Even slower on mobile */
+    }
+    
+    .scroll-item {
+        font-size: 1rem;
+        padding: 0 1.5rem;
+    }
+    
+    .separator {
+        padding: 0 0.75rem;
+    }
+}
+
+/* Prevent text overflow */
+.typewriter {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Adjust button sizes on mobile */
+@media (max-width: 640px) {
+    #home .flex.gap-6 {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    #home .flex.gap-6 a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Additional mobile text protection */
+@media (max-width: 480px) {
+    #home .text-4xl {
+        font-size: 1.75rem;
+    }
+    
+    #home .text-base {
+        font-size: 0.875rem;
+    }
+}
+
+/* Ensure hero section content is centered and doesn't overflow */
+#home {
+    overflow-x: hidden;
+}
+
+#home .relative.z-10.text-center {
+    width: 100%;
+    max-width: 100%;
+}

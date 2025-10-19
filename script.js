@@ -256,7 +256,7 @@ setTimeout(() => {
     
     const isMobile = window.innerWidth < 768;
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
-    camera.position.set(0, isMobile ? 250 : 200, isMobile ? 1100 : 1000);
+    camera.position.set(0, isMobile ? 300 : 250, isMobile ? 1200 : 1100);
 
     const renderer = new THREE.WebGLRenderer({ 
         antialias: true,
@@ -426,7 +426,7 @@ setTimeout(() => {
 
     // ===== TRANSPARENT RAINBOW RINGS =====
     const ringGroup = new THREE.Group();
-    const ringGeometry = new THREE.RingGeometry(120, 220, 32);
+    const ringGeometry = new THREE.RingGeometry(120, 220, 64);
     
     function createRingTexture() {
         const canvas = document.createElement('canvas');
@@ -434,16 +434,16 @@ setTimeout(() => {
         canvas.height = 256;
         const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
         
-        // Subtle rainbow gradient with very low opacity
+        // Subtle rainbow gradient with slightly higher opacity for visibility
         const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
         gradient.addColorStop(0, 'rgba(0,0,0,0)');
-        gradient.addColorStop(0.15, 'rgba(148,0,211,0.08)');  // Violet
-        gradient.addColorStop(0.3, 'rgba(75,0,130,0.12)');     // Indigo
-        gradient.addColorStop(0.45, 'rgba(0,0,255,0.15)');     // Blue
-        gradient.addColorStop(0.55, 'rgba(0,255,0,0.15)');     // Green
-        gradient.addColorStop(0.65, 'rgba(255,255,0,0.15)');   // Yellow
-        gradient.addColorStop(0.8, 'rgba(255,127,0,0.12)');    // Orange
-        gradient.addColorStop(0.92, 'rgba(255,0,0,0.08)');     // Red
+        gradient.addColorStop(0.15, 'rgba(148,0,211,0.18)');  // Violet
+        gradient.addColorStop(0.3, 'rgba(75,0,130,0.22)');     // Indigo
+        gradient.addColorStop(0.45, 'rgba(0,0,255,0.25)');     // Blue
+        gradient.addColorStop(0.55, 'rgba(0,255,0,0.25)');     // Green
+        gradient.addColorStop(0.65, 'rgba(255,255,0,0.25)');   // Yellow
+        gradient.addColorStop(0.8, 'rgba(255,127,0,0.22)');    // Orange
+        gradient.addColorStop(0.92, 'rgba(255,0,0,0.18)');     // Red
         gradient.addColorStop(1, 'rgba(0,0,0,0)');
         
         ctx.fillStyle = gradient;
@@ -461,7 +461,7 @@ setTimeout(() => {
         map: ringTexture,
         alphaMap: ringTexture,
         transparent: true,
-        opacity: 0.3,
+        opacity: 0.5,
         side: THREE.DoubleSide,
         depthWrite: false,
         blending: THREE.AdditiveBlending
@@ -528,7 +528,7 @@ setTimeout(() => {
     
     const aspect = window.innerWidth / window.innerHeight;
     const vFOV = THREE.MathUtils.degToRad(camera.fov);
-    const cameraDistance = isMobile ? 1100 : 1000;
+    const cameraDistance = isMobile ? 1200 : 1100;
     const height = 2 * Math.tan(vFOV / 2) * cameraDistance;
     const width = height * aspect;
     
@@ -579,8 +579,8 @@ setTimeout(() => {
         ringOrbitGroup.rotation.x = ringRotation;
 
         // Smooth camera using matrix lerp
-        const cameraZ = (isMobile ? 1100 : 1000) + saturn.position.z * 0.1;
-        const cameraY = (isMobile ? 250 : 200) + saturn.position.y * 0.15;
+        const cameraZ = (isMobile ? 1200 : 1100) + saturn.position.z * 0.1;
+        const cameraY = (isMobile ? 300 : 250) + saturn.position.y * 0.15;
         camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
         camera.position.y += (cameraY - camera.position.y) * 0.05;
         camera.position.z += (cameraZ - camera.position.z) * 0.05;
@@ -621,7 +621,7 @@ setTimeout(() => {
             }
             
             const aspect = window.innerWidth / window.innerHeight;
-            const cameraDistance = nowMobile ? 1100 : 1000;
+            const cameraDistance = nowMobile ? 1200 : 1100;
             const height = 2 * Math.tan(vFOV / 2) * cameraDistance;
             const width = height * aspect;
             spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
