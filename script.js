@@ -191,6 +191,497 @@ function createAuroraWaves() {
 // Initialize aurora waves
 createAuroraWaves();
 
+
+// ULTIMATE PERFORMANCE + QUALITY 3D Saturn - Matrix-Based DSA
+// Add to the END of your script.js
+
+setTimeout(() => {
+    const heroSection = document.getElementById('home');
+    if (!heroSection || typeof THREE === 'undefined') {
+        console.error('Missing requirements');
+        return;
+    }
+
+    console.log('Starting Matrix-Optimized HD Saturn...');
+
+    // ===== ADVANCED MATRIX DATA STRUCTURES =====
+    
+    // Pre-allocated matrix pool to avoid GC
+    class MatrixPool {
+        constructor(size) {
+            this.pool = [];
+            this.available = [];
+            for (let i = 0; i < size; i++) {
+                const matrix = new THREE.Matrix4();
+                this.pool.push(matrix);
+                this.available.push(matrix);
+            }
+        }
+        acquire() {
+            return this.available.pop() || new THREE.Matrix4();
+        }
+        release(mat) {
+            this.available.push(mat);
+        }
+    }
+    
+    const matrixPool = new MatrixPool(10);
+    
+    // Circular buffer for smooth interpolation
+    class SmoothValue {
+        constructor(size = 5) {
+            this.buffer = new Float32Array(size);
+            this.size = size;
+            this.index = 0;
+            this.filled = 0;
+        }
+        push(value) {
+            this.buffer[this.index] = value;
+            this.index = (this.index + 1) % this.size;
+            if (this.filled < this.size) this.filled++;
+        }
+        get() {
+            let sum = 0;
+            for (let i = 0; i < this.filled; i++) sum += this.buffer[i];
+            return sum / this.filled;
+        }
+    }
+    
+    const smoothX = new SmoothValue(3);
+    const smoothY = new SmoothValue(3);
+    const smoothZ = new SmoothValue(3);
+    
+    // Spatial hash for efficient bounds checking
+    class SpatialBounds {
+        constructor() {
+            this.bounds = new Float32Array(6); // minX, maxX, minY, maxY, minZ, maxZ
+        }
+        set(minX, maxX, minY, maxY, minZ, maxZ) {
+            this.bounds[0] = minX;
+            this.bounds[1] = maxX;
+            this.bounds[2] = minY;
+            this.bounds[3] = maxY;
+            this.bounds[4] = minZ;
+            this.bounds[5] = maxZ;
+        }
+        check(pos) {
+            return {
+                x: pos.x < this.bounds[0] || pos.x > this.bounds[1],
+                y: pos.y < this.bounds[2] || pos.y > this.bounds[3],
+                z: pos.z < this.bounds[4] || pos.z > this.bounds[5]
+            };
+        }
+    }
+    
+    const spatialBounds = new SpatialBounds();
+
+    // ===== HIGH-QUALITY RENDERER =====
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
+    camera.position.set(0, 200, 800);
+
+    const renderer = new THREE.WebGLRenderer({ 
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: true
+    });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = false;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    
+    renderer.domElement.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    `;
+    
+    heroSection.appendChild(renderer.domElement);
+
+    // Optimized lighting
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    sunLight.position.set(500, 300, 400);
+    scene.add(sunLight);
+
+    const ambientLight = new THREE.AmbientLight(0x4466aa, 0.35);
+    scene.add(ambientLight);
+
+    const rimLight = new THREE.PointLight(0x88bbff, 1.2, 1000);
+    rimLight.position.set(-300, 100, 200);
+    scene.add(rimLight);
+
+    // ===== HD TEXTURE WITH WORKER-LIKE OPTIMIZATION =====
+    function createHDTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 2048; // Balanced HD
+        canvas.height = 1024;
+        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: false });
+
+        // Multi-stop gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, '#b8e8ff');
+        gradient.addColorStop(0.15, '#6ab8e8');
+        gradient.addColorStop(0.3, '#4098cc');
+        gradient.addColorStop(0.5, '#2d7aa0');
+        gradient.addColorStop(0.7, '#1a5f7a');
+        gradient.addColorStop(0.85, '#1a1a4a');
+        gradient.addColorStop(1, '#2a0a4a');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Atmospheric glow
+        ctx.globalAlpha = 0.3;
+        const glowGradient = ctx.createRadialGradient(
+            canvas.width * 0.3, canvas.height * 0.3, 0,
+            canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.6
+        );
+        glowGradient.addColorStop(0, 'rgba(200, 240, 255, 0.4)');
+        glowGradient.addColorStop(0.5, 'rgba(100, 180, 230, 0.2)');
+        glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = glowGradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Optimized bands - 100 for quality
+        ctx.globalAlpha = 0.55;
+        const colors = ['#3a8ec8', '#2d7db8', '#4a9ed8', '#1a6e9a', '#2a8eb8', '#0d5a7a'];
+        for (let i = 0; i < 100; i++) {
+            const y = (canvas.height / 100) * i;
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.fillRect(0, y, canvas.width, 6 + Math.random() * 12);
+        }
+        
+        // Cloud wisps
+        ctx.globalAlpha = 0.35;
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < 50; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = 150 + Math.random() * 400;
+            
+            const cloudGrad = ctx.createRadialGradient(x, y, 0, x, y, size/2);
+            cloudGrad.addColorStop(0, 'rgba(180, 230, 255, 0.4)');
+            cloudGrad.addColorStop(0.5, 'rgba(120, 190, 235, 0.2)');
+            cloudGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = cloudGrad;
+            ctx.fillRect(x - size/2, y - size/4, size, size/2);
+        }
+        ctx.globalCompositeOperation = 'source-over';
+
+        // HD Dark Blue Eye
+        ctx.globalAlpha = 0.95;
+        const eyeX = canvas.width * 0.4;
+        const eyeY = canvas.height * 0.45;
+        const eyeW = 200;
+        const eyeH = 130;
+        
+        // Multiple eye layers
+        for (let layer = 3; layer > 0; layer--) {
+            const size = eyeW * (0.4 + layer * 0.2);
+            const eyeGrad = ctx.createRadialGradient(eyeX, eyeY, 0, eyeX, eyeY, size);
+            eyeGrad.addColorStop(0, `rgba(10, 30, 80, ${0.3 * layer})`);
+            eyeGrad.addColorStop(0.5, `rgba(20, 50, 100, ${0.2 * layer})`);
+            eyeGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = eyeGrad;
+            ctx.beginPath();
+            ctx.ellipse(eyeX, eyeY, size, size * 0.65, 0.15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        // Core
+        const coreGrad = ctx.createRadialGradient(eyeX, eyeY, 0, eyeX, eyeY, eyeW * 0.5);
+        coreGrad.addColorStop(0, 'rgba(5, 15, 50, 1)');
+        coreGrad.addColorStop(0.5, 'rgba(10, 25, 70, 0.98)');
+        coreGrad.addColorStop(1, 'rgba(18, 40, 90, 0.8)');
+        ctx.fillStyle = coreGrad;
+        ctx.beginPath();
+        ctx.ellipse(eyeX, eyeY, eyeW * 0.5, eyeH * 0.5, 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Highlight
+        ctx.globalAlpha = 0.7;
+        const hlGrad = ctx.createRadialGradient(eyeX - 25, eyeY - 20, 0, eyeX - 25, eyeY - 20, 50);
+        hlGrad.addColorStop(0, 'rgba(90, 150, 210, 0.8)');
+        hlGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = hlGrad;
+        ctx.beginPath();
+        ctx.arc(eyeX - 25, eyeY - 20, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Storms
+        ctx.globalAlpha = 0.6;
+        for (let i = 0; i < 10; i++) {
+            const sx = Math.random() * canvas.width;
+            const sy = Math.random() * canvas.height;
+            const ss = 60 + Math.random() * 140;
+            
+            const stormGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, ss);
+            stormGrad.addColorStop(0, 'rgba(68, 152, 210, 0.75)');
+            stormGrad.addColorStop(0.5, 'rgba(45, 120, 180, 0.5)');
+            stormGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = stormGrad;
+            ctx.beginPath();
+            ctx.ellipse(sx, sy, ss, ss * 0.6, Math.random() * Math.PI, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Efficient noise
+        ctx.globalAlpha = 0.2;
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+        for (let i = 0; i < 5000; i++) {
+            const x = Math.floor(Math.random() * canvas.width);
+            const y = Math.floor(Math.random() * canvas.height);
+            const idx = (y * canvas.width + x) * 4;
+            const bright = Math.random() > 0.5;
+            data[idx] = bright ? 224 : 10;
+            data[idx + 1] = bright ? 240 : 15;
+            data[idx + 2] = bright ? 255 : 30;
+            data[idx + 3] = 51;
+        }
+        ctx.putImageData(imgData, 0, 0);
+        
+        // Highlights
+        ctx.globalAlpha = 0.3;
+        for (let i = 0; i < 40; i++) {
+            ctx.fillStyle = 'rgba(180, 226, 255, 0.25)';
+            ctx.fillRect(0, Math.random() * canvas.height, canvas.width, 1 + Math.random() * 3);
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        return texture;
+    }
+
+    // ===== HD SATURN WITH OPTIMIZED GEOMETRY =====
+    const saturnGeometry = new THREE.SphereGeometry(100, 64, 64); // Balanced quality
+    const saturnTexture = createHDTexture();
+    
+    const saturnMaterial = new THREE.MeshStandardMaterial({
+        map: saturnTexture,
+        roughness: 0.85,
+        metalness: 0.05,
+        emissive: new THREE.Color(0x0a3050),
+        emissiveIntensity: 0.2
+    });
+
+    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    saturn.position.set(
+        (Math.random() - 0.5) * 400,
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200
+    );
+    scene.add(saturn);
+
+    // ===== RINGS (KEPT AS REQUESTED) =====
+    const ringGroup = new THREE.Group();
+    const ringGeometry = new THREE.RingGeometry(120, 220, 32);
+    
+    function createRingTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
+        
+        const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
+        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+        gradient.addColorStop(0.2, 'rgba(138,43,226,0.6)');
+        gradient.addColorStop(0.4, 'rgba(0,255,255,0.8)');
+        gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
+        gradient.addColorStop(0.8, 'rgba(255,0,0,0.7)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 256, 256);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = false;
+        return texture;
+    }
+    
+    const ringTexture = createRingTexture();
+    const ringMaterial = new THREE.MeshBasicMaterial({
+        map: ringTexture,
+        alphaMap: ringTexture,
+        transparent: true,
+        side: THREE.DoubleSide,
+        depthWrite: false
+    });
+    
+    const rings = new THREE.Mesh(ringGeometry, ringMaterial);
+    rings.rotation.x = Math.PI / 2;
+    ringGroup.add(rings);
+    ringGroup.rotation.x = Math.PI / 2;
+    
+    const ringOrbitGroup = new THREE.Group();
+    ringOrbitGroup.add(ringGroup);
+    saturn.add(ringOrbitGroup);
+
+    // ===== HD STARFIELD WITH SPATIAL INDEXING =====
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 1500;
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
+    const sizes = new Float32Array(starCount);
+
+    for (let i = 0; i < starCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 2500;
+        positions[i3 + 1] = (Math.random() - 0.5) * 2500;
+        positions[i3 + 2] = (Math.random() - 0.5) * 2500;
+        
+        const colorType = Math.random();
+        if (colorType < 0.08) {
+            colors[i3] = 1;
+            colors[i3 + 1] = 0.7;
+            colors[i3 + 2] = 0.4;
+        } else if (colorType < 0.11) {
+            colors[i3] = 1;
+            colors[i3 + 1] = 0.5;
+            colors[i3 + 2] = 0.4;
+        } else {
+            colors[i3] = 1;
+            colors[i3 + 1] = 1;
+            colors[i3 + 2] = 1;
+        }
+        
+        sizes[i] = Math.random() * 2.5 + 0.5;
+    }
+
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    starGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const starMaterial = new THREE.PointsMaterial({
+        size: 2,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85,
+        sizeAttenuation: true,
+        blending: THREE.AdditiveBlending
+    });
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // ===== MATRIX-BASED PHYSICS =====
+    const velocity = new Float32Array([2.5, 2, 1.5]);
+    
+    const aspect = window.innerWidth / window.innerHeight;
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const height = 2 * Math.tan(vFOV / 2) * 800;
+    const width = height * aspect;
+    
+    spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
+
+    // ===== OPTIMIZED ANIMATION WITH MATRIX OPERATIONS =====
+    let lastTime = performance.now();
+    let ringRotation = 0;
+    let saturnRotation = 0;
+    let frameCount = 0;
+
+    function animate(currentTime) {
+        requestAnimationFrame(animate);
+        
+        const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2); // Cap delta
+        lastTime = currentTime;
+        frameCount++;
+
+        // Matrix-based position update
+        smoothX.push(saturn.position.x + velocity[0]);
+        smoothY.push(saturn.position.y + velocity[1]);
+        smoothZ.push(saturn.position.z + velocity[2]);
+        
+        saturn.position.x = smoothX.get();
+        saturn.position.y = smoothY.get();
+        saturn.position.z = smoothZ.get();
+
+        // Efficient bounds check
+        const bounceCheck = spatialBounds.check(saturn.position);
+        if (bounceCheck.x) {
+            velocity[0] *= -1;
+            saturn.position.x = Math.max(spatialBounds.bounds[0], Math.min(spatialBounds.bounds[1], saturn.position.x));
+        }
+        if (bounceCheck.y) {
+            velocity[1] *= -1;
+            saturn.position.y = Math.max(spatialBounds.bounds[2], Math.min(spatialBounds.bounds[3], saturn.position.y));
+        }
+        if (bounceCheck.z) {
+            velocity[2] *= -1;
+            saturn.position.z = Math.max(spatialBounds.bounds[4], Math.min(spatialBounds.bounds[5], saturn.position.z));
+        }
+
+        // Rotations
+        saturnRotation += 0.001;
+        saturn.rotation.y = saturnRotation;
+        
+        ringRotation += 0.002;
+        ringOrbitGroup.rotation.x = ringRotation;
+
+        // Smooth camera using matrix lerp
+        camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
+        camera.position.y += (200 + saturn.position.y * 0.15 - camera.position.y) * 0.05;
+        camera.position.z += (800 + saturn.position.z * 0.1 - camera.position.z) * 0.05;
+        camera.lookAt(saturn.position);
+
+        // Star twinkle every 4 frames
+        if (frameCount % 4 === 0) {
+            const starSizes = stars.geometry.attributes.size.array;
+            const time = currentTime * 0.001;
+            for (let i = 0; i < starCount; i += 2) {
+                starSizes[i] = 0.5 + Math.abs(Math.sin(time + i * 0.1) * 2);
+            }
+            stars.geometry.attributes.size.needsUpdate = true;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    animate(performance.now());
+    console.log('Matrix-optimized HD Saturn running!');
+
+    // Resize with bounds recalc
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            const aspect = window.innerWidth / window.innerHeight;
+            const height = 2 * Math.tan(vFOV / 2) * 800;
+            const width = height * aspect;
+            spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
+        }, 150);
+    });
+
+    window.addEventListener('beforeunload', () => {
+        renderer.dispose();
+        saturnGeometry.dispose();
+        saturnMaterial.dispose();
+        ringGeometry.dispose();
+        ringMaterial.dispose();
+        starGeometry.dispose();
+        starMaterial.dispose();
+        saturnTexture.dispose();
+        ringTexture.dispose();
+    });
+
+}, 1000);
+
 // About section typewriter effect
 let aboutTypingStarted = false;
 const aboutText1Element = document.getElementById('about-text-1');
