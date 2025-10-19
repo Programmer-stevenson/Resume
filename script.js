@@ -56,7 +56,7 @@ document.addEventListener('keydown', (e) => {
 
 // Optimized Typewriter effect with alternating text using requestAnimationFrame
 const typewriterElement = document.querySelector('.typewriter');
-const texts = ['Brandon Stevenson', 'Tech Professional'];
+const texts = ['Brandon S.', 'Tech Professional'];
 let textIndex = 0;
 let isDeleting = false;
 let charIndex = 0;
