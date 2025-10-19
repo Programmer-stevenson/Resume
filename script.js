@@ -1,6 +1,7 @@
 // Hamburger Menu Functionality
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
+const closeMenu = document.getElementById('closeMenu');
 const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 const body = document.body;
 
@@ -26,6 +27,10 @@ if (hamburger) {
     });
 }
 
+if (closeMenu) {
+    closeMenu.addEventListener('click', closeMenuFunc);
+}
+
 // Close menu when clicking on a link
 mobileNavLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -49,61 +54,35 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ============================================
-// Typewriter Effect - Alternating Text Loop
-// ============================================
-// This creates a typing and deleting animation that cycles between multiple texts
+// Typewriter effect with loop
 const typewriterElement = document.querySelector('.typewriter');
-
-// Array of texts to cycle through
-const texts = ['Brandon Stevenson', 'Tech Professional'];
-
-// Current text index (which text in the array we're displaying)
-let textIndex = 0;
-
-// Whether we're currently deleting or typing
+const text = 'Brandon Stevenson';
 let isDeleting = false;
-
-// Current character position in the text
 let charIndex = 0;
 
-/**
- * Main typewriter animation function
- * Handles typing, deleting, and switching between texts
- */
 function typeWriter() {
-    // Get the current text we should be displaying
-    const currentText = texts[textIndex];
-    
-    if (!isDeleting && charIndex < currentText.length) {
-        // TYPING MODE: Add one character at a time
-        typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+    if (!isDeleting && charIndex < text.length) {
+        // Typing
+        typewriterElement.textContent = text.substring(0, charIndex + 1);
         charIndex++;
-        setTimeout(typeWriter, 225); // Typing speed: 225ms per character
-        
-    } else if (!isDeleting && charIndex === currentText.length) {
-        // PAUSE MODE: Finished typing, wait before deleting
+        setTimeout(typeWriter, 225);
+    } else if (!isDeleting && charIndex === text.length) {
+        // Wait 2 seconds before deleting
         isDeleting = true;
-        setTimeout(typeWriter, 2000); // Wait 2 seconds before deleting
-        
+        setTimeout(typeWriter, 2000);
     } else if (isDeleting && charIndex > 0) {
-        // DELETING MODE: Remove one character at a time
-        typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+        // Deleting
+        typewriterElement.textContent = text.substring(0, charIndex - 1);
         charIndex--;
-        setTimeout(typeWriter, 150); // Deleting speed: 150ms per character (faster than typing)
-        
+        setTimeout(typeWriter, 150);
     } else if (isDeleting && charIndex === 0) {
-        // SWITCH MODE: Finished deleting, move to next text
+        // Wait 1.5 seconds before typing again
         isDeleting = false;
-        
-        // Move to next text in array, loop back to start when reaching the end
-        textIndex = (textIndex + 1) % texts.length;
-        
-        setTimeout(typeWriter, 1500); // Wait 1.5 seconds before typing next text
+        setTimeout(typeWriter, 1500);
     }
 }
 
-// Initialize the typewriter effect when page loads
+// Start the typewriter effect
 if (typewriterElement) {
     typeWriter();
 }
@@ -192,9 +171,6 @@ function createAuroraWaves() {
 createAuroraWaves();
 
 
-// ULTIMATE PERFORMANCE + QUALITY 3D Saturn - Matrix-Based DSA
-// Add to the END of your script.js
-
 setTimeout(() => {
     const heroSection = document.getElementById('home');
     if (!heroSection || typeof THREE === 'undefined') {
@@ -278,8 +254,9 @@ setTimeout(() => {
     // ===== HIGH-QUALITY RENDERER =====
     const scene = new THREE.Scene();
     
+    const isMobile = window.innerWidth < 768;
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
-    camera.position.set(0, 200, 800);
+    camera.position.set(0, isMobile ? 250 : 200, isMobile ? 1100 : 1000);
 
     const renderer = new THREE.WebGLRenderer({ 
         antialias: true,
@@ -290,7 +267,9 @@ setTimeout(() => {
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Lower pixel ratio on mobile for better performance
+    const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+    renderer.setPixelRatio(pixelRatio);
     renderer.shadowMap.enabled = false;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
@@ -464,7 +443,9 @@ setTimeout(() => {
     }
 
     // ===== HD SATURN WITH OPTIMIZED GEOMETRY =====
-    const saturnGeometry = new THREE.SphereGeometry(100, 64, 64); // Balanced quality
+    // Reduce geometry complexity on mobile
+    const saturnSegments = isMobile ? 48 : 64;
+    const saturnGeometry = new THREE.SphereGeometry(100, saturnSegments, saturnSegments);
     const saturnTexture = createHDTexture();
     
     const saturnMaterial = new THREE.MeshStandardMaterial({
@@ -488,32 +469,28 @@ setTimeout(() => {
     const ringGeometry = new THREE.RingGeometry(120, 220, 32);
     
     function createRingTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512; // Higher resolution helps
-    canvas.height = 512;
-    const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
-    
-    // Clear to transparent
-    ctx.clearRect(0, 0, 512, 512);
-    
-    // Create gradient that matches ring geometry better
-    const gradient = ctx.createRadialGradient(256, 256, 120, 256, 256, 256);
-    gradient.addColorStop(0, 'rgba(0,0,0,0)'); // Transparent at inner edge
-    gradient.addColorStop(0.05, 'rgba(138,43,226,0.6)');
-    gradient.addColorStop(0.3, 'rgba(0,255,255,0.8)');
-    gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
-    gradient.addColorStop(0.85, 'rgba(255,0,0,0.7)');
-    gradient.addColorStop(1, 'rgba(0,0,0,0)');
-    
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 512, 512);
-    
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.generateMipmaps = true; // Enable mipmaps for mobile
-    return texture;
-}
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
+        
+        const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
+        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+        gradient.addColorStop(0.2, 'rgba(138,43,226,0.6)');
+        gradient.addColorStop(0.4, 'rgba(0,255,255,0.8)');
+        gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
+        gradient.addColorStop(0.8, 'rgba(255,0,0,0.7)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 256, 256);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = false;
+        return texture;
+    }
     
     const ringTexture = createRingTexture();
     const ringMaterial = new THREE.MeshBasicMaterial({
@@ -535,7 +512,7 @@ setTimeout(() => {
 
     // ===== HD STARFIELD WITH SPATIAL INDEXING =====
     const starGeometry = new THREE.BufferGeometry();
-    const starCount = 1500;
+    const starCount = isMobile ? 800 : 1500;
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
     const sizes = new Float32Array(starCount);
@@ -585,7 +562,8 @@ setTimeout(() => {
     
     const aspect = window.innerWidth / window.innerHeight;
     const vFOV = THREE.MathUtils.degToRad(camera.fov);
-    const height = 2 * Math.tan(vFOV / 2) * 800;
+    const cameraDistance = isMobile ? 1100 : 1000;
+    const height = 2 * Math.tan(vFOV / 2) * cameraDistance;
     const width = height * aspect;
     
     spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
@@ -635,9 +613,11 @@ setTimeout(() => {
         ringOrbitGroup.rotation.x = ringRotation;
 
         // Smooth camera using matrix lerp
+        const cameraZ = (isMobile ? 1100 : 1000) + saturn.position.z * 0.1;
+        const cameraY = (isMobile ? 250 : 200) + saturn.position.y * 0.15;
         camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
-        camera.position.y += (200 + saturn.position.y * 0.15 - camera.position.y) * 0.05;
-        camera.position.z += (800 + saturn.position.z * 0.1 - camera.position.z) * 0.05;
+        camera.position.y += (cameraY - camera.position.y) * 0.05;
+        camera.position.z += (cameraZ - camera.position.z) * 0.05;
         camera.lookAt(saturn.position);
 
         // Star twinkle every 4 frames
@@ -661,12 +641,22 @@ setTimeout(() => {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
+            const wasMobile = isMobile;
+            const nowMobile = window.innerWidth < 768;
+            
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
             
+            // Update pixel ratio if mobile state changed
+            if (wasMobile !== nowMobile) {
+                const pixelRatio = nowMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+                renderer.setPixelRatio(pixelRatio);
+            }
+            
             const aspect = window.innerWidth / window.innerHeight;
-            const height = 2 * Math.tan(vFOV / 2) * 800;
+            const cameraDistance = nowMobile ? 1100 : 1000;
+            const height = 2 * Math.tan(vFOV / 2) * cameraDistance;
             const width = height * aspect;
             spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
         }, 150);
