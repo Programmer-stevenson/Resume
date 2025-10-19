@@ -355,46 +355,6 @@ setTimeout(() => {
         }
         ctx.globalCompositeOperation = 'source-over';
 
-        // HD Dark Blue Eye
-        ctx.globalAlpha = 0.95;
-        const eyeX = canvas.width * 0.4;
-        const eyeY = canvas.height * 0.45;
-        const eyeW = 200;
-        const eyeH = 130;
-        
-        // Multiple eye layers
-        for (let layer = 3; layer > 0; layer--) {
-            const size = eyeW * (0.4 + layer * 0.2);
-            const eyeGrad = ctx.createRadialGradient(eyeX, eyeY, 0, eyeX, eyeY, size);
-            eyeGrad.addColorStop(0, `rgba(10, 30, 80, ${0.3 * layer})`);
-            eyeGrad.addColorStop(0.5, `rgba(20, 50, 100, ${0.2 * layer})`);
-            eyeGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = eyeGrad;
-            ctx.beginPath();
-            ctx.ellipse(eyeX, eyeY, size, size * 0.65, 0.15, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        
-        // Core
-        const coreGrad = ctx.createRadialGradient(eyeX, eyeY, 0, eyeX, eyeY, eyeW * 0.5);
-        coreGrad.addColorStop(0, 'rgba(5, 15, 50, 1)');
-        coreGrad.addColorStop(0.5, 'rgba(10, 25, 70, 0.98)');
-        coreGrad.addColorStop(1, 'rgba(18, 40, 90, 0.8)');
-        ctx.fillStyle = coreGrad;
-        ctx.beginPath();
-        ctx.ellipse(eyeX, eyeY, eyeW * 0.5, eyeH * 0.5, 0.15, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Highlight
-        ctx.globalAlpha = 0.7;
-        const hlGrad = ctx.createRadialGradient(eyeX - 25, eyeY - 20, 0, eyeX - 25, eyeY - 20, 50);
-        hlGrad.addColorStop(0, 'rgba(90, 150, 210, 0.8)');
-        hlGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = hlGrad;
-        ctx.beginPath();
-        ctx.arc(eyeX - 25, eyeY - 20, 50, 0, Math.PI * 2);
-        ctx.fill();
-
         // Storms
         ctx.globalAlpha = 0.6;
         for (let i = 0; i < 10; i++) {
@@ -464,7 +424,7 @@ setTimeout(() => {
     );
     scene.add(saturn);
 
-    // ===== RINGS (KEPT AS REQUESTED) =====
+    // ===== TRANSPARENT RAINBOW RINGS =====
     const ringGroup = new THREE.Group();
     const ringGeometry = new THREE.RingGeometry(120, 220, 32);
     
@@ -474,12 +434,16 @@ setTimeout(() => {
         canvas.height = 256;
         const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
         
+        // Subtle rainbow gradient with very low opacity
         const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
         gradient.addColorStop(0, 'rgba(0,0,0,0)');
-        gradient.addColorStop(0.2, 'rgba(138,43,226,0.6)');
-        gradient.addColorStop(0.4, 'rgba(0,255,255,0.8)');
-        gradient.addColorStop(0.6, 'rgba(255,255,0,0.9)');
-        gradient.addColorStop(0.8, 'rgba(255,0,0,0.7)');
+        gradient.addColorStop(0.15, 'rgba(148,0,211,0.08)');  // Violet
+        gradient.addColorStop(0.3, 'rgba(75,0,130,0.12)');     // Indigo
+        gradient.addColorStop(0.45, 'rgba(0,0,255,0.15)');     // Blue
+        gradient.addColorStop(0.55, 'rgba(0,255,0,0.15)');     // Green
+        gradient.addColorStop(0.65, 'rgba(255,255,0,0.15)');   // Yellow
+        gradient.addColorStop(0.8, 'rgba(255,127,0,0.12)');    // Orange
+        gradient.addColorStop(0.92, 'rgba(255,0,0,0.08)');     // Red
         gradient.addColorStop(1, 'rgba(0,0,0,0)');
         
         ctx.fillStyle = gradient;
@@ -497,8 +461,10 @@ setTimeout(() => {
         map: ringTexture,
         alphaMap: ringTexture,
         transparent: true,
+        opacity: 0.3,
         side: THREE.DoubleSide,
-        depthWrite: false
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
     });
     
     const rings = new THREE.Mesh(ringGeometry, ringMaterial);
