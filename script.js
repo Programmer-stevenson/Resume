@@ -660,6 +660,30 @@ setTimeout(() => {
 
 }, 1000);
 
+
+
+
+// Navbar with soft pastel bluish-purple
+const nav = document.querySelector('nav');
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    
+    if (scrollY > 100) {
+        // Soft pastel look
+        nav.style.background = 'rgba(230, 240, 255, 0.15)';
+        nav.style.backdropFilter = 'blur(30px) saturate(150%)';
+        nav.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.1), inset 0 0 0 1px rgba(199, 210, 254, 0.3)';
+        nav.style.borderBottom = '1px solid rgba(199, 210, 254, 0.4)';
+        nav.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.320, 1)';
+    } else {
+        // Transparent at top
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.boxShadow = 'none';
+        nav.style.borderBottom = 'none';
+    }
+});
 // About section typewriter effect
 let aboutTypingStarted = false;
 const aboutText1Element = document.getElementById('about-text-1');
