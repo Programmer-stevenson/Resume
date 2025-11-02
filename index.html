@@ -71,62 +71,184 @@
             </div>
             
             <!-- Hamburger Menu Button -->
-            <button class="hamburger md:hidden flex flex-col gap-1.5 w-8 h-8 justify-center items-center relative z-50 group" id="hamburger" aria-label="Toggle menu">
-                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
-                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
-                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
+            <button class="md:hidden relative z-[60] w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 hover:border-teal-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/30 group" id="hamburger" aria-label="Toggle menu">
+                <div class="w-5 h-4 flex flex-col justify-between">
+                    <span class="hamburger-line block w-full h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full transition-all duration-300 group-hover:from-cyan-300 group-hover:to-teal-300"></span>
+                    <span class="hamburger-line block w-full h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full transition-all duration-300 group-hover:from-cyan-300 group-hover:to-teal-300"></span>
+                    <span class="hamburger-line block w-full h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full transition-all duration-300 group-hover:from-cyan-300 group-hover:to-teal-300"></span>
+                </div>
             </button>
         </div>
         
-        <!-- Enhanced Mobile Menu -->
-        <div class="mobile-menu fixed inset-0 bg-black/95 backdrop-blur-xl z-40 opacity-0 invisible pointer-events-none transition-all duration-500" id="mobileMenu">
-            <div class="mobile-menu-content flex flex-col h-full justify-center items-center px-8">
-                <div class="mobile-menu-header mb-12">
-                    <div class="text-4xl font-bold font-display bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Menu</div>
+        <!-- Enhanced Mobile Menu with Modern Design -->
+        <div class="fixed inset-0 z-50 md:hidden opacity-0 invisible pointer-events-none transition-all duration-500" id="mobileMenu">
+            <!-- Backdrop with blur -->
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900/98 via-teal-900/95 to-gray-900/98 backdrop-blur-2xl"></div>
+            
+            <!-- Animated gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-cyan-500/10 to-blue-500/5 animate-pulse"></div>
+            
+            <!-- Content -->
+            <div class="relative h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
+                <!-- Top Section - Close Button -->
+                <div class="flex justify-end">
+                    <button id="closeMenu" class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 hover:border-teal-400/60 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-teal-500/30 group">
+                        <svg class="w-6 h-6 text-teal-400 group-hover:text-cyan-300 group-hover:rotate-90 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
-                <div class="mobile-menu-links flex flex-col gap-6 w-full max-w-md">
-                    <a href="#home" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Home</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#about" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">About</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#projects" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Projects</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#experience" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Experience</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#education" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Education</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#skills" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Skills</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                    <a href="#contact" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
-                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Contact</span>
-                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
-                </div>
-                <div class="mobile-menu-footer mt-12">
-                    <div class="flex gap-8 justify-center mb-6">
-                        <a href="mailto:brandon.stevensen@outlook.com" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="Email">
-                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+
+                <!-- Middle Section - Navigation Links -->
+                <nav class="flex-1 flex items-center justify-center">
+                    <div class="w-full max-w-md space-y-3">
+                        <a href="#home" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-teal-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/20 group-hover:from-teal-500/30 group-hover:to-cyan-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-teal-400 transition-colors duration-300">Home</span>
+                                </div>
+                                <svg class="w-5 h-5 text-teal-400/50 group-hover:text-teal-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
                         </a>
-                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="LinkedIn">
-                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+
+                        <a href="#about" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-teal-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 group-hover:from-cyan-500/30 group-hover:to-blue-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-cyan-400 transition-colors duration-300">About</span>
+                                </div>
+                                <svg class="w-5 h-5 text-cyan-400/50 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
                         </a>
-                        <a href="tel:+17253142660" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="Phone">
-                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+
+                        <a href="#projects" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-blue-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 group-hover:from-blue-500/30 group-hover:to-purple-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-blue-400 transition-colors duration-300">Projects</span>
+                                </div>
+                                <svg class="w-5 h-5 text-blue-400/50 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="#experience" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-purple-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-purple-400 transition-colors duration-300">Experience</span>
+                                </div>
+                                <svg class="w-5 h-5 text-purple-400/50 group-hover:text-purple-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="#education" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-pink-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-500/20 to-rose-500/20 group-hover:from-pink-500/30 group-hover:to-rose-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-pink-400 transition-colors duration-300">Education</span>
+                                </div>
+                                <svg class="w-5 h-5 text-pink-400/50 group-hover:text-pink-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="#skills" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-orange-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-amber-500/20 group-hover:from-orange-500/30 group-hover:to-amber-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-orange-400 transition-colors duration-300">Skills</span>
+                                </div>
+                                <svg class="w-5 h-5 text-orange-400/50 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="#contact" class="mobile-nav-link group block relative overflow-hidden rounded-2xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative flex items-center justify-between px-6 py-5 border border-teal-500/20 group-hover:border-emerald-400/50 rounded-2xl backdrop-blur-sm transition-all duration-300">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 group-hover:from-emerald-500/30 group-hover:to-teal-500/30 transition-all duration-300">
+                                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-xl font-semibold text-gray-200 group-hover:text-emerald-400 transition-colors duration-300">Contact</span>
+                                </div>
+                                <svg class="w-5 h-5 text-emerald-400/50 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
                         </a>
                     </div>
-                    <p class="text-gray-500 text-sm text-center">Las Vegas, NV</p>
+                </nav>
+
+                <!-- Bottom Section - Social Links -->
+                <div class="space-y-6">
+                    <div class="flex justify-center gap-4">
+                        <a href="mailto:brandon.stevensen@outlook.com" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 hover:border-teal-400/60 hover:scale-110 hover:shadow-lg hover:shadow-teal-500/30 transition-all duration-300 group" aria-label="Email">
+                            <svg class="w-6 h-6 text-teal-400 group-hover:text-cyan-300 transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30 hover:border-blue-400/60 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 group" aria-label="LinkedIn">
+                            <svg class="w-6 h-6 text-blue-400 group-hover:text-purple-300 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="tel:+17253142660" class="w-14 h-14 flex items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 hover:border-purple-400/60 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 group" aria-label="Phone">
+                            <svg class="w-6 h-6 text-purple-400 group-hover:text-pink-300 transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 text-gray-400 text-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Las Vegas, NV</span>
+                    </div>
                 </div>
             </div>
         </div>

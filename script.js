@@ -8,13 +8,11 @@ const body = document.body;
 function openMenu() {
     hamburger.classList.add('active');
     mobileMenu.classList.add('active');
-    body.classList.add('menu-open');
 }
 
 function closeMenuFunc() {
     hamburger.classList.remove('active');
     mobileMenu.classList.remove('active');
-    body.classList.remove('menu-open');
 }
 
 if (hamburger) {
@@ -634,11 +632,10 @@ window.addEventListener('scroll', () => {
     
     if (scrollY > 100) {
         // Soft pastel look
-        nav.style.background = 'rgba(230, 240, 255, 0.15)';
-        nav.style.backdropFilter = 'blur(30px) saturate(150%)';
+        nav.style.background = 'rgba(1, 30, 25, 0.9)';
         nav.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.1), inset 0 0 0 1px rgba(199, 210, 254, 0.3)';
         nav.style.borderBottom = '1px solid rgba(199, 210, 254, 0.4)';
-        nav.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.320, 1)';
+        
     } else {
         // Transparent at top
         nav.style.background = 'transparent';
