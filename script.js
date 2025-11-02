@@ -54,56 +54,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Optimized Typewriter effect with alternating text using requestAnimationFrame
-const typewriterElement = document.querySelector('.typewriter');
-const texts = ['Brandon S.', 'Tech Professional'];
-let textIndex = 0;
-let isDeleting = false;
-let charIndex = 0;
-let lastUpdate = 0;
-const typeSpeed = 150; // ms per character when typing
-const deleteSpeed = 75; // ms per character when deleting
-const pauseAfterComplete = 2000; // ms pause after completing a word
-const pauseBeforeType = 300; // ms pause before typing next word
-
-function typeWriter(timestamp) {
-    const currentText = texts[textIndex];
-    const speed = isDeleting ? deleteSpeed : typeSpeed;
-    
-    if (timestamp - lastUpdate >= speed) {
-        if (!isDeleting && charIndex < currentText.length) {
-            // Typing
-            charIndex++;
-            typewriterElement.textContent = currentText.substring(0, charIndex);
-            lastUpdate = timestamp;
-        } else if (!isDeleting && charIndex === currentText.length) {
-            // Pause before deleting
-            if (timestamp - lastUpdate >= pauseAfterComplete) {
-                isDeleting = true;
-                lastUpdate = timestamp;
-            }
-        } else if (isDeleting && charIndex > 0) {
-            // Deleting
-            charIndex--;
-            typewriterElement.textContent = currentText.substring(0, charIndex);
-            lastUpdate = timestamp;
-        } else if (isDeleting && charIndex === 0) {
-            // Switch to next text
-            if (timestamp - lastUpdate >= pauseBeforeType) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                lastUpdate = timestamp;
-            }
-        }
-    }
-    
-    requestAnimationFrame(typeWriter);
-}
-
-// Start the typewriter effect
-if (typewriterElement) {
-    requestAnimationFrame(typeWriter);
-}
 
 // Aurora Particles Effect
 function createAuroraParticles() {
@@ -160,7 +110,7 @@ function createAuroraWaves() {
     const heroSection = document.getElementById('home');
     if (!heroSection) return;
     
-    const waveCount = 3;
+    const waveCount = 6;
     
     for (let i = 0; i < waveCount; i++) {
         const wave = document.createElement('div');
@@ -196,11 +146,9 @@ setTimeout(() => {
         return;
     }
 
-    console.log('Starting Matrix-Optimized HD Saturn...');
+    console.log('Starting Matrix-Optimized HD Saturn with zoom...');
 
-    // ===== ADVANCED MATRIX DATA STRUCTURES =====
-    
-    // Pre-allocated matrix pool to avoid GC
+    // ===== ADVANCED DATA STRUCTURES =====
     class MatrixPool {
         constructor(size) {
             this.pool = [];
@@ -221,7 +169,6 @@ setTimeout(() => {
     
     const matrixPool = new MatrixPool(10);
     
-    // Circular buffer for smooth interpolation
     class SmoothValue {
         constructor(size = 5) {
             this.buffer = new Float32Array(size);
@@ -245,10 +192,9 @@ setTimeout(() => {
     const smoothY = new SmoothValue(3);
     const smoothZ = new SmoothValue(3);
     
-    // Spatial hash for efficient bounds checking
     class SpatialBounds {
         constructor() {
-            this.bounds = new Float32Array(6); // minX, maxX, minY, maxY, minZ, maxZ
+            this.bounds = new Float32Array(6);
         }
         set(minX, maxX, minY, maxY, minZ, maxZ) {
             this.bounds[0] = minX;
@@ -273,8 +219,10 @@ setTimeout(() => {
     const scene = new THREE.Scene();
     
     const isMobile = window.innerWidth < 768;
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
-    camera.position.set(0, isMobile ? 300 : 250, isMobile ? 1200 : 1100);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
+    
+    // Start camera far away for zoom animation
+    camera.position.set(0, 400, 3500);
 
     const renderer = new THREE.WebGLRenderer({ 
         antialias: true,
@@ -285,7 +233,6 @@ setTimeout(() => {
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // Lower pixel ratio on mobile for better performance
     const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
     renderer.setPixelRatio(pixelRatio);
     renderer.shadowMap.enabled = false;
@@ -316,10 +263,10 @@ setTimeout(() => {
     rimLight.position.set(-300, 100, 200);
     scene.add(rimLight);
 
-    // ===== HD TEXTURE WITH WORKER-LIKE OPTIMIZATION =====
+    // ===== HD TEXTURE =====
     function createHDTexture() {
         const canvas = document.createElement('canvas');
-        canvas.width = 2048; // Balanced HD
+        canvas.width = 2048;
         canvas.height = 1024;
         const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: false });
 
@@ -347,7 +294,7 @@ setTimeout(() => {
         ctx.fillStyle = glowGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Optimized bands - 100 for quality
+        // Optimized bands
         ctx.globalAlpha = 0.55;
         const colors = ['#3a8ec8', '#2d7db8', '#4a9ed8', '#1a6e9a', '#2a8eb8', '#0d5a7a'];
         for (let i = 0; i < 100; i++) {
@@ -420,8 +367,7 @@ setTimeout(() => {
         return texture;
     }
 
-    // ===== HD SATURN WITH OPTIMIZED GEOMETRY =====
-    // Reduce geometry complexity on mobile
+    // ===== HD SATURN =====
     const saturnSegments = isMobile ? 48 : 64;
     const saturnGeometry = new THREE.SphereGeometry(100, saturnSegments, saturnSegments);
     const saturnTexture = createHDTexture();
@@ -452,16 +398,15 @@ setTimeout(() => {
         canvas.height = 256;
         const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
         
-        // Subtle rainbow gradient with slightly higher opacity for visibility
         const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
         gradient.addColorStop(0, 'rgba(0,0,0,0)');
-        gradient.addColorStop(0.15, 'rgba(148,0,211,0.18)');  // Violet
-        gradient.addColorStop(0.3, 'rgba(75,0,130,0.22)');     // Indigo
-        gradient.addColorStop(0.45, 'rgba(0,0,255,0.25)');     // Blue
-        gradient.addColorStop(0.55, 'rgba(0,255,0,0.25)');     // Green
-        gradient.addColorStop(0.65, 'rgba(255,255,0,0.25)');   // Yellow
-        gradient.addColorStop(0.8, 'rgba(255,127,0,0.22)');    // Orange
-        gradient.addColorStop(0.92, 'rgba(255,0,0,0.18)');     // Red
+        gradient.addColorStop(0.15, 'rgba(148,0,211,0.18)');
+        gradient.addColorStop(0.3, 'rgba(75,0,130,0.22)');
+        gradient.addColorStop(0.45, 'rgba(0,0,255,0.25)');
+        gradient.addColorStop(0.55, 'rgba(0,255,0,0.25)');
+        gradient.addColorStop(0.65, 'rgba(255,255,0,0.25)');
+        gradient.addColorStop(0.8, 'rgba(255,127,0,0.22)');
+        gradient.addColorStop(0.92, 'rgba(255,0,0,0.18)');
         gradient.addColorStop(1, 'rgba(0,0,0,0)');
         
         ctx.fillStyle = gradient;
@@ -494,7 +439,7 @@ setTimeout(() => {
     ringOrbitGroup.add(ringGroup);
     saturn.add(ringOrbitGroup);
 
-    // ===== HD STARFIELD WITH SPATIAL INDEXING =====
+    // ===== HD STARFIELD =====
     const starGeometry = new THREE.BufferGeometry();
     const starCount = isMobile ? 800 : 1500;
     const positions = new Float32Array(starCount * 3);
@@ -541,18 +486,24 @@ setTimeout(() => {
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
-    // ===== MATRIX-BASED PHYSICS =====
+    // ===== PHYSICS =====
     const velocity = new Float32Array([2.5, 2, 1.5]);
     
     const aspect = window.innerWidth / window.innerHeight;
     const vFOV = THREE.MathUtils.degToRad(camera.fov);
-    const cameraDistance = isMobile ? 1200 : 1100;
-    const height = 2 * Math.tan(vFOV / 2) * cameraDistance;
+    const targetCameraZ = isMobile ? 1200 : 1100;
+    const targetCameraY = isMobile ? 300 : 250;
+    const height = 2 * Math.tan(vFOV / 2) * targetCameraZ;
     const width = height * aspect;
     
     spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
 
-    // ===== OPTIMIZED ANIMATION WITH MATRIX OPERATIONS =====
+    // ===== ZOOM ANIMATION =====
+    const zoomDuration = 4000; // 4 seconds - moderate speed
+    const zoomStartTime = performance.now();
+    let zoomComplete = false;
+
+    // ===== ANIMATION LOOP =====
     let lastTime = performance.now();
     let ringRotation = 0;
     let saturnRotation = 0;
@@ -561,32 +512,53 @@ setTimeout(() => {
     function animate(currentTime) {
         requestAnimationFrame(animate);
         
-        const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2); // Cap delta
+        const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
         lastTime = currentTime;
         frameCount++;
 
-        // Matrix-based position update
-        smoothX.push(saturn.position.x + velocity[0]);
-        smoothY.push(saturn.position.y + velocity[1]);
-        smoothZ.push(saturn.position.z + velocity[2]);
-        
-        saturn.position.x = smoothX.get();
-        saturn.position.y = smoothY.get();
-        saturn.position.z = smoothZ.get();
+        // Zoom animation with easing
+        if (!zoomComplete) {
+            const zoomProgress = Math.min((currentTime - zoomStartTime) / zoomDuration, 1);
+            const easeProgress = 1 - Math.pow(1 - zoomProgress, 3); // Ease out cubic
+            
+            camera.position.z = 3500 - (3500 - targetCameraZ) * easeProgress;
+            camera.position.y = 400 - (400 - targetCameraY) * easeProgress;
+            
+            if (zoomProgress >= 1) {
+                zoomComplete = true;
+            }
+        }
 
-        // Efficient bounds check
-        const bounceCheck = spatialBounds.check(saturn.position);
-        if (bounceCheck.x) {
-            velocity[0] *= -1;
-            saturn.position.x = Math.max(spatialBounds.bounds[0], Math.min(spatialBounds.bounds[1], saturn.position.x));
-        }
-        if (bounceCheck.y) {
-            velocity[1] *= -1;
-            saturn.position.y = Math.max(spatialBounds.bounds[2], Math.min(spatialBounds.bounds[3], saturn.position.y));
-        }
-        if (bounceCheck.z) {
-            velocity[2] *= -1;
-            saturn.position.z = Math.max(spatialBounds.bounds[4], Math.min(spatialBounds.bounds[5], saturn.position.z));
+        // Saturn movement after zoom
+        if (zoomComplete) {
+            smoothX.push(saturn.position.x + velocity[0]);
+            smoothY.push(saturn.position.y + velocity[1]);
+            smoothZ.push(saturn.position.z + velocity[2]);
+            
+            saturn.position.x = smoothX.get();
+            saturn.position.y = smoothY.get();
+            saturn.position.z = smoothZ.get();
+
+            const bounceCheck = spatialBounds.check(saturn.position);
+            if (bounceCheck.x) {
+                velocity[0] *= -1;
+                saturn.position.x = Math.max(spatialBounds.bounds[0], Math.min(spatialBounds.bounds[1], saturn.position.x));
+            }
+            if (bounceCheck.y) {
+                velocity[1] *= -1;
+                saturn.position.y = Math.max(spatialBounds.bounds[2], Math.min(spatialBounds.bounds[3], saturn.position.y));
+            }
+            if (bounceCheck.z) {
+                velocity[2] *= -1;
+                saturn.position.z = Math.max(spatialBounds.bounds[4], Math.min(spatialBounds.bounds[5], saturn.position.z));
+            }
+
+            // Smooth camera follow
+            const cameraZ = targetCameraZ + saturn.position.z * 0.1;
+            const cameraY = targetCameraY + saturn.position.y * 0.15;
+            camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
+            camera.position.y += (cameraY - camera.position.y) * 0.05;
+            camera.position.z += (cameraZ - camera.position.z) * 0.05;
         }
 
         // Rotations
@@ -596,15 +568,10 @@ setTimeout(() => {
         ringRotation += 0.002;
         ringOrbitGroup.rotation.x = ringRotation;
 
-        // Smooth camera using matrix lerp
-        const cameraZ = (isMobile ? 1200 : 1100) + saturn.position.z * 0.1;
-        const cameraY = (isMobile ? 300 : 250) + saturn.position.y * 0.15;
-        camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
-        camera.position.y += (cameraY - camera.position.y) * 0.05;
-        camera.position.z += (cameraZ - camera.position.z) * 0.05;
+        // Camera look at
         camera.lookAt(saturn.position);
 
-        // Star twinkle every 4 frames
+        // Star twinkle
         if (frameCount % 4 === 0) {
             const starSizes = stars.geometry.attributes.size.array;
             const time = currentTime * 0.001;
@@ -618,25 +585,21 @@ setTimeout(() => {
     }
 
     animate(performance.now());
-    console.log('Matrix-optimized HD Saturn running!');
+    console.log('Matrix-optimized HD Saturn with zoom running!');
 
-    // Resize with bounds recalc
+    // Resize handler
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            const wasMobile = isMobile;
             const nowMobile = window.innerWidth < 768;
             
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
             
-            // Update pixel ratio if mobile state changed
-            if (wasMobile !== nowMobile) {
-                const pixelRatio = nowMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
-                renderer.setPixelRatio(pixelRatio);
-            }
+            const pixelRatio = nowMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+            renderer.setPixelRatio(pixelRatio);
             
             const aspect = window.innerWidth / window.innerHeight;
             const cameraDistance = nowMobile ? 1200 : 1100;
@@ -692,12 +655,12 @@ const aboutText2Element = document.getElementById('about-text-2');
 const aboutTexts = [
     {
         element: aboutText1Element,
-        text: "I'm a detail-oriented IT professional with a passion for building scalable infrastructure and developing innovative software solutions.",
+        text: "Blending IT administration, user experience, and web development, I bring a holistic approach to technology. With hands-on experience using Microsoft Intune and managing enterprise environments, I’m pursuing a degree in Cloud & Network Engineering to build secure, scalable systems.",
         delay: 0
     },
     {
         element: aboutText2Element,
-        text: "Currently pursuing my Bachelor's in Cloud & Network Engineering while working as an IT Admin, I've successfully managed over 1,500+ devices and developed AI-powered applications.",
+        text: "I’ve worked across both IT operations and software development, giving me a unique perspective on how systems and people connect. From managing endpoints in Microsoft Intune to developing full-stack applications, I focus on efficiency, automation, and clean user experiences. I’m currently expanding into cloud and network engineering to help design smarter, scalable infrastructures for the future.",
         delay: 4500
     }
 ];

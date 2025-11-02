@@ -1,125 +1,411 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brandon Stevenson - Interactive Resume</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="animations.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'gradient': 'gradient 8s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'shimmer': 'shimmer 3s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-teal-900 to-gray-900 text-white">
-    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+<body class="bg-gradient-to-br from-gray-900 via-teal-900 to-gray-900 text-white font-sans antialiased overflow-x-hidden">
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500 z-[100] transition-all duration-300 shadow-lg shadow-teal-500/50" id="progressBar" style="width: 0%"></div>
 
-    <nav class="fixed top-0 w-full bg-black bg-opacity-50 backdrop-blur-md z-50 fade-in">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold">BS</div>
-            <div class="desktop-nav flex gap-8">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#contact" class="nav-link">Contact</a>
+    <!-- Enhanced Navigation with Glassmorphism -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-500 ease-out">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-xl sm:text-2xl font-bold font-display bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300 cursor-pointer">Brandon Stevenson </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="desktop-nav hidden md:flex gap-6 lg:gap-8">
+                <a href="#home" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    About
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#projects" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Projects
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#experience" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Experience
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#education" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Education
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#skills" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Skills
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="nav-link relative text-sm lg:text-base font-medium text-gray-300 hover:text-teal-400 transition-all duration-300 group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
             </div>
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
+            
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger md:hidden flex flex-col gap-1.5 w-8 h-8 justify-center items-center relative z-50 group" id="hamburger" aria-label="Toggle menu">
+                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
+                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
+                <span class="hamburger-line w-6 h-0.5 bg-teal-400 rounded-full transition-all duration-300 group-hover:bg-cyan-400"></span>
             </button>
         </div>
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-menu-content">
-                <div class="mobile-menu-header">
-                    <div class="text-2xl font-bold text-teal-400">Menu</div>
+        
+        <!-- Enhanced Mobile Menu -->
+        <div class="mobile-menu fixed inset-0 bg-black/95 backdrop-blur-xl z-40 opacity-0 invisible pointer-events-none transition-all duration-500" id="mobileMenu">
+            <div class="mobile-menu-content flex flex-col h-full justify-center items-center px-8">
+                <div class="mobile-menu-header mb-12">
+                    <div class="text-4xl font-bold font-display bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Menu</div>
                 </div>
-                <div class="mobile-menu-links">
-                    <a href="#home" class="mobile-nav-link"><span class="mobile-link-text">Home</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                    <a href="#about" class="mobile-nav-link"><span class="mobile-link-text">About</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                    <a href="#projects" class="mobile-nav-link"><span class="mobile-link-text">Projects</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                    <a href="#experience" class="mobile-nav-link"><span class="mobile-link-text">Experience</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                    <a href="#skills" class="mobile-nav-link"><span class="mobile-link-text">Skills</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
-                    <a href="#contact" class="mobile-nav-link"><span class="mobile-link-text">Contact</span><svg class="mobile-link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
+                <div class="mobile-menu-links flex flex-col gap-6 w-full max-w-md">
+                    <a href="#home" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Home</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#about" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">About</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#projects" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Projects</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#experience" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Experience</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#education" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Education</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#skills" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Skills</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#contact" class="mobile-nav-link flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 hover:border-teal-400/50 transition-all duration-300 group">
+                        <span class="mobile-link-text text-2xl font-medium text-teal-100 group-hover:text-teal-400 transition-colors">Contact</span>
+                        <svg class="mobile-link-arrow w-6 h-6 text-teal-400 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
                 </div>
-                <div class="mobile-menu-footer">
-                    <div class="flex gap-6 justify-center">
-                        <a href="mailto:brandon.stevensen@outlook.com" class="mobile-social-link" aria-label="Email"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg></a>
-                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="mobile-social-link" aria-label="LinkedIn"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                        <a href="tel:+17253142660" class="mobile-social-link" aria-label="Phone"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg></a>
+                <div class="mobile-menu-footer mt-12">
+                    <div class="flex gap-8 justify-center mb-6">
+                        <a href="mailto:brandon.stevensen@outlook.com" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="Email">
+                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="LinkedIn">
+                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="tel:+17253142660" class="mobile-social-link w-12 h-12 flex items-center justify-center rounded-full bg-teal-500/20 border border-teal-400/30 hover:bg-teal-500/30 hover:border-teal-400 hover:scale-110 transition-all duration-300" aria-label="Phone">
+                            <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+                        </a>
                     </div>
-                    <p class="text-gray-500 text-sm mt-6">Las Vegas, NV</p>
+                    <p class="text-gray-500 text-sm text-center">Las Vegas, NV</p>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Hero Section with Enhanced Aurora Background -->
     <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden borealis-bg">
-        <div class="floating-orb orb-1"></div>
-        <div class="floating-orb orb-2"></div>
-        <div class="floating-orb orb-3"></div>
-        <div class="relative z-10 text-center px-6">
-            <div class="mb-6">
-                <div class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold typewriter inline-block">Brandon Stevenson</div>
-            </div>
-            <!-- Infinite Scrolling Text -->
-<div class="scrolling-text-wrapper fade-in">
-    <div class="scrolling-text">
-        <!-- First set of text -->
-        <span class="scroll-item">IT Professional</span>
-        <span class="separator">•</span>
-        <span class="scroll-item">Aspiring Cloud Specialist</span>
-        <span class="separator">•</span>
-        <span class="scroll-item">Software Developer</span>
-        <span class="separator">•</span>
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1 absolute w-96 h-96 bg-teal-500/30 rounded-full blur-3xl"></div>
+        <div class="floating-orb orb-2 absolute w-[500px] h-[500px] bg-cyan-500/30 rounded-full blur-3xl"></div>
+        <div class="floating-orb orb-3 absolute w-80 h-80 bg-purple-500/30 rounded-full blur-3xl"></div>
         
-        <!-- Duplicate for seamless loop -->
-        <span class="scroll-item">IT Professional</span>
-        <span class="separator">•</span>
-        <span class="scroll-item">Aspiring Cloud Engineer</span>
-        <span class="separator">•</span>
-        <span class="scroll-item">Software Developer</span>
-        <span class="separator">•</span>
+        <div class="relative z-10 text-center px-4 sm:px-6 pt-20">
+            <div class="mb-[10px]">
+                <div class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold font-mono typewriter inline-block"></div>
+            </div>
+            
+            <!-- Enhanced Scrolling Text -->
+            <!-- Enhanced Scrolling Text -->
+<div class="scrolling-text-wrapper relative w-full max-w-md mx-auto overflow-hidden py-4 mb-8 mt-[50px] invisible">
+    <div class="scrolling-text flex whitespace-nowrap">
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">Cloud Engineer Aspirant</span>
+        <span class="separator text-teal-500 text-lg">•</span>
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">Full-Stack Developer</span>
+        <span class="separator text-teal-500 text-lg">•</span>
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">IT Professional</span>
+        <span class="separator text-teal-500 text-lg">•</span>
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">Cloud Engineer Aspirant</span>
+        <span class="separator text-teal-500 text-lg">•</span>
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">Full-Stack Developer</span>
+        <span class="separator text-teal-500 text-lg">•</span>
+        <span class="scroll-item text-xl sm:text-2xl text-teal-300 font-medium px-8">IT Professional</span>
+        <span class="separator text-teal-500 text-lg">•</span>
     </div>
 </div>
-            <p class="text-base sm:text-lg text-teal-300 max-w-2xl mx-auto mb-8 fade-in px-4">Building innovative solutions at the intersection of infrastructure and code</p>
-            <div class="flex gap-6 justify-center fade-in">
-                <a href="#contact" class="bg-white text-teal-600 px-8 py-3 rounded-full font-semibold hover:bg-teal-100 transition-all hover:scale-105">Get In Touch</a>
-                <a href="#projects" class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-teal-600 transition-all hover:scale-105">View Projects</a>
-            </div>
-        </div>
-        <div class="scroll-indicator"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
-    </section>
 
-    <section id="about" class="min-h-screen py-20 px-6 bg-gray-900">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-5xl font-bold mb-12">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="slide-in-left">
-                    <p class="text-xl text-gray-300 mb-6 leading-relaxed about-typewriter" id="about-text-1">I'm a detail-oriented IT professional with a passion for building scalable infrastructure and developing innovative software solutions.</p>
-                    <p class="text-lg text-gray-400 mb-6 leading-relaxed about-typewriter" id="about-text-2">Currently pursuing my Bachelor's in Cloud & Network Engineering, while working as an IT Professional,Ive become an IT generalist, adapting to new technologies.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div><h3 class="font-semibold text-lg">Problem Solver</h3><p class="text-gray-400">Turning complex challenges into elegant solutions</p></div></div>
-                        <div class="flex items-center gap-3"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div><div><h3 class="font-semibold text-lg">Fast Learner</h3><p class="text-gray-400">Always exploring new technologies and methodologies</p></div></div>
-                        <div class="flex items-center gap-3"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div><div><h3 class="font-semibold text-lg">Team Player</h3><p class="text-gray-400">Collaborative approach to achieving goals</p></div></div>
-                    </div>
+<p class="text-base sm:text-lg md:text-xl text-gray-300 mb-20 max-w-2xl mx-auto leading-relaxed invisible">Transforming infrastructure challenges into scalable cloud solutions</p>
+
+<!-- Enhanced CTA Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+    <a href="#contact" class="group relative px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg font-medium text-base shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/50 transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden w-full sm:w-auto">
+        <span class="relative z-10 flex items-center justify-center gap-2">
+            Get In Touch
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+        </span>
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </a>
+    <a href="#projects" class="group relative px-6 py-3 bg-gray-800/50 backdrop-blur-sm border border-teal-500/30 rounded-lg font-medium text-base text-teal-300 hover:bg-gray-800/80 hover:border-teal-400/50 transform hover:-translate-y-0.5 transition-all duration-300 w-full sm:w-auto">
+        <span class="flex items-center justify-center gap-2">
+            View Projects
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+        </span>
+    </a>
+</div>
+        </div>
+    </section>
+    <!-- Introduction Section - Insert RIGHT AFTER Hero Section (after </section> closing tag around line 195) -->
+<section class="relative py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-black via-gray-900/80 to-gray-900 overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+    
+    <div class="max-w-5xl mx-auto relative z-10">
+        <!-- Main intro text -->
+        <div class="text-center mb-16">
+            <div class="inline-block mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-[2px] bg-gradient-to-r from-transparent via-teal-500 to-teal-500"></div>
+                    <span class="text-teal-400 font-mono text-sm tracking-wider uppercase">Introduction</span>
+                    <div class="w-12 h-[2px] bg-gradient-to-r from-teal-500 via-teal-500 to-transparent"></div>
                 </div>
+            </div>
+            
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <span class="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+                    I'm Brandon Stevenson
+                </span>
+            </h2>
+            
+            <p class="text-xl sm:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+                A passionate <span class="text-teal-400 font-semibold">Tech Professional</span> specializing in cloud infrastructure, system administration, and full-stack development
+            </p>
+        </div>
+        
+        <!-- Role cards grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            
+            <!-- IT Admin Card -->
+            <div class="group relative">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500"></div>
+                <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-2xl border border-gray-800 group-hover:border-teal-500/50 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                        IT Administrator
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Managing enterprise environments with Microsoft 365, Intune, and Azure infrastructure
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Developer Card -->
+            <div class="group relative">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500"></div>
+                <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-2xl border border-gray-800 group-hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                        Full-Stack Developer
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Building modern web applications with React, Node.js, and cutting-edge technologies
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Cloud Engineer Card -->
+            <div class="group relative sm:col-span-2 lg:col-span-1">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500"></div>
+                <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-2xl border border-gray-800 group-hover:border-blue-500/50 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Cloud Engineer
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Architecting scalable cloud solutions and automating infrastructure deployment
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Bottom tagline -->
+        <div class="mt-16 text-center">
+            <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Combining technical expertise with creative problem-solving to deliver
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 font-semibold"> innovative solutions</span> that drive business success
+            </p>
+        </div>
+    </div>
+</section>
+
+    <!-- About Section with Enhanced Design -->
+    <section id="about" class="min-h-screen py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-12 pl-8">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Text Content -->
                 <div class="space-y-6">
-                    <div class="card-hover scroll-reveal-right glow-border bg-gray-800 p-6 rounded-lg border border-teal-500 border-opacity-30">
-                        <h3 class="text-2xl font-bold mb-3 gradient-text-animate float-icon">Education</h3>
-                        <div class="space-y-4">
-                            <div><h4 class="font-semibold text-lg">B.S Management Information Systems</h4><p class="text-gray-400">University of Las Vegas Nevada</p><p class="text-sm text-teal-400">Completed</p></div>
-                            <div><h4 class="font-semibold text-lg">A.A.S Software-Programming</h4><p class="text-gray-400">College of Southern Nevada</p><p class="text-sm text-teal-400">Completed</p></div>
+                    <p class="text-lg sm:text-xl text-gray-300 leading-relaxed" id="about-text-1"></p>
+                    <p class="text-lg sm:text-xl text-gray-300 leading-relaxed" id="about-text-2"></p>
+                    <div class="flex flex-wrap gap-4 pt-6">
+                        <div class="flex items-center gap-3 px-4 py-2 bg-teal-500/10 border border-teal-500/30 rounded-full">
+                            <svg class="w-5 h-5 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-sm font-medium text-teal-100">IT Admin, End User Support, Cloud</span>
+                        </div>
+                        <div class="flex items-center gap-3 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
+                            <svg class="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-sm font-medium text-cyan-100">Pursuing Certifications</span>
+                        </div>
+                        <div class="flex items-center gap-3 px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-full">
+                            <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-sm font-medium text-purple-100">AI Enthusiast</span>
                         </div>
                     </div>
-                    <div class="card-hover scroll-reveal-right shimmer glow-border bg-gray-800 p-6 rounded-lg border border-teal-500 border-opacity-30">
-                        <h3 class="text-2xl font-bold mb-3 gradient-text-animate float-icon">Core Competencies</h3>
-                        <ul class="space-y-2 text-gray-300">
-                            <li>• Cloud Infrastructure & DevOps</li>
-                            <li>• Full-Stack Development</li>
-                            <li>• IT Systems Administration</li>
-                            <li>• Database Design & Management</li>
-                            <li>• Network Engineering</li>
-                            <li>• Cybersecurity Best Practices</li>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-2 gap-4 lg:gap-6">
+                    <div class="card-hover group p-6 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/30 rounded-2xl hover:border-teal-400/50 hover:shadow-xl hover:shadow-teal-500/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="text-4xl lg:text-5xl font-bold font-display bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent mb-2">3+</div>
+                        <div class="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors">Years Experience</div>
+                    </div>
+                    <div class="card-hover group p-6 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl hover:border-cyan-400/50 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="text-4xl lg:text-5xl font-bold font-display bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">10+</div>
+                        <div class="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors">Projects Completed</div>
+                    </div>
+                    <div class="card-hover group p-6 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-2xl hover:border-purple-400/50 hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="text-4xl lg:text-5xl font-bold font-display bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">5+</div>
+                        <div class="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors">Technologies Mastered</div>
+                    </div>
+                    <div class="card-hover group p-6 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-2xl hover:border-blue-400/50 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="text-4xl lg:text-5xl font-bold font-display bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">99%</div>
+                        <div class="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors">Uptime Achieved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section with Timeline -->
+    <section id="experience" class="min-h-screen py-16 sm:py-20 px-4 sm:px-6 bg-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-12 pl-8">Experience</h2>
+            <div class="space-y-8">
+                <!-- Experience Item 1 -->
+                <div class="experience-item group relative pl-8 sm:pl-12 pb-12 border-l-4 border-teal-500/30 hover:border-teal-500 transition-all duration-300">
+                    <div class="absolute -left-3 top-0 w-6 h-6 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full shadow-lg shadow-teal-500/50 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-teal-500/20 hover:border-teal-500/40 hover:shadow-xl hover:shadow-teal-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                            <h3 class="text-2xl sm:text-3xl font-bold font-display text-teal-400">IT Admin</h3>
+                            <span class="text-sm sm:text-base text-gray-400 font-medium px-3 py-1 bg-teal-500/10 rounded-full w-fit">Nov 2024 - Nov 2025</span>
+                        </div>
+                        <p class="text-lg sm:text-xl text-cyan-300 mb-4 font-medium">MAC.BID</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Established and manage MAC.BID’s IT infrastructure, overseeing more than on site 50 devices (PCs, laptops, mobile phones, and tablets). Utilize Microsoft Intune remote administration for centralized configuration, software deployment, device tracking, and compliance enforcement.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Provide ongoing technical support for a wide range of systems and devices: workstations, printers, scanners, mobile devices, laptops, webcams, and company-specific applications, both on-site and remotely.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Collaborate with distributed team members via Microsoft Teams to coordinate IT projects, address support requests, and ensure seamless operations across all locations.</span>
+                            </li>
+                             <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Develop and deliver training for employees on IT policies, procedures, and high-value product listing standards.</span>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Operates independently with minimal supervision while maintaining strong communication and integrity across a remote, multi-location team</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="experience-item group relative pl-8 sm:pl-12 pb-12 border-l-4 border-cyan-500/30 hover:border-cyan-500 transition-all duration-300">
+                    <div class="absolute -left-3 top-0 w-6 h-6 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-lg shadow-cyan-500/50 group-hover:scale-125 transition-transform duration-300"></div>
+                    <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-cyan-500/20 hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                            <h3 class="text-2xl sm:text-3xl font-bold font-display text-cyan-400">IT Configurations Technician</h3>
+                            <span class="text-sm sm:text-base text-gray-400 font-medium px-3 py-1 bg-cyan-500/10 rounded-full w-fit">Apr 2023 - Nov 2024</span>
+                        </div>
+                        <p class="text-lg sm:text-xl text-blue-300 mb-4 font-medium">CDW</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Configure and prepare hundreds of devices with Client Specified I.T Services daily for order fulfillment, ensuring timely delivery including frequent major clients such as Apple, PayPal, Amazon, Meta , TikTok, and Instagram.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Perform various services, including asset tagging, software imaging, hardware upgrades, BitLocker encryption, Chrome white glove service, BIOS settings customization, auto-pilot, and Software installations , and other common configuration services</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Install, configure, and test hardware, software, and network devices in alignment with client specifications and operational standards.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Maintain accurate logs of configurations, installations, and troubleshooting activities for tracking and reporting.</span>
+                            </li><li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Troubleshoot and resolve technical issues efficiently to minimize delays in the fulfillment process.</span>
+                            </li></li><li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Conduct quality control checks to verify that all devices are fully operational and meet strict client standards before shipping.</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -127,198 +413,499 @@
         </div>
     </section>
 
-    <section id="experience" class="min-h-screen py-20 px-6 bg-gray-900">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-5xl font-bold mb-12">Work Experience</h2>
-            <div class="space-y-12">
-                <div class="experience-item border-l-4 border-teal-500 pl-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <div><h3 class="text-2xl font-bold">IT Admin</h3><p class="text-teal-400 font-semibold">MAC.BID</p></div>
-                        <div class="text-right"><p class="text-gray-400">Las Vegas, NV</p><p class="text-sm text-gray-500">Nov 2024 - Present</p></div>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400">
-                        <li>Deployed, configured, and managed enterprise workstations, laptops, and mobile devices through <strong>Microsoft Intune</strong>, automating software deployment, patch management, and compliance enforcement across 1,500+ devices</li>
 
-                        <li>Led the transition to centralized device management using <strong>Microsoft Intune</strong>, improving visibility, security compliance, and remote support capabilities across multiple office locations</li>
-
-                        <li>Provided Tier 1 and Tier 2 technical support across Windows, macOS, iOS, and Android environments — diagnosing hardware, software, and network issues while minimizing user downtime and maintaining SLA standards</li>
-
-                        <li>Administered <strong>Active Directory</strong> and <strong>Microsoft 365</strong> environments, including user provisioning, access management, password resets, group policy configurations, and license assignments</li>
-
-                        <li>Implemented and monitored <strong>Mobile Device Management (MDM)</strong> and endpoint security settings, ensuring device encryption, antivirus configuration, and compliance with company data protection policies</li>
-
-                        <li>Configured and maintained core IT systems infrastructure including network connectivity, workstations, and access control systems to ensure consistent uptime and performance</li>
-
-                        <li>Collaborated with leadership and remote teams on IT process automation, new technology rollouts, and infrastructure improvement projects aligned with organizational goals</li>
-
-                        <li>Created and maintained documentation for device configurations, Intune compliance policies, and IT asset inventory, supporting operational consistency and audit readiness</li>
-
-                    </ul>
-                </div>
-                <div class="experience-item border-l-4 border-teal-500 pl-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <div><h3 class="text-2xl font-bold">IT Configurations Technician</h3><p class="text-teal-400 font-semibold">CDW</p></div>
-                        <div class="text-right"><p class="text-gray-400">Las Vegas, NV</p><p class="text-sm text-gray-500">Apr 2023 - Nov 2024</p></div>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400">
-                        <li>Configured, imaged, and quality-tested enterprise laptops, desktops, and mobile devices in alignment with client-specific build sheets and configuration standards</li>
-
-                        <li>Handled large-scale deployment projects involving hundreds of hardware units, ensuring each device met precise client specifications and passed all quality assurance benchmarks before shipment</li>
-
-                        <li>Implemented security configurations including full-disk encryption, antivirus setup, and device compliance checks to ensure readiness for enterprise environments</li>
-
-                        <li>Collaborated closely with project leads and configuration teams to meet tight production deadlines and maintain consistency across large client orders</li>
-
-                        <li>Utilized <strong>Microsoft Intune</strong>, <strong>Autopilot</strong>, and imaging tools to streamline device provisioning, reduce setup time, and minimize configuration errors</li>
-
-                        <li>Maintained detailed documentation for build processes, imaging templates, and deployment workflows to support scalability and repeatability across client projects</li>
-
-                        <li>Contributed to continuous improvement initiatives by identifying workflow bottlenecks and suggesting optimizations that improved throughput and accuracy</li>
-
-                    </ul>
-                </div>
-                <div class="experience-item border-l-4 border-teal-500 pl-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <div><h3 class="text-2xl font-bold">General Manager</h3><p class="text-teal-400 font-semibold">Burger King</p></div>
-                        <div class="text-right"><p class="text-gray-400">Las Vegas, NV</p><p class="text-sm text-gray-500">Mar 2014 - Apr 2017</p></div>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400">
-                        <li>Youngest GM promotion in region</li>
-                        <li>Led high-volume location generating $170K/month in sales</li>
-                        <li>Managed operations, team leadership, and performance optimization</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section id="projects" class="min-h-screen py-20 px-6 bg-black">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-5xl font-bold mb-12">Featured Projects</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="project-card scroll-reveal card-3d rainbow-border p-8 rounded-lg">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-2xl font-bold gradient-text-animate">Brothers Properties Landscaping</h3>
-                        <svg class="w-8 h-8 text-teal-400 float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    </div>
-                    <p class="text-gray-400 mb-4">Responsive frontend demo application for a landscaping client, showcasing custom web solutions and design capabilities. First client-facing demo developed in collaboration with Marketing and Product Manager.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">JavaScript</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Tailwind CSS</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Web Design</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">CRM</span>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm mb-4">
-                        <li>Client-ready interface tailored to landscaping industry</li>
-                        <li>Bridged frontend development with business goals</li>
-                        <li>Translated client requirements into visual demonstration</li>
-                        <li>Responsive design across all devices</li>
-                    </ul>
-                    <div class="flex gap-4">
-                        <a href="https://brothers-properties-landscaping.onrender.com" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>Live Demo</a>
-                        <a href="https://github.com/Programmer-stevenson/Brothers-Properties-Lanscaping" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
+    <!-- Education Section with Enhanced Gradients -->
+    <section id="education" class="min-h-screen py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-gray-900 via-purple-900/20 to-black relative overflow-hidden">
+        <!-- Animated Background Gradient Orbs -->
+        <div class="absolute top-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <h2 class="section-title text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-12 pl-8">Education</h2>
+            <div class="space-y-8">
+                <!-- Current Education -->
+                <div class="group relative">
+                    <!-- Animated gradient border -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500 group-hover:duration-200"></div>
+                    <div class="relative bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-purple-500/30 group-hover:border-purple-500/60 transition-all duration-300 transform hover:-translate-y-2">
+                        <!-- Shimmer overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl shimmer"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-2xl sm:text-3xl font-bold font-display bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-2">Bachelor of Science - Cloud & Network Engineering</h3>
+                                    <p class="text-lg sm:text-xl text-purple-300 font-medium">Western Governors University (WGU)</p>
+                                </div>
+                                <div class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full border border-purple-400/30 w-fit">
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                                    <span class="text-sm sm:text-base text-purple-200 font-medium">In Progress</span>
+                                </div>
+                            </div>
+                            <div class="space-y-3 text-gray-300">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Focusing on cloud infrastructure, network architecture, and cybersecurity practices</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Pursuing Multiple industry certifications while completing degree</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Hands-on experience with Azure, AWS, and enterprise networking</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="project-card scroll-reveal card-3d rainbow-border p-8 rounded-lg">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-2xl font-bold gradient-text-animate">Plexura.net</h3>
-                        <svg class="w-8 h-8 text-teal-400 float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                <!-- Completed Education -->
+                <div class="group relative">
+                    <!-- Animated gradient border -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 rounded-2xl opacity-40 group-hover:opacity-80 blur transition duration-500 group-hover:duration-200"></div>
+                    <div class="relative bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-teal-500/30 group-hover:border-teal-500/60 transition-all duration-300 transform hover:-translate-y-2">
+                        <!-- Shimmer overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl shimmer"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-2xl sm:text-3xl font-bold font-display bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Associate of Applied Science</h3>
+                                    <p class="text-lg sm:text-xl text-teal-300 font-medium">Computing Information Technology: Software programming</p>
+                                </div>
+                                <div class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-full border border-teal-400/30 w-fit">
+                                    <svg class="w-4 h-4 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span class="text-sm sm:text-base text-teal-200 font-medium">Completed</span>
+                                </div>
+                            </div>
+                            <div class="space-y-3 text-gray-300">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Designed and developed full-stack web applications as part of academic coursework, applying object-oriented programming principles and software development lifecycle (SDLC) methodologies.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Built responsive front-end interfaces using HTML, CSS, and JavaScript, integrating them with Django-based back-end systems.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Developed RESTful APIs with Django to handle client-server communication, authentication, and data processing.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Connected front-end forms and UIs to back-end databases using Django’s MVC framework, enabling dynamic content and CRUD functionality.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>Created and managed relational databases using MySQL; implemented models, migrations, and queries within Django ORM.</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-400 mb-4">Full-stack web application designed and developed from scratch using modern frontend technologies. Features dynamic user interfaces, responsive design, and optimized performance through Vite bundling.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">React</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Tailwind CSS</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Vite</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">JavaScript</span>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm mb-4">
-                        <li>Modern React-based architecture</li>
-                        <li>Fast development workflow with Vite</li>
-                        <li>Production deployment pipeline</li>
-                        <li>End-to-end development from design to deployment</li>
-                    </ul>
-                    <div class="flex gap-4">
-                        <a href="https://plexura-net.onrender.com" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>Live Demo</a>
-                        <a href="https://github.com/Programmer-stevenson/Plexura.net" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
-                    </div>
-                </div>
-
-                <div class="project-card scroll-reveal card-3d rainbow-border p-8 rounded-lg">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-2xl font-bold gradient-text-animate">AI-Powered Chatbot</h3>
-                        <svg class="w-8 h-8 text-teal-400 float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    </div>
-                    <p class="text-gray-400 mb-4">Intelligent conversational AI leveraging natural language processing for context-aware interactions and intent recognition.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Node.Js</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">Google Gemini</span>
-                        <span class="px-3 py-1 bg-teal-600 bg-opacity-30 rounded-full text-sm">AI</span>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm mb-4">
-                        <li>Real-time conversational interface</li>
-                        <li>Context-aware response generation</li>
-                        <li>User intent classification</li>
-                        <li>Deployed production-ready application</li>
-                    </ul>
-                    <div class="flex gap-4">
-                        <a href="https://chatbot-rp2c.onrender.com/" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>Live Demo</a>
-                        <a href="https://github.com/Programmer-stevenson/chatbot" target="_blank" class="text-teal-400 hover:text-teal-300 flex items-center gap-2"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a>                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="min-h-screen py-20 px-6 bg-black">
+    <!-- Projects Section - Modern Redesign -->
+    <section id="projects" class="min-h-screen py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-black via-gray-900/50 to-black relative overflow-hidden">
+        <!-- Subtle background pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <!-- Section Header -->
+            <div class="mb-16 sm:mb-20">
+                <div class="inline-block">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-[2px] bg-gradient-to-r from-teal-500 to-cyan-500"></div>
+                        <span class="text-teal-400 font-mono text-sm tracking-wider uppercase">Portfolio</span>
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+                        <span class="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">Featured Work</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg max-w-2xl">A selection of projects showcasing full-stack development, modern web technologies, and client-focused solutions.</p>
+                </div>
+            </div>
+
+            <!-- Projects Grid - Featured + Regular -->
+            <div class="space-y-8 lg:space-y-12">
+                
+                <!-- Featured Project - Full Width -->
+                <article class="group relative">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border border-gray-800 hover:border-teal-500/30 transition-all duration-700">
+                        <!-- Gradient overlay on hover -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        
+                        <div class="relative p-8 sm:p-10 lg:p-12">
+                            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                                <!-- Project Info -->
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 mb-4">
+                                            <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                                            <span class="text-xs font-medium text-teal-300 uppercase tracking-wider">Featured Project</span>
+                                        </div>
+                                        <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                                            <span class="bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Brothers Properties Landscaping</span>
+                                        </h3>
+                                        <p class="text-gray-300 text-lg leading-relaxed">
+                                            A responsive, client-facing web application designed for a landscaping business. This project demonstrates end-to-end frontend development, from client requirements to production deployment, with a focus on user experience and business goals.
+                                        </p>
+                                    </div>
+
+                                    <!-- Key Features -->
+                                    <div class="space-y-3">
+                                        <div class="flex items-start gap-3 group/item">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-teal-400 mt-2 group-hover/item:scale-150 transition-transform"></div>
+                                            <p class="text-gray-400 group-hover/item:text-gray-300 transition-colors">Industry-tailored UI/UX with custom CRM integration</p>
+                                        </div>
+                                        <div class="flex items-start gap-3 group/item">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 group-hover/item:scale-150 transition-transform"></div>
+                                            <p class="text-gray-400 group-hover/item:text-gray-300 transition-colors">Collaborative development with marketing and product teams</p>
+                                        </div>
+                                        <div class="flex items-start gap-3 group/item">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 group-hover/item:scale-150 transition-transform"></div>
+                                            <p class="text-gray-400 group-hover/item:text-gray-300 transition-colors">Fully responsive across all device breakpoints</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tech Stack -->
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-4 py-2 rounded-full text-xs font-medium bg-gray-800 text-gray-300 border border-gray-700 hover:border-teal-500/50 hover:text-teal-300 transition-all">JavaScript</span>
+                                        <span class="px-4 py-2 rounded-full text-xs font-medium bg-gray-800 text-gray-300 border border-gray-700 hover:border-cyan-500/50 hover:text-cyan-300 transition-all">Tailwind CSS</span>
+                                        <span class="px-4 py-2 rounded-full text-xs font-medium bg-gray-800 text-gray-300 border border-gray-700 hover:border-blue-500/50 hover:text-blue-300 transition-all">Responsive Design</span>
+                                        <span class="px-4 py-2 rounded-full text-xs font-medium bg-gray-800 text-gray-300 border border-gray-700 hover:border-purple-500/50 hover:text-purple-300 transition-all">CRM Integration</span>
+                                    </div>
+
+                                    <!-- Links -->
+                                    <div class="flex flex-wrap gap-4 pt-4">
+                                        <a href="https://brothers-properties-landscaping.onrender.com" target="_blank" 
+                                           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 text-white font-medium hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 group/btn">
+                                            <span>View Live Site</span>
+                                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                        </a>
+                                        <a href="https://github.com/Programmer-stevenson/Brothers-Properties-Lanscaping" target="_blank"
+                                           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gray-800 text-gray-300 font-medium border border-gray-700 hover:border-gray-600 hover:text-white transition-all duration-300 group/btn">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                            <span>Source Code</span>
+                                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Visual Preview -->
+                                <div class="relative">
+                                    <div class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/20 backdrop-blur-sm overflow-hidden group-hover:border-teal-500/40 transition-all duration-700">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="text-center space-y-4 p-8">
+                                                <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
+                                                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                                                </div>
+                                                <p class="text-gray-400 font-mono text-sm">Live Production Site</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Decorative elements -->
+                                    <div class="absolute -inset-4 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Regular Projects Grid -->
+                <div class="grid lg:grid-cols-2 gap-6 lg:gap-8">
+                    
+                    <!-- Project 2 - AI Chatbot -->
+                    <article class="group relative">
+                        <div class="h-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-cyan-500/30 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <div class="relative p-8">
+                                <!-- Icon -->
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-cyan-500/40 transition-all duration-500">
+                                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4">
+                                    <span class="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">AI-Powered Chatbot</span>
+                                </h3>
+                                
+                                <p class="text-gray-400 mb-6 leading-relaxed">
+                                    Intelligent conversational AI built with Google Gemini, featuring real-time natural language processing and context-aware response generation.
+                                </p>
+
+                                <!-- Features -->
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-cyan-400"></div>
+                                        Real-time conversational interface
+                                    </li>
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-blue-400"></div>
+                                        Context-aware AI responses
+                                    </li>
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-purple-400"></div>
+                                        Intent classification system
+                                    </li>
+                                </ul>
+
+                                <!-- Tech -->
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">Node.js</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">Google Gemini</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">AI/ML</span>
+                                </div>
+
+                                <!-- Links -->
+                                <div class="flex gap-3 pt-4 border-t border-gray-800">
+                                    <a href="https://chatbot-rp2c.onrender.com/" target="_blank"
+                                       class="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors group/link">
+                                        <span class="text-sm font-medium">Live Demo</span>
+                                        <svg class="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </a>
+                                    <span class="text-gray-700">|</span>
+                                    <a href="https://github.com/Programmer-stevenson/chatbot" target="_blank"
+                                       class="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors group/link">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        <span class="text-sm font-medium">GitHub</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 - Plexura.net -->
+                    <article class="group relative">
+                        <div class="h-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:border-purple-500/30 transition-all duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <div class="relative p-8">
+                                <!-- Icon -->
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-purple-500/40 transition-all duration-500">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                                </div>
+
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-4">
+                                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Plexura.net</span>
+                                </h3>
+                                
+                                <p class="text-gray-400 mb-6 leading-relaxed">
+                                    Modern full-stack web application featuring React architecture, optimized build pipeline with Vite, and end-to-end deployment automation.
+                                </p>
+
+                                <!-- Features -->
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-purple-400"></div>
+                                        Component-based React architecture
+                                    </li>
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-pink-400"></div>
+                                        Lightning-fast Vite build system
+                                    </li>
+                                    <li class="flex items-center gap-2 text-sm text-gray-500">
+                                        <div class="w-1 h-1 rounded-full bg-red-400"></div>
+                                        Production-ready deployment
+                                    </li>
+                                </ul>
+
+                                <!-- Tech -->
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">React</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">Vite</span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800/50 text-gray-400 border border-gray-700/50">Tailwind</span>
+                                </div>
+
+                                <!-- Links -->
+                                <div class="flex gap-3 pt-4 border-t border-gray-800">
+                                    <a href="https://plexura-net.onrender.com" target="_blank"
+                                       class="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors group/link">
+                                        <span class="text-sm font-medium">Live Demo</span>
+                                        <svg class="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </a>
+                                    <span class="text-gray-700">|</span>
+                                    <a href="https://github.com/Programmer-stevenson/Plexura.net" target="_blank"
+                                       class="flex items-center gap-2 text-gray-400 hover:text-gray-300 transition-colors group/link">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        <span class="text-sm font-medium">GitHub</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section with Interactive Tags -->
+    <section id="skills" class="min-h-screen py-16 sm:py-20 px-4 sm:px-6 bg-black">
         <div class="max-w-6xl mx-auto">
-            <h2 class="section-title text-5xl font-bold mb-12">Technical Skills</h2>
+            <h2 class="section-title text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-12 pl-8">Technical Skills</h2>
             <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">Languages</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">Python</span><span class="skill-tag px-3 py-2 rounded-full text-sm">JavaScript</span><span class="skill-tag px-3 py-2 rounded-full text-sm">SQL</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Java</span><span class="skill-tag px-3 py-2 rounded-full text-sm">C/C++</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Bash</span></div></div>
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">Cloud & DevOps</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">Azure</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Docker</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Ansible</span><span class="skill-tag px-3 py-2 rounded-full text-sm">vSphere</span><span class="skill-tag px-3 py-2 rounded-full text-sm">ESXi</span></div></div>
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">Databases</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">MySQL</span><span class="skill-tag px-3 py-2 rounded-full text-sm">MS SQL Server</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Oracle</span></div></div>
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">IT Management</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">Microsoft 365</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Intune</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Active Directory</span><span class="skill-tag px-3 py-2 rounded-full text-sm">SharePoint</span></div></div>
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">Tools & Platforms</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">Jira</span><span class="skill-tag px-3 py-2 rounded-full text-sm">ServiceNow</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Salesforce</span></div></div>
-                <div class="card-hover scroll-reveal shimmer glow-border bg-gray-900 p-6 rounded-lg border border-teal-500 border-opacity-30"><h3 class="text-2xl font-bold mb-4 gradient-text-animate">Operating Systems</h3><div class="flex flex-wrap gap-2"><span class="skill-tag px-3 py-2 rounded-full text-sm">Linux</span><span class="skill-tag px-3 py-2 rounded-full text-sm">UNIX</span><span class="skill-tag px-3 py-2 rounded-full text-sm">Windows Server</span></div></div>
+                <!-- Languages Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-teal-500/30 hover:border-teal-500/50 hover:shadow-xl hover:shadow-teal-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent gradient-text-animate">Languages</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-teal-500/10 border border-teal-500/30 text-teal-300 hover:bg-teal-500/20 hover:border-teal-400 hover:scale-105 hover:shadow-lg hover:shadow-teal-500/50 transition-all duration-300 cursor-pointer">Python</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 cursor-pointer">JavaScript</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-blue-500/10 border border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 cursor-pointer">SQL</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer">Java</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-pink-500/10 border border-pink-500/30 text-pink-300 hover:bg-pink-500/20 hover:border-pink-400 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 cursor-pointer">C/C++</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 cursor-pointer">Bash</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-cyan-500/30 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent gradient-text-animate">Cloud & DevOps</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-400 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 cursor-pointer">Azure</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-blue-500/10 border border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 cursor-pointer">Docker</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer">Ansible</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 cursor-pointer">vSphere</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-pink-500/10 border border-pink-500/30 text-pink-300 hover:bg-pink-500/20 hover:border-pink-400 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 cursor-pointer">ESXi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Databases Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-blue-500/30 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent gradient-text-animate">Databases</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-blue-500/10 border border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 cursor-pointer">MySQL</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer">MS SQL Server</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 cursor-pointer">Oracle</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IT Management Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/30 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent gradient-text-animate">IT Management</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer">Microsoft 365</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-pink-500/10 border border-pink-500/30 text-pink-300 hover:bg-pink-500/20 hover:border-pink-400 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 cursor-pointer">Intune</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 cursor-pointer">Active Directory</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-blue-500/10 border border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 cursor-pointer">SharePoint</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Platforms Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-pink-500/30 hover:border-pink-500/50 hover:shadow-xl hover:shadow-pink-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent gradient-text-animate">Tools & Platforms</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-pink-500/10 border border-pink-500/30 text-pink-300 hover:bg-pink-500/20 hover:border-pink-400 hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 cursor-pointer">Jira</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-red-500/10 border border-red-500/30 text-red-300 hover:bg-red-500/20 hover:border-red-400 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 cursor-pointer">ServiceNow</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-orange-500/10 border border-orange-500/30 text-orange-300 hover:bg-orange-500/20 hover:border-orange-400 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 cursor-pointer">Salesforce</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operating Systems Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-indigo-500/30 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold font-display mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent gradient-text-animate">Operating Systems</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 cursor-pointer">Linux</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer">UNIX</span>
+                            <span class="skill-tag px-3 py-2 rounded-full text-sm font-medium bg-blue-500/10 border border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 cursor-pointer">Windows Server</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    
 
-    <section id="contact" class="min-h-screen py-20 px-6 bg-gray-900 flex items-center">
+    <!-- Contact Section with Modern Design -->
+    <section id="contact" class="min-h-screen py-16 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-gray-900 to-black flex items-center">
         <div class="max-w-6xl mx-auto w-full">
-            <h2 class="section-title text-5xl font-bold mb-12">Get In Touch</h2>
-            <div class="grid md:grid-cols-2 gap-12">
+            <h2 class="section-title text-4xl sm:text-5xl lg:text-6xl font-bold font-display mb-12 pl-8">Get In Touch</h2>
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Contact Info -->
                 <div>
-                    <p class="text-xl text-gray-300 mb-8">I'm always open to discussing new opportunities, collaborations, or just connecting with fellow tech enthusiasts.</p>
+                    <p class="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed">I'm always open to discussing new opportunities, collaborations, or just connecting with fellow tech enthusiasts.</p>
                     <div class="space-y-6">
-                        <a href="mailto:brandon.stevensonn@outlook.com" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg></div><span>brandon.stevensonn@outlook.com</span></a>
-                        <a href="tel:+17253142660" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg></div><span>725-314-2660</span></a>
-                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="flex items-center gap-4 text-lg hover:text-teal-400 transition-all group"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><span>LinkedIn Profile</span></a>
-                        <div class="flex items-center gap-4 text-lg"><div class="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg></div><span>Las Vegas, NV</span></div>
+                        <a href="mailto:brandon.stevensonn@outlook.com" class="group flex items-center gap-4 text-base sm:text-lg hover:text-teal-400 transition-all duration-300 transform hover:translate-x-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-teal-500/50 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-teal-500/70 transition-all duration-300">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                            </div>
+                            <span>brandon.stevensonn@outlook.com</span>
+                        </a>
+                        <a href="tel:+17253142660" class="group flex items-center gap-4 text-base sm:text-lg hover:text-teal-400 transition-all duration-300 transform hover:translate-x-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/50 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-cyan-500/70 transition-all duration-300">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+                            </div>
+                            <span>725-314-2660</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/brandon-s-041069330" target="_blank" class="group flex items-center gap-4 text-base sm:text-lg hover:text-teal-400 transition-all duration-300 transform hover:translate-x-2">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/50 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-blue-500/70 transition-all duration-300">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </div>
+                            <span>LinkedIn Profile</span>
+                        </a>
+                        <div class="flex items-center gap-4 text-base sm:text-lg">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/50">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                            </div>
+                            <span>Las Vegas, NV</span>
+                        </div>
                     </div>
                 </div>
-                <div class="card-hover bg-gradient-to-br from-teal-600 to-cyan-600 p-8 rounded-lg">
-                    <h3 class="text-3xl font-bold mb-4">Let's Build Something Amazing</h3>
-                    <p class="text-lg mb-6 text-teal-100">Whether you're looking for a dedicated IT professional, a cloud engineer, or a developer who can bring ideas to life, I'd love to hear from you.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Available for full-time opportunities</span></div>
-                        <div class="flex items-center gap-3"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Open to consulting projects</span></div>
-                        <div class="flex items-center gap-3"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Interested in collaboration</span></div>
+                
+                <!-- CTA Card -->
+                <div class="card-hover group relative bg-gradient-to-br from-teal-500/20 to-cyan-500/20 backdrop-blur-sm p-8 rounded-2xl border border-teal-500/30 hover:border-teal-500/50 hover:shadow-2xl hover:shadow-teal-500/30 transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl sm:text-3xl font-bold font-display mb-4 text-white">Let's Build Something Amazing</h3>
+                        <p class="text-base sm:text-lg mb-6 text-teal-100 leading-relaxed">Whether you're looking for a dedicated IT professional, a cloud engineer, or a developer who can bring ideas to life, I'd love to hear from you.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6 text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-sm sm:text-base">Available for full-time opportunities</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6 text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-sm sm:text-base">Open to consulting projects</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6 text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-sm sm:text-base">Interested in collaboration</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-black py-8 px-6 border-t border-teal-500 border-opacity-30">
+    <!-- Footer -->
+    <footer class="bg-black py-8 px-4 sm:px-6 border-t border-teal-500/30">
         <div class="max-w-6xl mx-auto text-center">
-            <p class="text-gray-400">© 2025 Brandon Stevenson. Built with passion and code.</p>
+            <p class="text-gray-400 text-sm sm:text-base">© 2025 Brandon Stevenson. Built with passion and code.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
-    <script src="animations.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </body>
 </html>
