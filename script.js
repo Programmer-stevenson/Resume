@@ -1,208 +1,61 @@
-// ========================================
-// MOBILE MENU FUNCTIONALITY - Pure Tailwind
-// ========================================
-console.log('🚀 Mobile menu script loading...');
-
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+// Hamburger Menu Functionality
+const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-const menuBackdrop = document.getElementById('menuBackdrop');
-const menuContent = document.getElementById('menuContent');
-const menuTitle = document.getElementById('menuTitle');
-const closeHint = document.getElementById('closeHint');
+const closeMenu = document.getElementById('closeMenu');
 const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-const line1 = document.getElementById('line1');
-const line2 = document.getElementById('line2');
-const line3 = document.getElementById('line3');
 const body = document.body;
 
-console.log('📱 Menu Button:', mobileMenuBtn);
-console.log('📋 Menu:', mobileMenu);
-console.log('🎭 Backdrop:', menuBackdrop);
-console.log('📝 Links found:', mobileNavLinks.length);
-
-let isMenuOpen = false;
-
 function openMenu() {
-    console.log('🎬 Opening menu...');
-    isMenuOpen = true;
-    
-    // Enable pointer events
-    mobileMenu.classList.remove('pointer-events-none');
-    mobileMenu.classList.add('pointer-events-auto');
-    console.log('✅ Pointer events enabled');
-    
-    // Prevent body scroll
-    body.style.overflow = 'hidden';
-    
-    // Animate backdrop
-    menuBackdrop.classList.remove('opacity-0');
-    menuBackdrop.classList.add('opacity-100');
-    console.log('✅ Backdrop animated');
-    
-    // Animate content
-    menuContent.classList.remove('translate-y-8', 'opacity-0');
-    menuContent.classList.add('translate-y-0', 'opacity-100');
-    
-    // Animate menu title
-    menuTitle.classList.remove('translate-y-4', 'opacity-0');
-    menuTitle.classList.add('translate-y-0', 'opacity-100');
-    
-    // Animate close hint
-    closeHint.classList.remove('translate-y-4', 'opacity-0');
-    closeHint.classList.add('translate-y-0', 'opacity-100');
-    
-    // Animate navigation links
-    mobileNavLinks.forEach(link => {
-        link.classList.remove('translate-y-4', 'opacity-0');
-        link.classList.add('translate-y-0', 'opacity-100');
-    });
-    console.log('✅ Links animated:', mobileNavLinks.length);
-    
-    // Transform hamburger to X
-    line1.classList.add('rotate-45', 'translate-y-2');
-    line2.classList.add('opacity-0', 'scale-0');
-    line3.classList.add('-rotate-45', '-translate-y-2');
-    console.log('✅ Hamburger transformed to X');
+    hamburger.classList.add('active');
+    mobileMenu.classList.add('active');
+    body.classList.add('menu-open');
 }
 
-function closeMenu() {
-    isMenuOpen = false;
-    
-    // Reset body scroll
-    body.style.overflow = '';
-    
-    // Animate backdrop
-    menuBackdrop.classList.remove('opacity-100');
-    menuBackdrop.classList.add('opacity-0');
-    
-    // Animate content
-    menuContent.classList.remove('translate-y-0', 'opacity-100');
-    menuContent.classList.add('translate-y-8', 'opacity-0');
-    
-    // Animate menu title
-    menuTitle.classList.remove('translate-y-0', 'opacity-100');
-    menuTitle.classList.add('translate-y-4', 'opacity-0');
-    
-    // Animate close hint
-    closeHint.classList.remove('translate-y-0', 'opacity-100');
-    closeHint.classList.add('translate-y-4', 'opacity-0');
-    
-    // Animate navigation links
-    mobileNavLinks.forEach(link => {
-        link.classList.remove('translate-y-0', 'opacity-100');
-        link.classList.add('translate-y-4', 'opacity-0');
-    });
-    
-    // Transform X back to hamburger
-    line1.classList.remove('rotate-45', 'translate-y-2');
-    line2.classList.remove('opacity-0', 'scale-0');
-    line3.classList.remove('-rotate-45', '-translate-y-2');
-    
-    // Wait for animation to finish before disabling pointer events
-    setTimeout(() => {
-        mobileMenu.classList.remove('pointer-events-auto');
-        mobileMenu.classList.add('pointer-events-none');
-    }, 500);
+function closeMenuFunc() {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    body.classList.remove('menu-open');
 }
 
-// Toggle menu on button click
-if (mobileMenuBtn) {
-    console.log('✅ Event listener attached to mobile menu button');
-    mobileMenuBtn.addEventListener('click', (e) => {
-        console.log('🔥 BUTTON CLICKED!', 'Menu open:', isMenuOpen);
-        e.stopPropagation();
-        if (isMenuOpen) {
-            closeMenu();
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('active')) {
+            closeMenuFunc();
         } else {
             openMenu();
         }
     });
-} else {
-    console.error('❌ Mobile menu button not found!');
 }
 
-// Close menu when clicking on backdrop
-if (menuBackdrop) {
-    menuBackdrop.addEventListener('click', closeMenu);
+if (closeMenu) {
+    closeMenu.addEventListener('click', closeMenuFunc);
 }
 
-// Close menu when clicking on navigation links
+// Close menu when clicking on a link
 mobileNavLinks.forEach(link => {
-    link.addEventListener('click', closeMenu);
-});
-
-// Close menu on ESC key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isMenuOpen) {
-        closeMenu();
-    }
-});
-
-// Prevent menu from staying open on resize
-window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768 && isMenuOpen) {
-        closeMenu();
-    }
-});
-
-
-// ========================================
-// NAVBAR SCROLL EFFECT
-// ========================================
-const nav = document.getElementById('mainNav');
-
-window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    
-    if (scrollY > 100) {
-        nav.style.background = 'rgba(230, 240, 255, 0.15)';
-        nav.style.backdropFilter = 'blur(30px) saturate(150%)';
-        nav.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.1), inset 0 0 0 1px rgba(199, 210, 254, 0.3)';
-        nav.style.borderBottom = '1px solid rgba(199, 210, 254, 0.4)';
-        nav.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.320, 1)';
-    } else {
-        nav.style.background = 'transparent';
-        nav.style.backdropFilter = 'none';
-        nav.style.boxShadow = 'none';
-        nav.style.borderBottom = 'none';
-    }
-});
-
-
-// ========================================
-// SCROLL PROGRESS BAR
-// ========================================
-window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    const progressBar = document.getElementById('progressBar');
-    if (progressBar) {
-        progressBar.style.width = scrolled + '%';
-    }
-});
-
-
-// ========================================
-// SMOOTH SCROLL FOR NAVIGATION
-// ========================================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+    link.addEventListener('click', () => {
+        closeMenuFunc();
     });
 });
 
+// Close menu when clicking outside
+if (mobileMenu) {
+    mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+            closeMenuFunc();
+        }
+    });
+}
 
-// ========================================
-// AURORA PARTICLES EFFECT
-// ========================================
+// Close menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+        closeMenuFunc();
+    }
+});
+
+
+// Aurora Particles Effect
 function createAuroraParticles() {
     const heroSection = document.getElementById('home');
     if (!heroSection) return;
@@ -213,6 +66,7 @@ function createAuroraParticles() {
         const particle = document.createElement('div');
         particle.className = 'aurora-particle';
         
+        // Random properties
         const size = Math.random() * 4 + 2;
         const startX = Math.random() * 100;
         const startY = Math.random() * 100;
@@ -220,6 +74,7 @@ function createAuroraParticles() {
         const delay = Math.random() * 5;
         const opacity = Math.random() * 0.5 + 0.3;
         
+        // Random color from aurora palette
         const colors = [
             'rgba(16, 185, 129, 0.6)',
             'rgba(59, 130, 246, 0.6)',
@@ -229,11 +84,12 @@ function createAuroraParticles() {
         ];
         const color = colors[Math.floor(Math.random() * colors.length)];
         
-        particle.style.cssText = `position: absolute; width: ${size}px; height: ${size}px; background: ${color}; border-radius: 50%; left: ${startX}%; top: ${startY}%; opacity: ${opacity}; filter: blur(2px); pointer-events: none; z-index: 2; animation: particleFloat ${duration}s ease-in-out infinite ${delay}s;`;
+        particle.style.cssText = 'position: absolute; width: ' + size + 'px; height: ' + size + 'px; background: ' + color + '; border-radius: 50%; left: ' + startX + '%; top: ' + startY + '%; opacity: ' + opacity + '; filter: blur(2px); pointer-events: none; z-index: 2; animation: particleFloat ' + duration + 's ease-in-out infinite ' + delay + 's;';
         
         heroSection.appendChild(particle);
     }
     
+    // Add particle animation
     const style = document.createElement('style');
     const randomX1 = Math.random() * 100 - 50;
     const randomY1 = Math.random() * 100 - 50;
@@ -242,21 +98,14 @@ function createAuroraParticles() {
     const randomX3 = Math.random() * 100 - 50;
     const randomY3 = Math.random() * 100 - 50;
     
-    style.textContent = `@keyframes particleFloat { 
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; } 
-        25% { transform: translate(${randomX1}px, ${randomY1}px) scale(1.2); opacity: 0.6; } 
-        50% { transform: translate(${randomX2}px, ${randomY2}px) scale(0.8); opacity: 0.8; } 
-        75% { transform: translate(${randomX3}px, ${randomY3}px) scale(1.1); opacity: 0.5; } 
-    }`;
+    style.textContent = '@keyframes particleFloat { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; } 25% { transform: translate(' + randomX1 + 'px, ' + randomY1 + 'px) scale(1.2); opacity: 0.6; } 50% { transform: translate(' + randomX2 + 'px, ' + randomY2 + 'px) scale(0.8); opacity: 0.8; } 75% { transform: translate(' + randomX3 + 'px, ' + randomY3 + 'px) scale(1.1); opacity: 0.5; } }';
     document.head.appendChild(style);
 }
 
+// Initialize aurora particles
 createAuroraParticles();
 
-
-// ========================================
-// AURORA WAVE EFFECT
-// ========================================
+// Aurora Wave Effect - creates traveling waves across the aurora
 function createAuroraWaves() {
     const heroSection = document.getElementById('home');
     if (!heroSection) return;
@@ -275,139 +124,21 @@ function createAuroraWaves() {
             'rgba(139, 92, 246, 0.15)'
         ];
         
-        wave.style.cssText = `position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(ellipse 800px 400px at 50% 50%, ${colors[i % 3]} 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: 2; mix-blend-mode: screen; animation: waveTravel ${duration}s ease-in-out infinite ${delay}s; opacity: 0;`;
+        wave.style.cssText = 'position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(ellipse 800px 400px at 50% 50%, ' + colors[i] + ' 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: 2; mix-blend-mode: screen; animation: waveTravel ' + duration + 's ease-in-out infinite ' + delay + 's; opacity: 0;';
         
         heroSection.appendChild(wave);
     }
     
+    // Add wave animation
     const style = document.createElement('style');
-    style.textContent = `@keyframes waveTravel { 
-        0% { transform: translate(-30%, -20%) scale(0.8); opacity: 0; } 
-        10% { opacity: 0.6; } 
-        50% { transform: translate(30%, 20%) scale(1.2); opacity: 0.8; } 
-        90% { opacity: 0.4; } 
-        100% { transform: translate(80%, 50%) scale(1); opacity: 0; } 
-    }`;
+    style.textContent = '@keyframes waveTravel { 0% { transform: translate(-30%, -20%) scale(0.8); opacity: 0; } 10% { opacity: 0.6; } 50% { transform: translate(30%, 20%) scale(1.2); opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translate(80%, 50%) scale(1); opacity: 0; } }';
     document.head.appendChild(style);
 }
 
+// Initialize aurora waves
 createAuroraWaves();
 
 
-// ========================================
-// ABOUT SECTION TYPEWRITER EFFECT
-// ========================================
-let aboutTypingStarted = false;
-const aboutText1Element = document.getElementById('about-text-1');
-const aboutText2Element = document.getElementById('about-text-2');
-
-const aboutTexts = [
-    {
-        element: aboutText1Element,
-        text: "Blending IT administration, user experience, and web development, I bring a holistic approach to technology. With hands-on experience using Microsoft Intune and managing enterprise environments, I'm pursuing a degree in Cloud & Network Engineering to build secure, scalable systems.",
-        delay: 0
-    },
-    {
-        element: aboutText2Element,
-        text: "I've worked across both IT operations and software development, giving me a unique perspective on how systems and people connect. From managing endpoints in Microsoft Intune to developing full-stack applications, I focus on efficiency, automation, and clean user experiences. I'm currently expanding into cloud and network engineering to help design smarter, scalable infrastructures for the future.",
-        delay: 4500
-    }
-];
-
-function typeAboutText(textObj, callback) {
-    if (!textObj.element) return;
-    
-    let charIndex = 0;
-    textObj.element.textContent = '';
-    textObj.element.classList.add('typing');
-    
-    function type() {
-        if (charIndex < textObj.text.length) {
-            textObj.element.textContent += textObj.text.charAt(charIndex);
-            charIndex++;
-            setTimeout(type, 35);
-        } else if (callback) {
-            callback();
-        }
-    }
-    
-    setTimeout(type, textObj.delay);
-}
-
-function startAboutTyping() {
-    if (!aboutTypingStarted) {
-        aboutTypingStarted = true;
-        typeAboutText(aboutTexts[0], () => {
-            typeAboutText(aboutTexts[1]);
-        });
-    }
-}
-
-const aboutSection = document.getElementById('about');
-if (aboutSection) {
-    const aboutObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                startAboutTyping();
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    aboutObserver.observe(aboutSection);
-}
-
-
-// ========================================
-// INTERSECTION OBSERVER FOR EXPERIENCE
-// ========================================
-const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.experience-item').forEach(item => {
-    observer.observe(item);
-});
-
-
-// ========================================
-// FLUID BUTTON ANIMATIONS
-// ========================================
-const buttonLeft = document.querySelector('.button-float-left');
-const buttonRight = document.querySelector('.button-float-right');
-let timeLeft = 0;
-let timeRight = 0;
-
-function animateButtons() {
-    if (buttonLeft && buttonRight) {
-        timeLeft += 0.016;
-        timeRight += 0.016;
-        
-        const leftOffset = Math.sin(timeLeft * 1.5) * 15;
-        const rightOffset = Math.sin(timeRight * 1.5 + Math.PI) * 15;
-        
-        buttonLeft.style.transform = `translateX(${leftOffset}px)`;
-        buttonRight.style.transform = `translateX(${rightOffset}px)`;
-    }
-    
-    requestAnimationFrame(animateButtons);
-}
-
-animateButtons();
-
-
-// ========================================
-// THREE.JS SATURN ANIMATION
-// (Keeping your existing Saturn code)
-// ========================================
 setTimeout(() => {
     const heroSection = document.getElementById('home');
     if (!heroSection || typeof THREE === 'undefined') {
@@ -417,7 +148,7 @@ setTimeout(() => {
 
     console.log('Starting Matrix-Optimized HD Saturn with zoom...');
 
-    // Advanced Data Structures
+    // ===== ADVANCED DATA STRUCTURES =====
     class MatrixPool {
         constructor(size) {
             this.pool = [];
@@ -484,208 +215,345 @@ setTimeout(() => {
     
     const spatialBounds = new SpatialBounds();
 
-    // High-Quality Renderer
+    // ===== HIGH-QUALITY RENDERER =====
     const scene = new THREE.Scene();
     
     const isMobile = window.innerWidth < 768;
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
+    
+    // Start camera far away for zoom animation
     camera.position.set(0, 400, 3500);
 
     const renderer = new THREE.WebGLRenderer({ 
-        alpha: true, 
         antialias: true,
-        powerPreference: "high-performance"
+        alpha: true,
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: true
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
+    const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+    renderer.setPixelRatio(pixelRatio);
     renderer.shadowMap.enabled = false;
-    renderer.sortObjects = false;
-    heroSection.appendChild(renderer.domElement);
-    renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.top = '0';
-    renderer.domElement.style.left = '0';
-    renderer.domElement.style.zIndex = '1';
-
-    // Starfield
-    const starCount = isMobile ? 2500 : 5000;
-    const starGeometry = new THREE.BufferGeometry();
-    const starPositions = new Float32Array(starCount * 3);
-    const starColors = new Float32Array(starCount * 3);
-    const starSizes = new Float32Array(starCount);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
     
-    for (let i = 0; i < starCount; i++) {
-        const i3 = i * 3;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        const radius = 1500 + Math.random() * 1500;
+    renderer.domElement.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    `;
+    
+    heroSection.appendChild(renderer.domElement);
+
+    // Optimized lighting
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    sunLight.position.set(500, 300, 400);
+    scene.add(sunLight);
+
+    const ambientLight = new THREE.AmbientLight(0x4466aa, 0.35);
+    scene.add(ambientLight);
+
+    const rimLight = new THREE.PointLight(0x88bbff, 1.2, 1000);
+    rimLight.position.set(-300, 100, 200);
+    scene.add(rimLight);
+
+    // ===== HD TEXTURE =====
+    function createHDTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 2048;
+        canvas.height = 1024;
+        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: false });
+
+        // Multi-stop gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, '#b8e8ff');
+        gradient.addColorStop(0.15, '#6ab8e8');
+        gradient.addColorStop(0.3, '#4098cc');
+        gradient.addColorStop(0.5, '#2d7aa0');
+        gradient.addColorStop(0.7, '#1a5f7a');
+        gradient.addColorStop(0.85, '#1a1a4a');
+        gradient.addColorStop(1, '#2a0a4a');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Atmospheric glow
+        ctx.globalAlpha = 0.3;
+        const glowGradient = ctx.createRadialGradient(
+            canvas.width * 0.3, canvas.height * 0.3, 0,
+            canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.6
+        );
+        glowGradient.addColorStop(0, 'rgba(200, 240, 255, 0.4)');
+        glowGradient.addColorStop(0.5, 'rgba(100, 180, 230, 0.2)');
+        glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = glowGradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Optimized bands
+        ctx.globalAlpha = 0.55;
+        const colors = ['#3a8ec8', '#2d7db8', '#4a9ed8', '#1a6e9a', '#2a8eb8', '#0d5a7a'];
+        for (let i = 0; i < 100; i++) {
+            const y = (canvas.height / 100) * i;
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.fillRect(0, y, canvas.width, 6 + Math.random() * 12);
+        }
         
-        starPositions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-        starPositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-        starPositions[i3 + 2] = radius * Math.cos(phi);
+        // Cloud wisps
+        ctx.globalAlpha = 0.35;
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < 50; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = 150 + Math.random() * 400;
+            
+            const cloudGrad = ctx.createRadialGradient(x, y, 0, x, y, size/2);
+            cloudGrad.addColorStop(0, 'rgba(180, 230, 255, 0.4)');
+            cloudGrad.addColorStop(0.5, 'rgba(120, 190, 235, 0.2)');
+            cloudGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = cloudGrad;
+            ctx.fillRect(x - size/2, y - size/4, size, size/2);
+        }
+        ctx.globalCompositeOperation = 'source-over';
+
+        // Storms
+        ctx.globalAlpha = 0.6;
+        for (let i = 0; i < 10; i++) {
+            const sx = Math.random() * canvas.width;
+            const sy = Math.random() * canvas.height;
+            const ss = 60 + Math.random() * 140;
+            
+            const stormGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, ss);
+            stormGrad.addColorStop(0, 'rgba(68, 152, 210, 0.75)');
+            stormGrad.addColorStop(0.5, 'rgba(45, 120, 180, 0.5)');
+            stormGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = stormGrad;
+            ctx.beginPath();
+            ctx.ellipse(sx, sy, ss, ss * 0.6, Math.random() * Math.PI, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Efficient noise
+        ctx.globalAlpha = 0.2;
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+        for (let i = 0; i < 5000; i++) {
+            const x = Math.floor(Math.random() * canvas.width);
+            const y = Math.floor(Math.random() * canvas.height);
+            const idx = (y * canvas.width + x) * 4;
+            const bright = Math.random() > 0.5;
+            data[idx] = bright ? 224 : 10;
+            data[idx + 1] = bright ? 240 : 15;
+            data[idx + 2] = bright ? 255 : 30;
+            data[idx + 3] = 51;
+        }
+        ctx.putImageData(imgData, 0, 0);
         
-        const colorVariation = 0.7 + Math.random() * 0.3;
-        starColors[i3] = colorVariation;
-        starColors[i3 + 1] = colorVariation;
-        starColors[i3 + 2] = colorVariation;
+        // Highlights
+        ctx.globalAlpha = 0.3;
+        for (let i = 0; i < 40; i++) {
+            ctx.fillStyle = 'rgba(180, 226, 255, 0.25)';
+            ctx.fillRect(0, Math.random() * canvas.height, canvas.width, 1 + Math.random() * 3);
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        return texture;
+    }
+
+    // ===== HD SATURN =====
+    const saturnSegments = isMobile ? 48 : 64;
+    const saturnGeometry = new THREE.SphereGeometry(100, saturnSegments, saturnSegments);
+    const saturnTexture = createHDTexture();
+    
+    const saturnMaterial = new THREE.MeshStandardMaterial({
+        map: saturnTexture,
+        roughness: 0.85,
+        metalness: 0.05,
+        emissive: new THREE.Color(0x0a3050),
+        emissiveIntensity: 0.2
+    });
+
+    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    saturn.position.set(
+        (Math.random() - 0.5) * 400,
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200
+    );
+    scene.add(saturn);
+
+    // ===== TRANSPARENT RAINBOW RINGS =====
+    const ringGroup = new THREE.Group();
+    const ringGeometry = new THREE.RingGeometry(120, 220, 64);
+    
+    function createRingTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
         
-        starSizes[i] = 0.5 + Math.random() * 2;
+        const gradient = ctx.createRadialGradient(128, 128, 60, 128, 128, 128);
+        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+        gradient.addColorStop(0.15, 'rgba(148,0,211,0.18)');
+        gradient.addColorStop(0.3, 'rgba(75,0,130,0.22)');
+        gradient.addColorStop(0.45, 'rgba(0,0,255,0.25)');
+        gradient.addColorStop(0.55, 'rgba(0,255,0,0.25)');
+        gradient.addColorStop(0.65, 'rgba(255,255,0,0.25)');
+        gradient.addColorStop(0.8, 'rgba(255,127,0,0.22)');
+        gradient.addColorStop(0.92, 'rgba(255,0,0,0.18)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 256, 256);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = false;
+        return texture;
     }
     
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-    starGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+    const ringTexture = createRingTexture();
+    const ringMaterial = new THREE.MeshBasicMaterial({
+        map: ringTexture,
+        alphaMap: ringTexture,
+        transparent: true,
+        opacity: 0.5,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
     
+    const rings = new THREE.Mesh(ringGeometry, ringMaterial);
+    rings.rotation.x = Math.PI / 2;
+    ringGroup.add(rings);
+    ringGroup.rotation.x = Math.PI / 2;
+    
+    const ringOrbitGroup = new THREE.Group();
+    ringOrbitGroup.add(ringGroup);
+    saturn.add(ringOrbitGroup);
+
+    // ===== HD STARFIELD =====
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = isMobile ? 800 : 1500;
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
+    const sizes = new Float32Array(starCount);
+
+    for (let i = 0; i < starCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 2500;
+        positions[i3 + 1] = (Math.random() - 0.5) * 2500;
+        positions[i3 + 2] = (Math.random() - 0.5) * 2500;
+        
+        const colorType = Math.random();
+        if (colorType < 0.08) {
+            colors[i3] = 1;
+            colors[i3 + 1] = 0.7;
+            colors[i3 + 2] = 0.4;
+        } else if (colorType < 0.11) {
+            colors[i3] = 1;
+            colors[i3 + 1] = 0.5;
+            colors[i3 + 2] = 0.4;
+        } else {
+            colors[i3] = 1;
+            colors[i3 + 1] = 1;
+            colors[i3 + 2] = 1;
+        }
+        
+        sizes[i] = Math.random() * 2.5 + 0.5;
+    }
+
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    starGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
     const starMaterial = new THREE.PointsMaterial({
         size: 2,
         vertexColors: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.85,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending
     });
-    
+
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
-    // Saturn
-    const saturnGeometry = new THREE.SphereGeometry(120, 64, 64);
-    const saturnTexture = new THREE.TextureLoader().load(
-        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/saturn.jpg'
-    );
-    saturnTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    
-    const saturnMaterial = new THREE.MeshStandardMaterial({
-        map: saturnTexture,
-        roughness: 0.7,
-        metalness: 0.3
-    });
-    
-    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
-    scene.add(saturn);
-
-    // Saturn Rings
-    const ringGeometry = new THREE.RingGeometry(140, 280, 128);
-    const ringTexture = new THREE.TextureLoader().load(
-        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/saturn_ring_alpha.png'
-    );
-    ringTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    
-    const ringMaterial = new THREE.MeshStandardMaterial({
-        map: ringTexture,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.85,
-        roughness: 0.8,
-        metalness: 0.2
-    });
-    
-    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-    ring.rotation.x = Math.PI / 2;
-    
-    const ringOrbitGroup = new THREE.Group();
-    ringOrbitGroup.add(ring);
-    ringOrbitGroup.rotation.x = Math.PI / 8;
-    saturn.add(ringOrbitGroup);
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-    
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    directionalLight.position.set(500, 300, 400);
-    scene.add(directionalLight);
-    
-    const rimLight = new THREE.DirectionalLight(0x4488ff, 0.6);
-    rimLight.position.set(-400, 200, -300);
-    scene.add(rimLight);
-
-    // Motion variables
-    const velocity = [0, 0, 0];
-    const acceleration = 0.3;
-    const friction = 0.94;
-    const maxSpeed = 8;
-    
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetMouseX = 0;
-    let targetMouseY = 0;
-    let saturnRotation = 0;
-    let ringRotation = 0;
-    let frameCount = 0;
-    
-    const vFOV = camera.fov * Math.PI / 180;
-    const targetCameraZ = isMobile ? 1200 : 1100;
-    const targetCameraY = isMobile ? 350 : 300;
+    // ===== PHYSICS =====
+    const velocity = new Float32Array([2.5, 2, 1.5]);
     
     const aspect = window.innerWidth / window.innerHeight;
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const targetCameraZ = isMobile ? 1200 : 1100;
+    const targetCameraY = isMobile ? 300 : 250;
     const height = 2 * Math.tan(vFOV / 2) * targetCameraZ;
     const width = height * aspect;
+    
     spatialBounds.set(-width * 0.4, width * 0.4, -height * 0.35, height * 0.35, -400, 400);
 
-    // Mouse interaction
-    let interactionEnabled = false;
-    setTimeout(() => {
-        interactionEnabled = true;
-    }, 4000);
-    
-    window.addEventListener('mousemove', (e) => {
-        if (!interactionEnabled) return;
-        targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
+    // ===== ZOOM ANIMATION =====
+    const zoomDuration = 4000; // 4 seconds - moderate speed
+    const zoomStartTime = performance.now();
+    let zoomComplete = false;
 
-    // Animation loop
+    // ===== ANIMATION LOOP =====
+    let lastTime = performance.now();
+    let ringRotation = 0;
+    let saturnRotation = 0;
+    let frameCount = 0;
+
     function animate(currentTime) {
         requestAnimationFrame(animate);
+        
+        const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
+        lastTime = currentTime;
         frameCount++;
 
-        // Zoom animation
-        if (currentTime < 4000) {
-            const progress = currentTime / 4000;
-            const eased = 1 - Math.pow(1 - progress, 3);
-            camera.position.z = 3500 - (3500 - targetCameraZ) * eased;
-            camera.position.y = 400 - (400 - targetCameraY) * eased;
-        } else {
-            // Mouse smoothing
-            mouseX += (targetMouseX - mouseX) * 0.05;
-            mouseY += (targetMouseY - mouseY) * 0.05;
+        // Zoom animation with easing
+        if (!zoomComplete) {
+            const zoomProgress = Math.min((currentTime - zoomStartTime) / zoomDuration, 1);
+            const easeProgress = 1 - Math.pow(1 - zoomProgress, 3); // Ease out cubic
+            
+            camera.position.z = 3500 - (3500 - targetCameraZ) * easeProgress;
+            camera.position.y = 400 - (400 - targetCameraY) * easeProgress;
+            
+            if (zoomProgress >= 1) {
+                zoomComplete = true;
+            }
+        }
 
-            const inputX = mouseX * 15;
-            const inputY = mouseY * 15;
+        // Saturn movement after zoom
+        if (zoomComplete) {
+            smoothX.push(saturn.position.x + velocity[0]);
+            smoothY.push(saturn.position.y + velocity[1]);
+            smoothZ.push(saturn.position.z + velocity[2]);
+            
+            saturn.position.x = smoothX.get();
+            saturn.position.y = smoothY.get();
+            saturn.position.z = smoothZ.get();
 
-            velocity[0] += (inputX - saturn.position.x) * acceleration * 0.01;
-            velocity[1] += (inputY - saturn.position.y) * acceleration * 0.01;
-
-            velocity[0] *= friction;
-            velocity[1] *= friction;
-            velocity[2] *= friction;
-
-            velocity[0] = Math.max(-maxSpeed, Math.min(maxSpeed, velocity[0]));
-            velocity[1] = Math.max(-maxSpeed, Math.min(maxSpeed, velocity[1]));
-
-            smoothX.push(velocity[0]);
-            smoothY.push(velocity[1]);
-            smoothZ.push(velocity[2]);
-
-            saturn.position.x += smoothX.get();
-            saturn.position.y += smoothY.get();
-            saturn.position.z += smoothZ.get();
-
-            const bounds = spatialBounds.check(saturn.position);
-            if (bounds.x) {
+            const bounceCheck = spatialBounds.check(saturn.position);
+            if (bounceCheck.x) {
                 velocity[0] *= -1;
                 saturn.position.x = Math.max(spatialBounds.bounds[0], Math.min(spatialBounds.bounds[1], saturn.position.x));
             }
-            if (bounds.y) {
+            if (bounceCheck.y) {
                 velocity[1] *= -1;
                 saturn.position.y = Math.max(spatialBounds.bounds[2], Math.min(spatialBounds.bounds[3], saturn.position.y));
             }
-            if (bounds.z) {
+            if (bounceCheck.z) {
                 velocity[2] *= -1;
                 saturn.position.z = Math.max(spatialBounds.bounds[4], Math.min(spatialBounds.bounds[5], saturn.position.z));
             }
 
+            // Smooth camera follow
             const cameraZ = targetCameraZ + saturn.position.z * 0.1;
             const cameraY = targetCameraY + saturn.position.y * 0.15;
             camera.position.x += (saturn.position.x * 0.15 - camera.position.x) * 0.05;
@@ -693,14 +561,17 @@ setTimeout(() => {
             camera.position.z += (cameraZ - camera.position.z) * 0.05;
         }
 
+        // Rotations
         saturnRotation += 0.001;
         saturn.rotation.y = saturnRotation;
         
         ringRotation += 0.002;
         ringOrbitGroup.rotation.x = ringRotation;
 
+        // Camera look at
         camera.lookAt(saturn.position);
 
+        // Star twinkle
         if (frameCount % 4 === 0) {
             const starSizes = stars.geometry.attributes.size.array;
             const time = currentTime * 0.001;
@@ -751,3 +622,155 @@ setTimeout(() => {
     });
 
 }, 1000);
+
+
+
+
+// Navbar with soft pastel bluish-purple
+const nav = document.querySelector('nav');
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    
+    if (scrollY > 100) {
+        // Soft pastel look
+        nav.style.background = 'rgba(230, 240, 255, 0.15)';
+        nav.style.backdropFilter = 'blur(30px) saturate(150%)';
+        nav.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.1), inset 0 0 0 1px rgba(199, 210, 254, 0.3)';
+        nav.style.borderBottom = '1px solid rgba(199, 210, 254, 0.4)';
+        nav.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.320, 1)';
+    } else {
+        // Transparent at top
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.boxShadow = 'none';
+        nav.style.borderBottom = 'none';
+    }
+});
+// About section typewriter effect
+let aboutTypingStarted = false;
+const aboutText1Element = document.getElementById('about-text-1');
+const aboutText2Element = document.getElementById('about-text-2');
+
+const aboutTexts = [
+    {
+        element: aboutText1Element,
+        text: "Blending IT administration, user experience, and web development, I bring a holistic approach to technology. With hands-on experience using Microsoft Intune and managing enterprise environments, I’m pursuing a degree in Cloud & Network Engineering to build secure, scalable systems.",
+        delay: 0
+    },
+    {
+        element: aboutText2Element,
+        text: "I’ve worked across both IT operations and software development, giving me a unique perspective on how systems and people connect. From managing endpoints in Microsoft Intune to developing full-stack applications, I focus on efficiency, automation, and clean user experiences. I’m currently expanding into cloud and network engineering to help design smarter, scalable infrastructures for the future.",
+        delay: 4500
+    }
+];
+
+function typeAboutText(textObj, callback) {
+    if (!textObj.element) return;
+    
+    let charIndex = 0;
+    textObj.element.textContent = '';
+    textObj.element.classList.add('typing');
+    
+    function type() {
+        if (charIndex < textObj.text.length) {
+            textObj.element.textContent += textObj.text.charAt(charIndex);
+            charIndex++;
+            setTimeout(type, 35);
+        } else if (callback) {
+            callback();
+        }
+    }
+    
+    setTimeout(type, textObj.delay);
+}
+
+function startAboutTyping() {
+    if (!aboutTypingStarted) {
+        aboutTypingStarted = true;
+        typeAboutText(aboutTexts[0], () => {
+            typeAboutText(aboutTexts[1]);
+        });
+    }
+}
+
+// Observe about section
+const aboutSection = document.getElementById('about');
+if (aboutSection) {
+    const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startAboutTyping();
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    aboutObserver.observe(aboutSection);
+}
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) {
+        progressBar.style.width = scrolled + '%';
+    }
+});
+
+// Intersection Observer for experience items
+const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.experience-item').forEach(item => {
+    observer.observe(item);
+});
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Fluid button animations
+const buttonLeft = document.querySelector('.button-float-left');
+const buttonRight = document.querySelector('.button-float-right');
+let timeLeft = 0;
+let timeRight = 0;
+
+function animateButtons() {
+    if (buttonLeft && buttonRight) {
+        timeLeft += 0.016;
+        timeRight += 0.016;
+        
+        const leftOffset = Math.sin(timeLeft * 1.5) * 15;
+        const rightOffset = Math.sin(timeRight * 1.5 + Math.PI) * 15;
+        
+        buttonLeft.style.transform = 'translateX(' + leftOffset + 'px)';
+        buttonRight.style.transform = 'translateX(' + rightOffset + 'px)';
+    }
+    
+    requestAnimationFrame(animateButtons);
+}
+
+// Start button animation
+animateButtons();
