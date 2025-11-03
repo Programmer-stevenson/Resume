@@ -4,6 +4,40 @@
 /* ============================================
    FADE IN ANIMATION
    ============================================ */
+
+
+
+   .slide {
+            display: grid;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+        .slide.exiting {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        .slideshow-dot {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slideshow-dot.active {
+            background-color: rgb(45, 212, 191);
+            transform: scale(1.2);
+        }
+        #slideshow {
+            position: relative;
+            min-height: 500px;
+        }
 @keyframes fadeIn {
     from {
         opacity: 0;
