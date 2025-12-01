@@ -58,7 +58,7 @@ const projects = [
     title: 'Portfolio Website',
     description: 'Interactive personal portfolio featuring Three.js Saturn background, advanced animations, and modern design patterns showcasing skills and experience.',
     tech: ['React', 'TypeScript', 'Three.js', 'Framer Motion'],
-    liveUrl: '#',
+    liveUrl: 'https://resume-frmy.onrender.com/',
     githubUrl: 'https://github.com/Programmer-stevenson',
     gradient: 'from-[#0a0a10] via-[#101020] to-[#0a0a12]',
     accentGradient: 'from-cyan-600 to-blue-500',
