@@ -13,7 +13,7 @@ const SaturnBackground = () => {
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
-    camera.position.set(0, 150, isMobile ? 500 : 600);
+    camera.position.set(0, 150, isMobile ? 1000 : 600);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: !isMobile,
@@ -128,7 +128,7 @@ const SaturnBackground = () => {
 
     // Saturn
     const saturnSegments = isMobile ? 32 : 64;
-    const saturnGeometry = new THREE.SphereGeometry(100, saturnSegments, saturnSegments);
+    const saturnGeometry = new THREE.SphereGeometry(75, saturnSegments, saturnSegments);
     const saturnTexture = createSaturnTexture();
 
     const saturnMaterial = new THREE.MeshStandardMaterial({
@@ -144,7 +144,7 @@ const SaturnBackground = () => {
     scene.add(saturn);
 
     // Rings
-    const ringGeometry = new THREE.RingGeometry(120, 220, isMobile ? 32 : 64);
+    const ringGeometry = new THREE.RingGeometry(95, 170, isMobile ? 32 : 64);
     const ringTexture = createRingTexture();
 
     const ringMaterial = new THREE.MeshBasicMaterial({
@@ -158,8 +158,13 @@ const SaturnBackground = () => {
     });
 
     const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-    rings.rotation.x = Math.PI / 2.5;
-    saturn.add(rings);
+    rings.rotation.x = Math.PI / 2;
+    
+    // Orbit group so rings rotate around planet
+    const ringOrbitGroup = new THREE.Group();
+    ringOrbitGroup.add(rings);
+    ringOrbitGroup.rotation.x = Math.PI / 2.5; // Tilt
+    saturn.add(ringOrbitGroup);
 
     // Stars
     const starGeometry = new THREE.BufferGeometry();
@@ -196,7 +201,7 @@ const SaturnBackground = () => {
       // DESKTOP ONLY: rotate
       if (shouldRotate) {
         saturn.rotation.y += 0.001;
-        rings.rotation.z += 0.0005;
+        ringOrbitGroup.rotation.z += 0.002; // Rings orbit around planet
         stars.rotation.y += 0.0001;
       }
 
