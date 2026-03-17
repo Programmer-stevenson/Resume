@@ -157,7 +157,7 @@ const DigitalMarketingCarousel = () => {
           </span>
         </h3>
         <p className="text-gray-400 max-w-xl mx-auto text-base sm:text-lg">
-          Brand graphics, social content, and marketing assets designed and produced for clients.
+          Brand graphics, Social Media content, and marketing assets designed for my business.
         </p>
       </motion.div>
 

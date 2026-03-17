@@ -160,10 +160,10 @@ const SaturnBackground = () => {
     const rings = new THREE.Mesh(ringGeometry, ringMaterial);
     rings.rotation.x = Math.PI / 2;
     
-    // Orbit group so rings rotate around planet
+    // Orbit group — ring stays horizontal (flat)
     const ringOrbitGroup = new THREE.Group();
     ringOrbitGroup.add(rings);
-    ringOrbitGroup.rotation.x = Math.PI / 2.5; // Tilt
+    ringOrbitGroup.rotation.x = Math.PI / 2; // Perfectly horizontal
     saturn.add(ringOrbitGroup);
 
     // Stars
@@ -193,15 +193,14 @@ const SaturnBackground = () => {
 
     // Animation
     let animationId: number;
-    const shouldRotate = !isMobile; // Store this value
+    const shouldRotate = !isMobile;
 
     function animate() {
       animationId = requestAnimationFrame(animate);
 
-      // DESKTOP ONLY: rotate
       if (shouldRotate) {
         saturn.rotation.y += 0.001;
-        ringOrbitGroup.rotation.z += 0.002; // Rings orbit around planet
+        ringOrbitGroup.rotation.y += 0.002; // Spin ring around Y axis to stay flat
         stars.rotation.y += 0.0001;
       }
 
