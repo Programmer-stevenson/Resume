@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Briefcase, GraduationCap, Mail, X, Menu } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Mail, X, Menu, User } from 'lucide-react';
 
 const navLinks = [
   { href: '#home', label: 'Home', icon: Home },
+  { href: '#introduction', label: 'About Me', icon: User },
   { href: '#projects', label: 'Projects', icon: Briefcase },
   { href: '#about', label: 'Experience', icon: Briefcase },
   { href: '#education', label: 'Education', icon: GraduationCap },
@@ -12,7 +13,7 @@ const navLinks = [
 
 const mobileNavIcons: Record<string, { gradient: string; hoverGradient: string }> = {
   Home: { gradient: 'from-teal-500/20 to-cyan-500/20', hoverGradient: 'from-teal-500/30 to-cyan-500/30' },
-  About: { gradient: 'from-cyan-500/20 to-blue-500/20', hoverGradient: 'from-cyan-500/30 to-blue-500/30' },
+  'About Me': { gradient: 'from-cyan-500/20 to-teal-500/20', hoverGradient: 'from-cyan-500/30 to-teal-500/30' },
   Projects: { gradient: 'from-blue-500/20 to-purple-500/20', hoverGradient: 'from-blue-500/30 to-purple-500/30' },
   Experience: { gradient: 'from-purple-500/20 to-pink-500/20', hoverGradient: 'from-purple-500/30 to-pink-500/30' },
   Education: { gradient: 'from-pink-500/20 to-rose-500/20', hoverGradient: 'from-pink-500/30 to-rose-500/30' },

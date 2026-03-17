@@ -13,7 +13,9 @@ import {
   Smartphone,
   CheckCircle2,
   Building2,
-  Award
+  Award,
+  Rocket,
+  HardDrive
 } from 'lucide-react';
 
 interface Experience {
@@ -33,22 +35,62 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
-    id: 'macbid',
-    title: 'IT Administrator',
-    company: 'MAC.BID',
+    id: 'epc',
+    title: 'IT Infrastructure Specialist',
+    company: 'Executive Personal Computers, Inc.',
     location: 'Las Vegas, NV',
-    period: 'Nov 2024 - Nov 2025',
+    period: 'Jan 2026 - Present',
     type: 'work',
     current: true,
     highlights: [
-      'Maintained IT infrastructure across multiple offices with 99.5% uptime',
-      'Provided tech support across Windows, macOS, iOS, and Android — 95% of issues resolved within SLA',
-      'Led company-wide migration to Microsoft Intune for device management',
-      'Managed Active Directory accounts and security groups',
-      'Handled software updates, patches, and security rollouts using Intune and Microsoft 365',
-      'Negotiated vendor contracts for hardware and licensing',
-      'Created IT documentation and SOPs for compliance and efficiency',
-      'Collaborated with HR and department heads on onboarding and infrastructure scaling',
+      'Configure, diagnose, test, and validate enterprise IT infrastructure across multi-vendor server platforms (Dell PowerEdge, HP ProLiant, Lenovo, Supermicro, Cisco UCS, IBM, Oracle), networking equipment, SAN storage arrays, and endpoint devices',
+      'Execute certified data sanitization via Blancco Drive Eraser and CLI tooling in strict compliance with NIST 800-88, generating verified certificates of destruction for regulatory audit',
+      'Drive full-lifecycle ITAD processing — intake, assessment, sanitization, functional testing, grading, and certified disposition or remarketing',
+      'Restore and configure enterprise servers and network infrastructure to factory specifications leveraging out-of-band management (HP iLO 4, Dell iDRAC) and PuTTY serial console',
+      'Execute full server rebuilds — OS reimaging, BIOS/UEFI firmware updates, RAID array configuration, drive pool initialization, and system health validation',
+      'Perform component-level hardware replacements on rack-mount and tower servers — RAM, SSD/HDD, CPUs, PSUs, NICs, RAID controllers, backplanes',
+      'Wipe, reset, and restore high-volume multi-vendor enterprise IT equipment — managed switches, routers, firewalls, access points, POS systems, and docking stations',
+      'Maintain rigorous asset documentation — hardware specs, test results, erasure verification, chain-of-custody — within ERP and inventory systems',
+    ],
+    skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'Blancco', 'iLO 4', 'iDRAC', 'PuTTY', 'NIST 800-88', 'RAID'],
+    icon: HardDrive,
+    accentColor: 'rose',
+  },
+  {
+    id: 'plexura',
+    title: 'Technical Co-Founder',
+    company: 'Plexura',
+    location: 'Las Vegas, NV · Remote',
+    period: 'Apr 2025 - Present',
+    type: 'work',
+    current: true,
+    highlights: [
+      'Lead technical strategy, architecture, and delivery for client web and mobile applications, logo design, graphic design, and digital marketing campaigns',
+      'Oversee project execution, coding standards, and development team operations across the full software development lifecycle',
+      'Build internal tooling and automations to streamline agency workflows and improve delivery efficiency',
+      'Implement analytics, SEO, and marketing technology stacks for client campaigns to drive measurable growth',
+      'Create and manage social media content, digital marketing assets, and brand presence across platforms',
+      'Partner with Director of Strategy & Sales on client acquisition, proposals, brand positioning, partnerships, and business operations including budgeting and contracts',
+    ],
+    skills: ['React', 'Next.js', 'Node.js', 'Three.js', 'Tailwind CSS', 'MongoDB', 'SEO', 'Figma'],
+    icon: Rocket,
+    accentColor: 'fuchsia',
+  },
+  {
+    id: 'macbid',
+    title: 'IT Administrator',
+    company: 'MAC.BID',
+    location: 'Las Vegas, NV · Hybrid Remote',
+    period: 'Nov 2024 - Nov 2025',
+    type: 'work',
+    highlights: [
+      'Supported IT infrastructure across multiple offices, maintaining 99.5% uptime for enterprise operations',
+      'Deployed and managed Microsoft Intune for device management and security across the organization',
+      'Provided multi-platform technical support (Windows, macOS, iOS, Android) with 95% SLA compliance',
+      'Managed Active Directory accounts, security groups, and user permissions',
+      'Deployed software updates, patches, and security rollouts using Intune and Microsoft 365',
+      'Negotiated with vendors for hardware procurement and licensing agreements',
+      'Created comprehensive IT documentation and SOPs to ensure compliance and operational efficiency',
     ],
     skills: ['Microsoft Intune', 'Active Directory', 'Microsoft 365', 'Windows', 'macOS', 'iOS', 'Android'],
     icon: Server,
@@ -56,22 +98,19 @@ const experiences: Experience[] = [
   },
   {
     id: 'cdw',
-    title: 'IT Configurations Technician II',
+    title: 'Desktop Support Technician',
     company: 'CDW',
     location: 'Las Vegas, NV',
-    period: 'Apr 2023 - Nov 2024',
+    period: 'Apr 2024 - Nov 2024',
     type: 'work',
     highlights: [
-      'Configured and imaged 10,000+ laptops, desktops, tablets, and mobile devices for enterprise deployments',
-      'Used Microsoft Intune, Autopilot, and MECM to provision devices to client specifications',
-      'Installed operating systems, business applications, and security software',
-      'Set up user accounts and access permissions through Active Directory and Azure AD',
-      'Configured VPN profiles, Wi-Fi connections, and network settings for corporate environments',
-      'Maintained accurate device inventory and asset records',
-      'Applied security settings including encryption, antivirus, and Windows updates',
-      'Performed quality assurance testing before deployment',
+      'Configured and imaged 500+ devices daily (laptops, desktops, tablets, mobile devices) for enterprise deployments',
+      'Provisioned devices using Autopilot and various deployment methods according to client specifications',
+      'Installed operating systems, business applications, and security software on new and refreshed hardware',
+      'Applied security settings including encryption, antivirus, and Windows updates before deployment',
+      'Performed quality assurance testing and asset tagging to ensure devices met standards and requirements',
     ],
-    skills: ['Intune', 'Autopilot', 'MECM', 'Azure AD', 'Active Directory', 'Device Imaging'],
+    skills: ['Intune', 'Autopilot', 'Azure AD', 'Active Directory', 'Device Imaging'],
     icon: Monitor,
     accentColor: 'emerald',
   },
@@ -155,6 +194,8 @@ const getAccentClasses = (color: string) => {
     emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', shadow: 'rgba(16, 185, 129, 0.15)' },
     violet: { bg: 'bg-violet-500/10', border: 'border-violet-500/30', text: 'text-violet-400', shadow: 'rgba(139, 92, 246, 0.15)' },
     amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', shadow: 'rgba(245, 158, 11, 0.15)' },
+    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', shadow: 'rgba(244, 63, 94, 0.15)' },
+    fuchsia: { bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/30', text: 'text-fuchsia-400', shadow: 'rgba(217, 70, 239, 0.15)' },
   };
   return colors[color] || colors.cyan;
 };
@@ -168,6 +209,7 @@ interface ExperienceCardProps {
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isLeft }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const isCardInView = useInView(cardRef, { 
+    once: true,
     margin: '-30% 0px -30% 0px'
   });
   
@@ -400,16 +442,21 @@ const About = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="relative">
-                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-violet-500/50 to-amber-500/50 transform md:-translate-x-1/2" />
+                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-rose-500/50 via-cyan-500/50 to-amber-500/50 transform md:-translate-x-1/2" />
 
                 <div className="space-y-8">
                   {experiences.map((exp, index) => (
-                    <ExperienceCard 
-                      key={exp.id} 
-                      exp={exp} 
-                      index={index} 
-                      isLeft={index % 2 === 0}
-                    />
+                    <div key={exp.id}>
+                      {/* Anchor for Education nav link — placed before the first education entry */}
+                      {exp.type === 'education' && (index === 0 || experiences[index - 1].type !== 'education') && (
+                        <div id="education" className="scroll-mt-24" />
+                      )}
+                      <ExperienceCard 
+                        exp={exp} 
+                        index={index} 
+                        isLeft={index % 2 === 0}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -440,7 +487,7 @@ const About = () => {
                       <div className={`p-2.5 rounded-xl bg-gradient-to-br ${category.color}`}>
                         <Icon className="w-5 h-5 text-white" />
                       </div>
-                      <h3 id="education" className="text-lg font-semibold text-white">{category.name}</h3>
+                      <h3 className="text-lg font-semibold text-white">{category.name}</h3>
                     </div>
 
                     <div className="relative flex flex-wrap gap-2">
@@ -476,7 +523,7 @@ const About = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {[
-            { label: 'Intune Migration', value: 'Led', icon: Cloud },
+            { label: 'Co-Founded Agency', value: 'Plexura', icon: Rocket },
             { label: 'Uptime Achieved', value: '99.5%', icon: Server },
             { label: 'Devices Configured', value: '10,000+', icon: Smartphone },
             { label: 'Years in IT', value: '3+', icon: Award },

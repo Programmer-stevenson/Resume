@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Rocket } from 'lucide-react';
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Rocket, Palette, Wrench, Droplets } from 'lucide-react';
 
 const projects = [
   {
@@ -19,6 +19,40 @@ const projects = [
     icon: Sparkles,
     iconLabel: 'Luxury E-Commerce',
     screenshot: '/vorus.png',
+  },
+  {
+    title: "Los's Auto Glass & Auto Repair",
+    description: 'Full-stack auto glass business site with service booking, gallery, financing info, and a custom admin dashboard. Built for a real client with Twilio SMS integration and MongoDB backend.',
+    tech: ['Next.js', 'Express', 'MongoDB', 'Twilio', 'Tailwind CSS'],
+    liveUrl: 'https://los-s-auto-glass-frontend.onrender.com/',
+    githubUrl: 'https://github.com/Programmer-stevenson',
+    gradient: 'from-[#060810] via-[#0a1220] to-[#080a12]',
+    accentGradient: 'from-blue-600 to-sky-500',
+    textGradient: 'from-blue-200 to-sky-100',
+    glowColor: 'shadow-blue-500/20',
+    borderAccent: 'border-blue-500/30',
+    tagBg: 'bg-blue-500/10',
+    tagText: 'text-blue-300',
+    icon: Wrench,
+    iconLabel: 'Full-Stack Business Site',
+    screenshot: '/los.jpg',
+  },
+  {
+    title: 'Plexura Plumbing Marketing',
+    description: 'Conversion-focused digital marketing landing page built for plumbing companies. Features GBP optimization info, service packages, campaign creative showcases, and mobile-first conversion UX.',
+    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive Design'],
+    liveUrl: 'https://plexura-plumbing-marketing.onrender.com/',
+    githubUrl: 'https://github.com/Programmer-stevenson',
+    gradient: 'from-[#050a0f] via-[#0a1a1f] to-[#080f12]',
+    accentGradient: 'from-teal-600 to-cyan-500',
+    textGradient: 'from-teal-200 to-cyan-100',
+    glowColor: 'shadow-teal-500/20',
+    borderAccent: 'border-teal-500/30',
+    tagBg: 'bg-teal-500/10',
+    tagText: 'text-teal-300',
+    icon: Droplets,
+    iconLabel: 'Digital Marketing',
+    screenshot: '/plumb.png',
   },
   {
     title: 'Cosmic Skate',
@@ -73,21 +107,150 @@ const projects = [
   },
 ];
 
+// Generate digi image array: digi1.jpg through digi13.jpg + plumb.png
+const digiImages = [
+  ...Array.from({ length: 13 }, (_, i) => ({
+    src: `/digi${i + 1}.jpg`,
+    alt: `Digital Marketing Design ${i + 1}`,
+  })),
+  {
+    src: '/plumb.png',
+    alt: 'Plexura Plumbing Marketing Landing Page',
+  },
+];
+
+const DigitalMarketingCarousel = () => {
+  const carouselRef = useRef(null);
+  const isInView = useInView(carouselRef, { once: true, margin: '-100px' });
+
+  // Duplicate images for seamless infinite loop
+  const duplicatedImages = [...digiImages, ...digiImages];
+
+  return (
+    <motion.div
+      ref={carouselRef}
+      className="mt-28"
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Section Header */}
+      <motion.div
+        className="mb-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <motion.span
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 text-sm text-fuchsia-300 mb-4"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.15 }}
+        >
+          <Palette className="w-3.5 h-3.5" />
+          Plexura Creative
+        </motion.span>
+        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3">
+          Digital Marketing {' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-pink-500">
+            For Plexura
+          </span>
+        </h3>
+        <p className="text-gray-400 max-w-xl mx-auto text-base sm:text-lg">
+          Brand graphics, social content, and marketing assets designed and produced for clients.
+        </p>
+      </motion.div>
+
+      {/* Auto-scrolling Carousel */}
+      <div className="relative overflow-hidden">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-gray-950 via-gray-950/80 to-transparent z-10 pointer-events-none" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-gray-950 via-gray-950/80 to-transparent z-10 pointer-events-none" />
+
+        {/* Scrolling track */}
+        <div className="flex animate-scroll hover:[animation-play-state:paused]">
+          {duplicatedImages.map((img, index) => (
+            <div
+              key={`${img.src}-${index}`}
+              className="flex-shrink-0 px-2 sm:px-3"
+            >
+              <div className="relative group w-[280px] sm:w-[340px] md:w-[400px] rounded-2xl overflow-hidden border border-white/10 hover:border-fuchsia-500/40 transition-all duration-500 shadow-lg hover:shadow-fuchsia-500/10">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CSS Keyframes for infinite scroll */}
+      <style>{`
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-scroll {
+          animation: scroll 60s linear infinite;
+          width: max-content;
+        }
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </motion.div>
+  );
+};
+
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageError, setImageError] = useState<Record<number, boolean>>({});
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const AUTOPLAY_DELAY = 8000;
+
+  // Start or restart the autoplay timer
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % projects.length);
-    }, 8000);
-    return () => clearInterval(interval);
+    }, AUTOPLAY_DELAY);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % projects.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
+  // Initialize autoplay
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [resetTimer]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % projects.length);
+    resetTimer();
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
+    resetTimer();
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    resetTimer();
+  };
 
   const handleImageError = (index: number) => {
     setImageError((prev) => ({ ...prev, [index]: true }));
@@ -292,7 +455,7 @@ const Projects = () => {
               <motion.button
                 key={index}
                 className="relative group"
-                onClick={() => setCurrentSlide(index)}
+                onClick={() => goToSlide(index)}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -322,6 +485,9 @@ const Projects = () => {
             <span>{String(projects.length).padStart(2, '0')}</span>
           </div>
         </motion.div>
+
+        {/* Digital Marketing Carousel */}
+        <DigitalMarketingCarousel />
       </div>
     </section>
   );
