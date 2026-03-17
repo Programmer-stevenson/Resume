@@ -143,7 +143,8 @@ const SaturnBackground = () => {
     saturn.position.set(0, 0, 0);
     scene.add(saturn);
 
-    // Rings
+    // Rings — RingGeometry is created in XY plane,
+    // so a single rotation.x of PI/2 lays it flat (horizontal)
     const ringGeometry = new THREE.RingGeometry(95, 170, isMobile ? 32 : 64);
     const ringTexture = createRingTexture();
 
@@ -158,12 +159,12 @@ const SaturnBackground = () => {
     });
 
     const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-    rings.rotation.x = Math.PI / 2;
-    
-    // Orbit group — ring stays horizontal (flat)
+    // Do NOT rotate the mesh itself — let the group handle orientation
+
     const ringOrbitGroup = new THREE.Group();
     ringOrbitGroup.add(rings);
-    ringOrbitGroup.rotation.x = Math.PI / 2; // Perfectly horizontal
+    // Single rotation to make rings horizontal
+    ringOrbitGroup.rotation.x = Math.PI / 2;
     saturn.add(ringOrbitGroup);
 
     // Stars
@@ -191,18 +192,16 @@ const SaturnBackground = () => {
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
-    // Animation
+    // Animation — enabled on all devices, slightly slower on mobile
     let animationId: number;
-    const shouldRotate = !isMobile;
+    const rotationSpeed = isMobile ? 0.6 : 1;
 
     function animate() {
       animationId = requestAnimationFrame(animate);
 
-      if (shouldRotate) {
-        saturn.rotation.y += 0.001;
-        ringOrbitGroup.rotation.y += 0.002; // Spin ring around Y axis to stay flat
-        stars.rotation.y += 0.0001;
-      }
+      saturn.rotation.y += 0.001 * rotationSpeed;
+      ringOrbitGroup.rotation.y += 0.002 * rotationSpeed;
+      stars.rotation.y += 0.0001 * rotationSpeed;
 
       camera.lookAt(saturn.position);
       renderer.render(scene, camera);
