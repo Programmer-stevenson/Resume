@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
+/*
+  Requires in public/textures/:
+    - 2k_eris_fictional.jpg
+    - space_bg.jpg  (2048x1024 equirectangular space background)
+*/
+
 const SaturnBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -12,7 +18,7 @@ const SaturnBackground = () => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 8000);
     camera.position.set(0, 150, isMobile ? 1000 : 600);
 
     const renderer = new THREE.WebGLRenderer({
@@ -20,12 +26,12 @@ const SaturnBackground = () => {
       alpha: true,
       powerPreference: 'default',
     });
-    
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-    
+    renderer.toneMappingExposure = 1.0;
+
     renderer.domElement.style.cssText = `
       position: absolute;
       top: 0;
@@ -35,68 +41,86 @@ const SaturnBackground = () => {
       pointer-events: none;
       z-index: 5;
     `;
-    
+
     container.appendChild(renderer.domElement);
 
     // Lighting
-    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.8);
     sunLight.position.set(500, 300, 400);
     scene.add(sunLight);
 
-    const ambientLight = new THREE.AmbientLight(0x4466aa, 0.4);
+    const ambientLight = new THREE.AmbientLight(0x222244, 0.3);
     scene.add(ambientLight);
 
     if (!isMobile) {
-      const rimLight = new THREE.PointLight(0x88bbff, 1.2, 1000);
+      const rimLight = new THREE.PointLight(0x6688bb, 0.8, 1000);
       rimLight.position.set(-300, 100, 200);
       scene.add(rimLight);
     }
 
-    // Create Saturn texture
-    function createSaturnTexture() {
-      const canvas = document.createElement('canvas');
-      canvas.width = isMobile ? 1024 : 2048;
-      canvas.height = isMobile ? 512 : 1024;
-      const ctx = canvas.getContext('2d')!;
+    const textureLoader = new THREE.TextureLoader();
 
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, '#b8e8ff');
-      gradient.addColorStop(0.15, '#6ab8e8');
-      gradient.addColorStop(0.3, '#4098cc');
-      gradient.addColorStop(0.5, '#2d7aa0');
-      gradient.addColorStop(0.7, '#1a5f7a');
-      gradient.addColorStop(0.85, '#1a1a4a');
-      gradient.addColorStop(1, '#2a0a4a');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    /* ─── Space background via CSS (no distortion) ─── */
+    container.style.backgroundImage = 'url(/textures/space_bg.jpg)';
+    container.style.backgroundSize = 'cover';
+    container.style.backgroundPosition = 'center';
+    container.style.backgroundRepeat = 'no-repeat';
 
-      ctx.globalAlpha = 0.55;
-      const colors = ['#3a8ec8', '#2d7db8', '#4a9ed8', '#1a6e9a', '#2a8eb8', '#0d5a7a'];
-      const bandCount = isMobile ? 40 : 100;
-      for (let i = 0; i < bandCount; i++) {
-        const y = (canvas.height / bandCount) * i;
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.fillRect(0, y, canvas.width, 6 + Math.random() * 12);
-      }
+    /* ─── Star Sparkles ─── */
+    const starCount = isMobile ? 300 : 600;
+    const starPositions = new Float32Array(starCount * 3);
+    const starSizes = new Float32Array(starCount);
+    const starPhases = new Float32Array(starCount); // random twinkle offset
+    const starSpeeds = new Float32Array(starCount); // random twinkle speed
+    const spread = 3000;
 
-      ctx.globalAlpha = 0.3;
-      const glowGradient = ctx.createRadialGradient(
-        canvas.width * 0.3, canvas.height * 0.3, 0,
-        canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.6
-      );
-      glowGradient.addColorStop(0, 'rgba(200, 240, 255, 0.4)');
-      glowGradient.addColorStop(0.5, 'rgba(100, 180, 230, 0.2)');
-      glowGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = glowGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      return texture;
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * spread;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * spread;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * spread;
+      starSizes[i] = Math.random() * 3 + 1;
+      starPhases[i] = Math.random() * Math.PI * 2;
+      starSpeeds[i] = 0.3 + Math.random() * 1.5;
     }
 
-    // Create Ring texture
+    const starGeometry = new THREE.BufferGeometry();
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+
+    const starMaterial = new THREE.PointsMaterial({
+      color: 0xffffff,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    /* ─── Planet ─── */
+    const planetTexture = textureLoader.load('/textures/2k_eris_fictional.jpg');
+    planetTexture.minFilter = THREE.LinearFilter;
+    planetTexture.magFilter = THREE.LinearFilter;
+
+    const planetSegments = isMobile ? 32 : 64;
+    const planetGeometry = new THREE.SphereGeometry(75, planetSegments, planetSegments);
+
+    const planetMaterial = new THREE.MeshStandardMaterial({
+      map: planetTexture,
+      color: new THREE.Color(0xccccdd),
+      roughness: 0.6,
+      metalness: 0.35,
+      emissive: new THREE.Color(0x0a1530),
+      emissiveIntensity: 0.25,
+    });
+
+    const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+    planet.position.set(0, 0, 0);
+    scene.add(planet);
+
+    /* ─── Rings ─── */
     function createRingTexture() {
       const canvas = document.createElement('canvas');
       const size = isMobile ? 128 : 256;
@@ -126,25 +150,6 @@ const SaturnBackground = () => {
       return texture;
     }
 
-    // Saturn
-    const saturnSegments = isMobile ? 32 : 64;
-    const saturnGeometry = new THREE.SphereGeometry(75, saturnSegments, saturnSegments);
-    const saturnTexture = createSaturnTexture();
-
-    const saturnMaterial = new THREE.MeshStandardMaterial({
-      map: saturnTexture,
-      roughness: 0.85,
-      metalness: 0.05,
-      emissive: new THREE.Color(0x0a3050),
-      emissiveIntensity: 0.2,
-    });
-
-    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
-    saturn.position.set(0, 0, 0);
-    scene.add(saturn);
-
-    // Rings — RingGeometry is created in XY plane,
-    // so a single rotation.x of PI/2 lays it flat (horizontal)
     const ringGeometry = new THREE.RingGeometry(95, 170, isMobile ? 32 : 64);
     const ringTexture = createRingTexture();
 
@@ -159,51 +164,41 @@ const SaturnBackground = () => {
     });
 
     const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-    // Do NOT rotate the mesh itself — let the group handle orientation
-
     const ringOrbitGroup = new THREE.Group();
     ringOrbitGroup.add(rings);
-    // Single rotation to make rings horizontal
     ringOrbitGroup.rotation.x = Math.PI / 2;
-    saturn.add(ringOrbitGroup);
+    planet.add(ringOrbitGroup);
 
-    // Stars
-    const starGeometry = new THREE.BufferGeometry();
-    const starCount = isMobile ? 300 : 1200;
-    const positions = new Float32Array(starCount * 3);
-
-    for (let i = 0; i < starCount; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 2000;
-      positions[i3 + 1] = (Math.random() - 0.5) * 2000;
-      positions[i3 + 2] = (Math.random() - 0.5) * 2000;
-    }
-
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const starMaterial = new THREE.PointsMaterial({
-      size: isMobile ? 1.5 : 2,
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.8,
-      sizeAttenuation: true,
-    });
-
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
-    // Animation — enabled on all devices, slightly slower on mobile
+    /* ─── Animation ─── */
     let animationId: number;
-    const rotationSpeed = isMobile ? 0.6 : 1;
+    const rotSpeed = isMobile ? 0.6 : 1;
+    let time = 0;
 
     function animate() {
       animationId = requestAnimationFrame(animate);
+      time += 0.016;
 
-      saturn.rotation.y += 0.001 * rotationSpeed;
-      ringOrbitGroup.rotation.y += 0.002 * rotationSpeed;
-      stars.rotation.y += 0.0001 * rotationSpeed;
+      // Planet rotation
+      planet.rotation.y += 0.001 * rotSpeed;
+      ringOrbitGroup.rotation.y += 0.002 * rotSpeed;
 
-      camera.lookAt(saturn.position);
+      // Star twinkle — update sizes each frame for sparkle effect
+      const sizes = starGeometry.attributes.size as THREE.BufferAttribute;
+      for (let i = 0; i < starCount; i++) {
+        const twinkle = Math.sin(time * starSpeeds[i] + starPhases[i]) * 0.5 + 0.5;
+        sizes.array[i] = starSizes[i] * (0.3 + twinkle * 0.7);
+      }
+      sizes.needsUpdate = true;
+
+      // Gentle camera drift
+      const driftX = Math.sin(time * 0.06) * 5;
+      const driftY = 150 + Math.cos(time * 0.04) * 3;
+      const driftZ = (isMobile ? 1000 : 600) + Math.sin(time * 0.03) * 8;
+      camera.position.x = driftX;
+      camera.position.y = driftY;
+      camera.position.z = driftZ;
+
+      camera.lookAt(planet.position);
       renderer.render(scene, camera);
     }
 
@@ -226,14 +221,14 @@ const SaturnBackground = () => {
         container.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      saturnGeometry.dispose();
-      saturnMaterial.dispose();
+      planetGeometry.dispose();
+      planetMaterial.dispose();
+      planetTexture.dispose();
       ringGeometry.dispose();
       ringMaterial.dispose();
+      ringTexture.dispose();
       starGeometry.dispose();
       starMaterial.dispose();
-      saturnTexture.dispose();
-      ringTexture.dispose();
     };
   }, []);
 

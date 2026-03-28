@@ -147,18 +147,6 @@ const Navigation = () => {
 
               {/* Content */}
               <div className="relative h-full flex flex-col justify-between py-20 px-6 overflow-y-auto">
-                {/* Close Button */}
-                <div className="flex justify-end">
-                  <motion.button
-                    className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 hover:border-teal-400/60 transition-all duration-300"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    whileHover={{ scale: 1.1, rotate: 90 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <X className="w-6 h-6 text-teal-400" />
-                  </motion.button>
-                </div>
-
                 {/* Navigation Links */}
                 <nav className="flex-1 flex items-center justify-center">
                   <div className="w-full max-w-md space-y-3">

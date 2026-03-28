@@ -15,7 +15,8 @@ import {
   Building2,
   Award,
   Rocket,
-  HardDrive
+  HardDrive,
+  Palette
 } from 'lucide-react';
 
 interface Experience {
@@ -122,7 +123,7 @@ const experiences: Experience[] = [
     title: 'Bachelor of Science in Cloud & Network Engineering',
     company: 'Western Governors University',
     location: 'Online',
-    period: 'Sep 2025 - Present',
+    period: 'Expected Graduation: Fall 2027',
     type: 'education',
     current: true,
     highlights: [
@@ -134,11 +135,25 @@ const experiences: Experience[] = [
     accentColor: 'violet',
   },
   {
+    id: 'unlv',
+    title: 'Management Information Systems',
+    company: 'University of Nevada, Las Vegas',
+    location: 'Las Vegas, NV',
+    period: '',
+    type: 'education',
+    highlights: [
+      'Built a foundation at the intersection of business strategy and technology, combining core business principles with hands-on technical training',
+      'Coursework spanning database design (SQL, ER modeling), object-oriented programming (Java), systems analysis (Agile/Waterfall, SDLC), data analytics, IT project management, and IT business strategy',
+    ],
+    icon: Building2,
+    accentColor: 'red',
+  },
+  {
     id: 'csn',
     title: 'Associate of Applied Science in Computing & IT',
     company: 'College of Southern Nevada',
     location: 'Las Vegas, NV',
-    period: '2020 - 2023',
+    period: '',
     type: 'education',
     description: 'Software Programming Concentration',
     highlights: [
@@ -156,38 +171,74 @@ const skillCategories = [
   {
     name: 'Languages',
     icon: Code2,
-    skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'SQL'],
+    skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'SQL', 'HTML', 'CSS'],
     color: 'from-cyan-500 to-blue-500',
+    glowColor: 'rgba(6, 182, 212, 0.4)',
+    shimmerColor: 'rgba(59, 130, 246, 0.15)',
+    borderGradient: 'from-cyan-400 via-blue-500 to-cyan-400',
   },
   {
     name: 'Frontend',
     icon: Monitor,
-    skills: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion', 'Three.js', 'WebGL'],
+    skills: ['React', 'Next.js', 'Tailwind CSS', 'Bootstrap', 'Framer Motion', 'Three.js', 'WebGL', 'Responsive Design'],
     color: 'from-violet-500 to-purple-500',
+    glowColor: 'rgba(139, 92, 246, 0.4)',
+    shimmerColor: 'rgba(168, 85, 247, 0.15)',
+    borderGradient: 'from-violet-400 via-purple-500 to-violet-400',
   },
   {
     name: 'Backend',
     icon: Server,
-    skills: ['Node.js', 'Express', 'MongoDB', 'REST APIs', 'PostgreSQL'],
+    skills: ['Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL', 'REST APIs', 'CI/CD'],
     color: 'from-emerald-500 to-teal-500',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
+    shimmerColor: 'rgba(20, 184, 166, 0.15)',
+    borderGradient: 'from-emerald-400 via-teal-500 to-emerald-400',
   },
   {
     name: 'Cloud & Infrastructure',
     icon: Cloud,
-    skills: ['Microsoft 365', 'Azure AD', 'Intune', 'Autopilot', 'MECM'],
+    skills: ['Azure', 'AWS', 'Microsoft 365', 'Intune', 'Autopilot', 'MECM', 'VPN', 'VoIP'],
     color: 'from-amber-500 to-orange-500',
+    glowColor: 'rgba(245, 158, 11, 0.4)',
+    shimmerColor: 'rgba(249, 115, 22, 0.15)',
+    borderGradient: 'from-amber-400 via-orange-500 to-amber-400',
   },
   {
     name: 'IT Administration',
     icon: Shield,
-    skills: ['Active Directory', 'Device Management', 'Network Config', 'Security'],
+    skills: ['Active Directory', 'Device Management', 'Blancco', 'NIST 800-88', 'Network Administration', 'Firewall', 'RDP'],
     color: 'from-rose-500 to-pink-500',
+    glowColor: 'rgba(244, 63, 94, 0.4)',
+    shimmerColor: 'rgba(236, 72, 153, 0.15)',
+    borderGradient: 'from-rose-400 via-pink-500 to-rose-400',
   },
   {
-    name: 'Platforms',
+    name: 'Platforms & Tools',
     icon: Smartphone,
-    skills: ['Windows', 'macOS', 'iOS', 'Android', 'Linux'],
+    skills: ['Windows', 'macOS', 'Linux', 'iOS', 'Android', 'Git', 'Jira', 'Adobe Creative Suite'],
     color: 'from-indigo-500 to-blue-500',
+    glowColor: 'rgba(99, 102, 241, 0.4)',
+    shimmerColor: 'rgba(59, 130, 246, 0.15)',
+    borderGradient: 'from-indigo-400 via-blue-500 to-indigo-400',
+  },
+  {
+    name: 'Enterprise Hardware',
+    icon: HardDrive,
+    skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'iLO 4', 'iDRAC', 'RAID', 'SAN Storage', 'PuTTY'],
+    color: 'from-orange-500 to-red-500',
+    glowColor: 'rgba(249, 115, 22, 0.4)',
+    shimmerColor: 'rgba(239, 68, 68, 0.15)',
+    borderGradient: 'from-orange-400 via-red-500 to-orange-400',
+  },
+  {
+    name: 'Design & Marketing',
+    icon: Palette,
+    skills: ['Figma', 'Graphic Design', 'Logo Design', 'SEO', 'UI/UX Design', 'Branding', 'Web Design'],
+    color: 'from-pink-500 to-fuchsia-500',
+    glowColor: 'rgba(236, 72, 153, 0.4)',
+    shimmerColor: 'rgba(217, 70, 239, 0.15)',
+    borderGradient: 'from-pink-400 via-fuchsia-500 to-pink-400',
   },
 ];
 
@@ -199,6 +250,7 @@ const getAccentClasses = (color: string) => {
     amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', shadow: 'rgba(245, 158, 11, 0.15)' },
     rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', shadow: 'rgba(244, 63, 94, 0.15)' },
     fuchsia: { bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/30', text: 'text-fuchsia-400', shadow: 'rgba(217, 70, 239, 0.15)' },
+    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', shadow: 'rgba(239, 68, 68, 0.15)' },
   };
   return colors[color] || colors.cyan;
 };
@@ -295,10 +347,12 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isLeft }) =
                   <MapPin className="w-3.5 h-3.5" />
                   {exp.location}
                 </span>
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {exp.period}
-                </span>
+                {exp.period && (
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5" />
+                    {exp.period}
+                  </span>
+                )}
               </div>
               {exp.description && (
                 <p className="mt-2 text-sm text-gray-500">{exp.description}</p>
@@ -366,6 +420,208 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isLeft }) =
   );
 };
 
+/* ── Shimmer keyframes injected once via a <style> tag ── */
+const ShimmerStyles = () => (
+  <style>{`
+    @keyframes shimmer-slide {
+      0% { transform: translateX(-100%) rotate(15deg); }
+      100% { transform: translateX(200%) rotate(15deg); }
+    }
+    @keyframes border-rotate {
+      0% { --angle: 0deg; }
+      100% { --angle: 360deg; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes float-particle {
+      0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-8px) scale(1.2); opacity: 0.7; }
+    }
+    .shimmer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--shimmer-color, rgba(255,255,255,0.06)) 50%,
+        transparent 100%
+      );
+      animation: shimmer-slide 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .shimmer-card:hover::before {
+      animation-duration: 2s;
+    }
+    .glow-border {
+      position: relative;
+    }
+    .glow-border::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 1rem;
+      padding: 1px;
+      background: linear-gradient(
+        var(--border-angle, 0deg),
+        var(--glow-from, rgba(6, 182, 212, 0.5)),
+        transparent 40%,
+        transparent 60%,
+        var(--glow-to, rgba(59, 130, 246, 0.5))
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: border-rotate 6s linear infinite;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .glow-border:hover::after {
+      opacity: 1;
+    }
+    .skill-pill {
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-pill::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--pill-shimmer, rgba(255,255,255,0.1)),
+        transparent
+      );
+      transition: left 0.5s ease;
+    }
+    .skill-pill:hover::before {
+      left: 100%;
+    }
+  `}</style>
+);
+
+interface SkillCardProps {
+  category: typeof skillCategories[0];
+  index: number;
+  hoveredSkill: string | null;
+  setHoveredSkill: (skill: string | null) => void;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({ category, index, hoveredSkill, setHoveredSkill }) => {
+  const Icon = category.icon;
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="shimmer-card glow-border group relative rounded-2xl overflow-hidden"
+      style={{
+        '--shimmer-color': category.shimmerColor,
+        '--glow-from': category.glowColor,
+        '--glow-to': category.glowColor,
+        '--border-angle': `${index * 45}deg`,
+      } as React.CSSProperties}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileHover={{ 
+        scale: 1.03,
+        y: -4,
+      }}
+    >
+      {/* Card background */}
+      <div className="relative p-6 bg-white/[0.02] backdrop-blur-sm border border-white/[0.08] rounded-2xl h-full">
+        
+        {/* Ambient glow on hover */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-br ${category.color} rounded-2xl pointer-events-none`}
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 0.06 }}
+          transition={{ duration: 0.4 }}
+        />
+        
+        {/* Floating particles (decorative dots) */}
+        <div className="absolute top-3 right-3 flex gap-1.5 pointer-events-none">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className={`w-1 h-1 rounded-full bg-gradient-to-br ${category.color}`}
+              style={{
+                animation: `float-particle 3s ease-in-out ${i * 0.6}s infinite`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Icon + Title row */}
+        <div className="relative flex items-center gap-3 mb-5">
+          <motion.div 
+            className={`relative p-2.5 rounded-xl bg-gradient-to-br ${category.color} shadow-lg`}
+            style={{
+              boxShadow: `0 4px 20px -4px ${category.glowColor}`,
+            }}
+            whileHover={{ rotate: [0, -8, 8, 0], scale: 1.1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Icon className="w-5 h-5 text-white" />
+          </motion.div>
+          <div>
+            <h3 className="text-lg font-semibold text-white">{category.name}</h3>
+            <span className="text-xs text-gray-500">{category.skills.length} skills</span>
+          </div>
+        </div>
+
+        {/* Skill pills */}
+        <div className="relative flex flex-wrap gap-2">
+          {category.skills.map((skill, i) => (
+            <motion.span
+              key={skill}
+              className={`skill-pill px-3 py-1.5 rounded-lg text-sm font-medium cursor-default transition-all duration-300 border ${
+                hoveredSkill === skill 
+                  ? 'bg-white/15 border-white/25 text-white shadow-lg' 
+                  : 'bg-white/[0.04] text-gray-300 border-white/[0.08]'
+              }`}
+              style={{
+                '--pill-shimmer': category.shimmerColor,
+                ...(hoveredSkill === skill ? { boxShadow: `0 0 20px -4px ${category.glowColor}` } : {}),
+              } as React.CSSProperties}
+              onMouseEnter={() => setHoveredSkill(skill)}
+              onMouseLeave={() => setHoveredSkill(null)}
+              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.15 + i * 0.04 }}
+            >
+              {skill}
+            </motion.span>
+          ))}
+        </div>
+
+        {/* Bottom accent line */}
+        <motion.div
+          className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r ${category.color}`}
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 + index * 0.08, duration: 0.6, ease: 'easeOut' }}
+          style={{ transformOrigin: 'left' }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
 const About = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -374,6 +630,7 @@ const About = () => {
 
   return (
     <section id="about" className="min-h-screen py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-black via-gray-950 to-black overflow-hidden">
+      <ShimmerStyles />
       <div ref={ref} className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -450,7 +707,6 @@ const About = () => {
                 <div className="space-y-8">
                   {experiences.map((exp, index) => (
                     <div key={exp.id}>
-                      {/* Anchor for Education nav link — placed before the first education entry */}
                       {exp.type === 'education' && (index === 0 || experiences[index - 1].type !== 'education') && (
                         <div id="education" className="scroll-mt-24" />
                       )}
@@ -471,49 +727,17 @@ const About = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
             >
-              {skillCategories.map((category, index) => {
-                const Icon = category.icon;
-                return (
-                  <motion.div
-                    key={category.name}
-                    className="group relative p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-sm overflow-hidden"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, borderColor: 'rgba(255,255,255,0.2)' }}
-                  >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                    
-                    <div className="relative flex items-center gap-3 mb-4">
-                      <div className={`p-2.5 rounded-xl bg-gradient-to-br ${category.color}`}>
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-white">{category.name}</h3>
-                    </div>
-
-                    <div className="relative flex flex-wrap gap-2">
-                      {category.skills.map((skill, i) => (
-                        <motion.span
-                          key={skill}
-                          className={`px-3 py-1.5 rounded-lg text-sm font-medium bg-white/5 text-gray-300 border border-white/10 cursor-default transition-all duration-300 ${
-                            hoveredSkill === skill ? 'bg-white/10 border-white/20 text-white' : ''
-                          }`}
-                          onMouseEnter={() => setHoveredSkill(skill)}
-                          onMouseLeave={() => setHoveredSkill(null)}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2 + i * 0.05 }}
-                        >
-                          {skill}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })}
+              {skillCategories.map((category, index) => (
+                <SkillCard
+                  key={category.name}
+                  category={category}
+                  index={index}
+                  hoveredSkill={hoveredSkill}
+                  setHoveredSkill={setHoveredSkill}
+                />
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
