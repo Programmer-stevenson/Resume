@@ -4,14 +4,6 @@ import SaturnBackground from './SaturnBackground';
 
 const Hero = () => {
   const [showContent, setShowContent] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 500);
@@ -27,43 +19,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden borealis-bg">
-      {/* Floating Orbs - desktop only */}
-      {!isMobile && (
-        <>
-          <motion.div
-            className="absolute w-96 h-96 bg-teal-500/30 rounded-full blur-3xl"
-            style={{ top: '20%', left: '10%' }}
-            animate={{
-              x: [0, 30, -30, 0],
-              y: [0, -30, 30, 0],
-              scale: [1, 1.1, 0.9, 1],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute w-[500px] h-[500px] bg-cyan-500/30 rounded-full blur-3xl"
-            style={{ bottom: '20%', right: '10%' }}
-            animate={{
-              x: [0, -30, 30, 0],
-              y: [0, 30, -30, 0],
-              scale: [1, 0.9, 1.1, 1],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          />
-          <motion.div
-            className="absolute w-80 h-80 bg-purple-500/30 rounded-full blur-3xl"
-            style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-            animate={{
-              x: [0, 20, -20, 0],
-              y: [0, -20, 20, 0],
-              scale: [1, 1.1, 0.9, 1],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-          />
-        </>
-      )}
-
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Saturn Background */}
       <SaturnBackground />
 
@@ -94,7 +50,7 @@ const Hero = () => {
           <div className="h-[28px] sm:h-[32px] md:h-[36px]" aria-hidden="true" />
         </motion.div>
 
-        {/* CTA Buttons - 8px lower on mobile */}
+        {/* CTA Buttons */}
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto mt-[8px] sm:mt-0"
           initial={{ opacity: 0, y: 20 }}
