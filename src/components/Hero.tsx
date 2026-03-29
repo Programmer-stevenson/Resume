@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import SaturnBackground from './SaturnBackground';
 
@@ -9,6 +9,7 @@ import SaturnBackground from './SaturnBackground';
 const Hero = () => {
   const [showContent, setShowContent] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -22,6 +23,19 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Block pinch-to-zoom on the hero section
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const blockPinch = (e: TouchEvent) => {
+      if (e.touches.length > 1) e.preventDefault();
+    };
+
+    el.addEventListener('touchmove', blockPinch, { passive: false });
+    return () => el.removeEventListener('touchmove', blockPinch);
+  }, []);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const target = document.querySelector(href);
@@ -32,6 +46,7 @@ const Hero = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
       style={{
@@ -39,6 +54,7 @@ const Hero = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        touchAction: 'pan-y',
       }}
     >
       {/* Sparkling stars — pure CSS */}
