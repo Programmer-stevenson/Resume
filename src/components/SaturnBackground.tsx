@@ -2,9 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 /*
-  Requires in public/textures/:
-    - 2k_eris_fictional.jpg
-    - space_bg.jpg  (2048x1024 equirectangular space background)
+  Requires: public/textures/texture-planet.jpg
 */
 
 const SaturnBackground = () => {
@@ -18,7 +16,7 @@ const SaturnBackground = () => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 8000);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
     camera.position.set(0, 150, isMobile ? 1000 : 600);
 
     const renderer = new THREE.WebGLRenderer({
@@ -30,7 +28,7 @@ const SaturnBackground = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
+    renderer.toneMappingExposure = 1.2;
 
     renderer.domElement.style.cssText = `
       position: absolute;
@@ -45,82 +43,26 @@ const SaturnBackground = () => {
     container.appendChild(renderer.domElement);
 
     // Lighting
-    const sunLight = new THREE.DirectionalLight(0xffffff, 1.8);
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
     sunLight.position.set(500, 300, 400);
     scene.add(sunLight);
 
-    const ambientLight = new THREE.AmbientLight(0x222244, 0.3);
+    const ambientLight = new THREE.AmbientLight(0x4466aa, 0.4);
     scene.add(ambientLight);
 
     if (!isMobile) {
-      const rimLight = new THREE.PointLight(0x6688bb, 0.8, 1000);
+      const rimLight = new THREE.PointLight(0x88bbff, 1.2, 1000);
       rimLight.position.set(-300, 100, 200);
       scene.add(rimLight);
     }
 
+    // Load planet texture
     const textureLoader = new THREE.TextureLoader();
+    const saturnTexture = textureLoader.load('/textures/texture-planet.jpg');
+    saturnTexture.minFilter = THREE.LinearFilter;
+    saturnTexture.magFilter = THREE.LinearFilter;
 
-    /* ─── Space background via CSS (no distortion) ─── */
-    container.style.backgroundImage = 'url(/textures/space_bg.jpg)';
-    container.style.backgroundSize = 'cover';
-    container.style.backgroundPosition = 'center';
-    container.style.backgroundRepeat = 'no-repeat';
-
-    /* ─── Star Sparkles ─── */
-    const starCount = isMobile ? 300 : 600;
-    const starPositions = new Float32Array(starCount * 3);
-    const starSizes = new Float32Array(starCount);
-    const starPhases = new Float32Array(starCount); // random twinkle offset
-    const starSpeeds = new Float32Array(starCount); // random twinkle speed
-    const spread = 3000;
-
-    for (let i = 0; i < starCount; i++) {
-      starPositions[i * 3] = (Math.random() - 0.5) * spread;
-      starPositions[i * 3 + 1] = (Math.random() - 0.5) * spread;
-      starPositions[i * 3 + 2] = (Math.random() - 0.5) * spread;
-      starSizes[i] = Math.random() * 3 + 1;
-      starPhases[i] = Math.random() * Math.PI * 2;
-      starSpeeds[i] = 0.3 + Math.random() * 1.5;
-    }
-
-    const starGeometry = new THREE.BufferGeometry();
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    starGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
-
-    const starMaterial = new THREE.PointsMaterial({
-      color: 0xffffff,
-      sizeAttenuation: true,
-      transparent: true,
-      opacity: 0.9,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    });
-
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
-    /* ─── Planet ─── */
-    const planetTexture = textureLoader.load('/textures/2k_eris_fictional.jpg');
-    planetTexture.minFilter = THREE.LinearFilter;
-    planetTexture.magFilter = THREE.LinearFilter;
-
-    const planetSegments = isMobile ? 32 : 64;
-    const planetGeometry = new THREE.SphereGeometry(75, planetSegments, planetSegments);
-
-    const planetMaterial = new THREE.MeshStandardMaterial({
-      map: planetTexture,
-      color: new THREE.Color(0xccccdd),
-      roughness: 0.6,
-      metalness: 0.35,
-      emissive: new THREE.Color(0x0a1530),
-      emissiveIntensity: 0.25,
-    });
-
-    const planet = new THREE.Mesh(planetGeometry, planetMaterial);
-    planet.position.set(0, 0, 0);
-    scene.add(planet);
-
-    /* ─── Rings ─── */
+    // Ring texture
     function createRingTexture() {
       const canvas = document.createElement('canvas');
       const size = isMobile ? 128 : 256;
@@ -150,6 +92,23 @@ const SaturnBackground = () => {
       return texture;
     }
 
+    // Planet
+    const saturnSegments = isMobile ? 32 : 64;
+    const saturnGeometry = new THREE.SphereGeometry(75, saturnSegments, saturnSegments);
+
+    const saturnMaterial = new THREE.MeshStandardMaterial({
+      map: saturnTexture,
+      roughness: 0.85,
+      metalness: 0.05,
+      emissive: new THREE.Color(0x0a3050),
+      emissiveIntensity: 0.2,
+    });
+
+    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    saturn.position.set(0, 0, 0);
+    scene.add(saturn);
+
+    // Rings
     const ringGeometry = new THREE.RingGeometry(95, 170, isMobile ? 32 : 64);
     const ringTexture = createRingTexture();
 
@@ -167,38 +126,19 @@ const SaturnBackground = () => {
     const ringOrbitGroup = new THREE.Group();
     ringOrbitGroup.add(rings);
     ringOrbitGroup.rotation.x = Math.PI / 2;
-    planet.add(ringOrbitGroup);
+    saturn.add(ringOrbitGroup);
 
-    /* ─── Animation ─── */
+    // Animation — planet + rings only
     let animationId: number;
-    const rotSpeed = isMobile ? 0.6 : 1;
-    let time = 0;
+    const rotationSpeed = isMobile ? 0.6 : 1;
 
     function animate() {
       animationId = requestAnimationFrame(animate);
-      time += 0.016;
 
-      // Planet rotation
-      planet.rotation.y += 0.001 * rotSpeed;
-      ringOrbitGroup.rotation.y += 0.002 * rotSpeed;
+      saturn.rotation.y += 0.001 * rotationSpeed;
+      ringOrbitGroup.rotation.y += 0.002 * rotationSpeed;
 
-      // Star twinkle — update sizes each frame for sparkle effect
-      const sizes = starGeometry.attributes.size as THREE.BufferAttribute;
-      for (let i = 0; i < starCount; i++) {
-        const twinkle = Math.sin(time * starSpeeds[i] + starPhases[i]) * 0.5 + 0.5;
-        sizes.array[i] = starSizes[i] * (0.3 + twinkle * 0.7);
-      }
-      sizes.needsUpdate = true;
-
-      // Gentle camera drift
-      const driftX = Math.sin(time * 0.06) * 5;
-      const driftY = 150 + Math.cos(time * 0.04) * 3;
-      const driftZ = (isMobile ? 1000 : 600) + Math.sin(time * 0.03) * 8;
-      camera.position.x = driftX;
-      camera.position.y = driftY;
-      camera.position.z = driftZ;
-
-      camera.lookAt(planet.position);
+      camera.lookAt(saturn.position);
       renderer.render(scene, camera);
     }
 
@@ -221,14 +161,12 @@ const SaturnBackground = () => {
         container.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      planetGeometry.dispose();
-      planetMaterial.dispose();
-      planetTexture.dispose();
+      saturnGeometry.dispose();
+      saturnMaterial.dispose();
+      saturnTexture.dispose();
       ringGeometry.dispose();
       ringMaterial.dispose();
       ringTexture.dispose();
-      starGeometry.dispose();
-      starMaterial.dispose();
     };
   }, []);
 

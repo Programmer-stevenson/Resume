@@ -2,8 +2,20 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SaturnBackground from './SaturnBackground';
 
+/*
+  Requires: public/textures/space-bg.jpg
+*/
+
 const Hero = () => {
   const [showContent, setShowContent] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 500);
@@ -19,8 +31,53 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Saturn Background */}
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      style={{
+        backgroundImage: 'url(/textures/space-bg.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Sparkling stars — pure CSS */}
+      <style>{`
+        @keyframes sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.5); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        .sparkle-star {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          background: white;
+          border-radius: 50%;
+          pointer-events: none;
+          opacity: 0;
+        }
+      `}</style>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[3]">
+        {[...Array(isMobile ? 12 : 25)].map((_, i) => (
+          <div
+            key={i}
+            className="sparkle-star"
+            style={{
+              width: `${1.5 + Math.random() * 2.5}px`,
+              height: `${1.5 + Math.random() * 2.5}px`,
+              top: `${5 + Math.random() * 90}%`,
+              left: `${5 + Math.random() * 90}%`,
+              animationName: 'sparkle',
+              animationDuration: `${2 + Math.random() * 3}s`,
+              animationDelay: `${Math.random() * 6}s`,
+              animationIterationCount: 'infinite',
+              animationTimingFunction: 'ease-in-out',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Planet + Rings (Three.js canvas with alpha transparency) */}
       <SaturnBackground />
 
       {/* Content */}
@@ -82,6 +139,27 @@ const Hero = () => {
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             />
+          </motion.a>
+
+          <motion.a
+            href="#introduction"
+            onClick={(e) => handleNavClick(e, '#introduction')}
+            className="group relative px-6 py-3 bg-gray-800/50 backdrop-blur-sm border border-teal-500/30 rounded-lg font-medium text-base text-teal-300 w-full sm:w-auto"
+            whileHover={{ scale: 1.05, borderColor: 'rgba(20, 184, 166, 0.5)', backgroundColor: 'rgba(31, 41, 55, 0.8)' }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="flex items-center justify-center gap-2">
+              About Me
+              <motion.svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                whileHover={{ x: 5 }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </motion.svg>
+            </span>
           </motion.a>
 
           <motion.a

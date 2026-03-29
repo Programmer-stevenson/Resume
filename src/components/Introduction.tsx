@@ -51,10 +51,18 @@ const Introduction = () => {
   return (
     <section
       id="introduction"
-      className="relative py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-black via-gray-900/80 to-gray-900 overflow-hidden"
+      className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
     >
-      {/* Background blobs — CSS only */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
+      {/* Space background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/textures/space-bg.jpg')" }}
+      />
+
+
+
+      {/* Subtle animated blobs on top */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="intro-blob absolute top-20 left-10 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl" />
         <div className="intro-blob intro-blob-delay absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
       </div>
@@ -169,7 +177,7 @@ const Introduction = () => {
             </motion.h2>
 
             <motion.p
-              className="text-lg sm:text-xl text-gray-400 mb-6 max-w-2xl leading-relaxed"
+              className="text-lg sm:text-xl text-gray-300 mb-6 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -180,7 +188,7 @@ const Introduction = () => {
             </motion.p>
 
             <motion.p
-              className="text-base sm:text-lg text-gray-500 max-w-2xl leading-relaxed"
+              className="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -197,7 +205,7 @@ const Introduction = () => {
             return (
               <motion.div
                 key={value.label}
-                className="group relative text-center p-6 rounded-2xl bg-white/[0.02] border border-white/10 overflow-hidden hover:border-white/20 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300"
+                className="group relative text-center p-6 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-white/20 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.35 + index * 0.1 }}
@@ -230,7 +238,7 @@ const Introduction = () => {
               return (
                 <div
                   key={card.title}
-                  className="group flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 cursor-default"
+                  className="group flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10 hover:bg-black/50 hover:border-white/20 hover:scale-[1.03] hover:-translate-y-0.5 transition-all duration-300 cursor-default"
                 >
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center flex-shrink-0`}>
                     <Icon className="w-5 h-5 text-white" />
@@ -250,8 +258,8 @@ const Introduction = () => {
 
           {/* Mobile: auto-scroll ticker */}
           <div className="sm:hidden relative overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-900/90 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-900/90 to-transparent z-10 pointer-events-none" />
 
             <div className="intro-roles-scroll flex">
               {[...roleCards, ...roleCards].map((card, index) => {
@@ -259,7 +267,7 @@ const Introduction = () => {
                 return (
                   <div
                     key={`${card.title}-${index}`}
-                    className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex-shrink-0 mx-2"
+                    className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10 flex-shrink-0 mx-2"
                   >
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center flex-shrink-0`}>
                       <Icon className="w-5 h-5 text-white" />
@@ -286,7 +294,7 @@ const Introduction = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Combining technical expertise with creative problem-solving to deliver
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 font-semibold"> innovative solutions</span> that drive business success
           </p>
