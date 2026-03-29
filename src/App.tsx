@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-teal-900 to-gray-900 text-white font-sans antialiased overflow-x-hidden">
+   <div className="bg-black text-white font-sans antialiased overflow-x-hidden">
       <Navigation />
       <Hero />
       <Introduction />
