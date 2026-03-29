@@ -13,7 +13,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; 
+  touch-action: pan-x pan-y;
+
 }
 
 /* ============================================
