@@ -2,8 +2,22 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 /*
-  Requires: public/textures/texture-planet.jpg
+  Requires in public/textures/:
+    - texture-planet.jpg
+    - texture-planet2.jpg
+    - texture-planet3.jpg
+    - texture-planet4.jpg
 */
+
+const TEXTURE_PATHS = [
+  '/textures/texture-planet.jpg',
+  '/textures/texture-planet2.jpg',
+  '/textures/texture-planet3.jpg',
+  '/textures/texture-planet4.jpg',
+];
+
+const CYCLE_INTERVAL = 5000; // ms between transitions
+const FADE_DURATION = 1500; // ms for crossfade
 
 const SaturnBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,11 +70,14 @@ const SaturnBackground = () => {
       scene.add(rimLight);
     }
 
-    // Load planet texture
+    // Preload all textures
     const textureLoader = new THREE.TextureLoader();
-    const saturnTexture = textureLoader.load('/textures/texture-planet.jpg');
-    saturnTexture.minFilter = THREE.LinearFilter;
-    saturnTexture.magFilter = THREE.LinearFilter;
+    const textures: THREE.Texture[] = TEXTURE_PATHS.map((path) => {
+      const tex = textureLoader.load(path);
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      return tex;
+    });
 
     // Ring texture
     function createRingTexture() {
@@ -92,19 +109,37 @@ const SaturnBackground = () => {
       return texture;
     }
 
-    // Planet
+    // Planet — two overlapping spheres for crossfade
     const saturnSegments = isMobile ? 32 : 64;
     const saturnGeometry = new THREE.SphereGeometry(75, saturnSegments, saturnSegments);
 
-    const saturnMaterial = new THREE.MeshStandardMaterial({
-      map: saturnTexture,
+    const materialA = new THREE.MeshStandardMaterial({
+      map: textures[0],
       roughness: 0.85,
       metalness: 0.05,
       emissive: new THREE.Color(0x0a3050),
       emissiveIntensity: 0.2,
+      transparent: true,
+      opacity: 1,
     });
 
-    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    const materialB = new THREE.MeshStandardMaterial({
+      map: textures[1],
+      roughness: 0.85,
+      metalness: 0.05,
+      emissive: new THREE.Color(0x0a3050),
+      emissiveIntensity: 0.2,
+      transparent: true,
+      opacity: 0,
+    });
+
+    const planetA = new THREE.Mesh(saturnGeometry, materialA);
+    const planetB = new THREE.Mesh(saturnGeometry, materialB);
+
+    // Parent group so both spheres rotate together
+    const saturn = new THREE.Group();
+    saturn.add(planetA);
+    saturn.add(planetB);
     saturn.position.set(0, 0, 0);
     scene.add(saturn);
 
@@ -128,7 +163,30 @@ const SaturnBackground = () => {
     ringOrbitGroup.rotation.x = Math.PI / 2;
     saturn.add(ringOrbitGroup);
 
-    // Animation — planet + rings only
+    // Texture cycling state
+    let currentIndex = 0;
+    let nextIndex = 1;
+    let isFading = false;
+    let fadeStart = 0;
+    let frontIsMaterialA = true;
+
+    const cycleInterval = setInterval(() => {
+      if (isFading) return;
+      nextIndex = (currentIndex + 1) % textures.length;
+
+      if (frontIsMaterialA) {
+        materialB.map = textures[nextIndex];
+        materialB.needsUpdate = true;
+      } else {
+        materialA.map = textures[nextIndex];
+        materialA.needsUpdate = true;
+      }
+
+      isFading = true;
+      fadeStart = performance.now();
+    }, CYCLE_INTERVAL);
+
+    // Animation
     let animationId: number;
     const rotationSpeed = isMobile ? 0.6 : 1;
 
@@ -137,6 +195,27 @@ const SaturnBackground = () => {
 
       saturn.rotation.y += 0.001 * rotationSpeed;
       ringOrbitGroup.rotation.y += 0.002 * rotationSpeed;
+
+      // Crossfade
+      if (isFading) {
+        const elapsed = performance.now() - fadeStart;
+        const t = Math.min(elapsed / FADE_DURATION, 1);
+        const ease = t * t * (3 - 2 * t); // smoothstep
+
+        if (frontIsMaterialA) {
+          materialA.opacity = 1 - ease;
+          materialB.opacity = ease;
+        } else {
+          materialB.opacity = 1 - ease;
+          materialA.opacity = ease;
+        }
+
+        if (t >= 1) {
+          isFading = false;
+          currentIndex = nextIndex;
+          frontIsMaterialA = !frontIsMaterialA;
+        }
+      }
 
       camera.lookAt(saturn.position);
       renderer.render(scene, camera);
@@ -156,14 +235,16 @@ const SaturnBackground = () => {
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
+      clearInterval(cycleInterval);
       cancelAnimationFrame(animationId);
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
       renderer.dispose();
       saturnGeometry.dispose();
-      saturnMaterial.dispose();
-      saturnTexture.dispose();
+      materialA.dispose();
+      materialB.dispose();
+      textures.forEach((t) => t.dispose());
       ringGeometry.dispose();
       ringMaterial.dispose();
       ringTexture.dispose();
