@@ -13,7 +13,6 @@ const TEXTURE_PATHS = [
   '/textures/texture-planet.jpg',
   '/textures/texture-planet2.jpg',
   '/textures/texture-planet3.jpg',
-  '/textures/texture-planet4.jpg',
 ];
 
 const CYCLE_INTERVAL = 5000; // ms between transitions
@@ -55,6 +54,12 @@ const SaturnBackground = () => {
     `;
 
     container.appendChild(renderer.domElement);
+
+    // Space background via CSS
+    container.style.backgroundImage = 'url(/textures/space-bg.jpg)';
+    container.style.backgroundSize = 'cover';
+    container.style.backgroundPosition = 'center';
+    container.style.backgroundRepeat = 'no-repeat';
 
     // Lighting
     const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
