@@ -6,7 +6,7 @@ import * as THREE from 'three';
     - texture-planet.jpg
     - texture-planet2.jpg
     - texture-planet3.jpg
-    - texture-planet4.jpg
+    - texture-planet4.jpg (moon)
 */
 
 const TEXTURE_PATHS = [
@@ -168,6 +168,30 @@ const SaturnBackground = () => {
     ringOrbitGroup.rotation.x = Math.PI / 2;
     saturn.add(ringOrbitGroup);
 
+    // Moon
+    const moonTexture = textureLoader.load('/textures/texture-planet4.jpg');
+    moonTexture.minFilter = THREE.LinearFilter;
+    moonTexture.magFilter = THREE.LinearFilter;
+
+    const moonSegments = isMobile ? 16 : 32;
+    const moonGeometry = new THREE.SphereGeometry(24, moonSegments, moonSegments);
+    const moonMaterial = new THREE.MeshStandardMaterial({
+      map: moonTexture,
+      color: new THREE.Color(0x999999),
+      roughness: 0.9,
+      metalness: 0.05,
+      emissive: new THREE.Color(0x0a2030),
+      emissiveIntensity: 0.15,
+    });
+
+    const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+    const moonOrbitGroup = new THREE.Group();
+    moonOrbitGroup.add(moon);
+    moon.position.set(-200, 40, 80); // left, higher, closer to viewer
+    moonOrbitGroup.rotation.x = 0.3;
+    moonOrbitGroup.rotation.y = 0; // start in front of planet
+    scene.add(moonOrbitGroup);
+
     // Texture cycling state
     let currentIndex = 0;
     let nextIndex = 1;
@@ -200,6 +224,8 @@ const SaturnBackground = () => {
 
       saturn.rotation.y += 0.001 * rotationSpeed;
       ringOrbitGroup.rotation.y += 0.002 * rotationSpeed;
+      moonOrbitGroup.rotation.y += 0.0008 * rotationSpeed; // slow orbit
+      moon.rotation.y += 0.002 * rotationSpeed; // moon self-rotation
 
       // Crossfade
       if (isFading) {
@@ -253,6 +279,9 @@ const SaturnBackground = () => {
       ringGeometry.dispose();
       ringMaterial.dispose();
       ringTexture.dispose();
+      moonGeometry.dispose();
+      moonMaterial.dispose();
+      moonTexture.dispose();
     };
   }, []);
 
