@@ -187,7 +187,7 @@ const SaturnBackground = () => {
     const moon = new THREE.Mesh(moonGeometry, moonMaterial);
     const moonOrbitGroup = new THREE.Group();
     moonOrbitGroup.add(moon);
-    moon.position.set(-200, 40, 80); // left, higher, closer to viewer
+    moon.position.set(-165, 35, 70);
     moonOrbitGroup.rotation.x = 0.3;
     moonOrbitGroup.rotation.y = 0; // start in front of planet
     scene.add(moonOrbitGroup);
