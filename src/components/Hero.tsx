@@ -158,27 +158,6 @@ const Hero = () => {
           </motion.a>
 
           <motion.a
-            href="#introduction"
-            onClick={(e) => handleNavClick(e, '#introduction')}
-            className="group relative px-6 py-3 bg-gray-800/50 backdrop-blur-sm border border-teal-500/30 rounded-lg font-medium text-base text-teal-300 w-full sm:w-auto"
-            whileHover={{ scale: 1.05, borderColor: 'rgba(20, 184, 166, 0.5)', backgroundColor: 'rgba(31, 41, 55, 0.8)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="flex items-center justify-center gap-2">
-              About Me
-              <motion.svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                whileHover={{ x: 5 }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </motion.svg>
-            </span>
-          </motion.a>
-
-          <motion.a
             href="#projects"
             onClick={(e) => handleNavClick(e, '#projects')}
             className="group relative px-6 py-3 bg-gray-800/50 backdrop-blur-sm border border-teal-500/30 rounded-lg font-medium text-base text-teal-300 w-full sm:w-auto"

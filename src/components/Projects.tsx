@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Rocket, Palette, Wrench, Droplets } from 'lucide-react';
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Rocket, Palette, Wrench, Droplets, PawPrint, PenTool, Flower2, LayoutGrid, ChevronDown } from 'lucide-react';
 
 const projects = [
   {
     title: 'Vorus Luxury Cologne',
-    description: 'Fully custom luxury cologne fictional landing page built from scratch — every visual, animation, and component handcrafted. Features a complete cart, checkout flow, and sample subscription concept.',
+    description: 'A fictional luxury cologne brand I designed and built end-to-end — I invented the product and brand identity, then handcrafted the entire web experience from scratch. Every visual, animation, and component is custom, with a complete cart, checkout flow, and sample subscription concept.',
     tech: ['React', 'TypeScript', 'MERN Stack', 'Framer Motion'],
     liveUrl: 'https://vorus.onrender.com',
     githubUrl: 'https://github.com/Programmer-stevenson/Vorus',
@@ -17,11 +17,28 @@ const projects = [
     tagBg: 'bg-amber-500/10',
     tagText: 'text-amber-300',
     icon: Sparkles,
-    iconLabel: 'Luxury E-Commerce Fictional Concept',
+    iconLabel: 'Fictional Product & Brand Design',
     screenshot: '/vorus.png',
   },
   {
-    title: "Los's Auto Glass & Auto Repair",
+    title: 'Pétale — Artisan Florist',
+    description: 'One of my first complex React builds — a fictional luxury florist concept where I designed the logo, created all of the imagery, and handcrafted the entire front end from scratch. Features a bouquet shop showcase, featured products, a weddings section, and a same-day delivery concept. Front-end demo only.',
+    tech: ['React', 'Framer Motion', 'Tailwind CSS', 'Responsive Design'],
+    liveUrl: 'https://petale-luxury-floral.onrender.com/',
+    githubUrl: 'https://github.com/Programmer-stevenson',
+    gradient: 'from-[#0a100c] via-[#121a14] to-[#0a0f0b]',
+    accentGradient: 'from-rose-400 to-pink-300',
+    textGradient: 'from-rose-200 to-pink-100',
+    glowColor: 'shadow-rose-500/20',
+    borderAccent: 'border-rose-500/30',
+    tagBg: 'bg-rose-500/10',
+    tagText: 'text-rose-300',
+    icon: Flower2,
+    iconLabel: 'Fictional Luxury Florist',
+    screenshot: '/Petale.jpg',
+  },
+  {
+    title: 'KCKN Glass — Auto Glass & Repair',
     description: 'Full-stack Utah Located auto glass business site with service booking, gallery, financing info, and a custom admin dashboard. Built for a real client with Twilio SMS integration and MongoDB backend.',
     tech: ['Next.js', 'Express', 'MongoDB', 'Twilio', 'Tailwind CSS'],
     liveUrl: 'https://kcknglass.com/',
@@ -36,6 +53,40 @@ const projects = [
     icon: Wrench,
     iconLabel: 'Utah Auto Glass Business Site',
     screenshot: '/los.jpg',
+  },
+  {
+    title: 'Super Duper Scooper',
+    description: 'Front-end website for a real Utah dog waste removal and lawn protection company serving West Jordan and the Salt Lake Valley. Features a quote-request form wired to a serverless form service, service-area coverage, a photo-confirmation visit concept, and a clean, conversion-focused design.',
+    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Form API'],
+    liveUrl: 'https://super-duper-scoopers.onrender.com/',
+    githubUrl: 'https://github.com/Programmer-stevenson',
+    gradient: 'from-[#080f08] via-[#0f1a0d] to-[#0a0f0a]',
+    accentGradient: 'from-green-600 to-lime-500',
+    textGradient: 'from-green-200 to-lime-100',
+    glowColor: 'shadow-green-500/20',
+    borderAccent: 'border-green-500/30',
+    tagBg: 'bg-green-500/10',
+    tagText: 'text-green-300',
+    icon: PawPrint,
+    iconLabel: 'Utah Dog Waste + Lawn Care',
+    screenshot: '/superScoop.png',
+  },
+  {
+    title: 'Hazey Tattoos',
+    description: 'Completely custom front-end portfolio site for a Utah tattoo artist. Features a filterable work gallery (illustrative B&G, realism, traditional, fine line, stippling), services, reviews, and a booking CTA — all in a bespoke dark-and-gold editorial design built entirely from scratch.',
+    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive Design'],
+    liveUrl: 'https://www.hazeytattoos.com',
+    githubUrl: 'https://github.com/Programmer-stevenson',
+    gradient: 'from-[#0c0a08] via-[#171310] to-[#0a0908]',
+    accentGradient: 'from-amber-500 to-orange-400',
+    textGradient: 'from-amber-200 to-orange-100',
+    glowColor: 'shadow-amber-500/20',
+    borderAccent: 'border-amber-500/30',
+    tagBg: 'bg-amber-500/10',
+    tagText: 'text-amber-300',
+    icon: PenTool,
+    iconLabel: 'Utah Tattoo Artist Portfolio',
+    screenshot: '/hazeyport.jpg',
   },
   {
     title: 'Plexura Plumbing Marketing',
@@ -56,7 +107,7 @@ const projects = [
   },
   {
     title: 'Cosmic Skate - Real Client Front End Demo for Background Animation',
-    description: 'Interstellar space-themed web experience for a music industry client. Features warp-speed stars, floating Saturn overlay, shooting stars, and cinematic WebGL effects.',
+    description: 'Interstellar space-themed front-end demo built for a real client — a galaxy-themed guitar shop. Features warp-speed stars, a floating Saturn overlay, shooting stars, and cinematic WebGL effects.',
     tech: ['React', 'Three.js', 'WebGL', 'Tailwind CSS'],
     liveUrl: 'https://cosmicskate.onrender.com',
     githubUrl: 'https://github.com/Programmer-stevenson',
@@ -68,7 +119,7 @@ const projects = [
     tagBg: 'bg-violet-500/10',
     tagText: 'text-violet-300',
     icon: Rocket,
-    iconLabel: 'Client Vision Galaxy Animation',
+    iconLabel: 'Real Client — Galaxy Guitar Shop',
     screenshot: '/cosmic.png',
   },
   {
@@ -92,7 +143,7 @@ const projects = [
     title: 'My Portfolio Website',
     description: 'Interactive MERN Stack personal portfolio featuring Three.js Saturn background, advanced animations, and modern design patterns showcasing skills and experience.',
     tech: ['React', 'TypeScript', 'Three.js', 'Framer Motion'],
-    liveUrl: 'https:brandons-resume.com/',
+    liveUrl: 'https://brandons-resume.com/',
     githubUrl: 'https://github.com/Programmer-stevenson/Resume',
     gradient: 'from-[#0a0a10] via-[#101020] to-[#0a0a12]',
     accentGradient: 'from-cyan-600 to-blue-500',
@@ -107,8 +158,8 @@ const projects = [
   },
   {
   title: 'Tiger Paw Cleaning',
-  description: 'Professional MERN Stack website built for a real Missouri cleaning business featuring premium animations, Radix UI components, lead generation flows, modern responsive design, and conversion-focused service pages designed to attract residential and commercial clients.',
-  tech: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Radix UI', 'Framer Motion'],
+  description: 'Front-end website built for a real Missouri cleaning business featuring premium animations, Radix UI components, and conversion-focused service pages designed to attract residential and commercial clients. Lead-generation forms are handled via Web3Forms, and all imagery was provided by the client.',
+  tech: ['React', 'TypeScript', 'Tailwind CSS', 'Radix UI', 'Framer Motion', 'Web3Forms'],
   liveUrl: 'https://tigerpawcleaning.com/',
   githubUrl: 'https://github.com/Programmer-stevenson/Tiger-Paw-Cleaning',
   gradient: 'from-[#0a0a10] via-[#111111] to-[#0a0a0a]',
@@ -181,9 +232,9 @@ const DigitalMarketingCarousel = () => {
       {/* Auto-scrolling Carousel */}
       <div className="relative overflow-hidden">
         {/* Left fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-gray-950 via-gray-950/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#0a0a16] via-[#0a0a16]/80 to-transparent z-10 pointer-events-none" />
         {/* Right fade */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-gray-950 via-gray-950/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#0a0a16] via-[#0a0a16]/80 to-transparent z-10 pointer-events-none" />
 
         {/* Scrolling track */}
         <div className="flex animate-scroll hover:[animation-play-state:paused]">
@@ -229,11 +280,62 @@ const DigitalMarketingCarousel = () => {
   );
 };
 
+const ProjectsSpaceBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const starCount = isMobile ? 24 : 55;
+  const stars = useMemo(
+    () =>
+      Array.from({ length: starCount }, () => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        size: 1 + Math.random() * 1.6,
+        opacity: 0.15 + Math.random() * 0.4,
+      })),
+    [starCount]
+  );
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Static minty-green + purple nebula glows */}
+      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-400/20 blur-[100px] sm:h-[30rem] sm:w-[30rem]" />
+      <div className="absolute top-1/4 -right-24 h-72 w-72 rounded-full bg-purple-600/25 blur-[110px] sm:h-[32rem] sm:w-[32rem]" />
+      <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-teal-400/15 blur-[100px] sm:h-[26rem] sm:w-[26rem]" />
+      <div className="absolute -bottom-16 right-1/4 h-64 w-64 rounded-full bg-fuchsia-600/15 blur-[100px] sm:h-96 sm:w-96" />
+      <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[130px]" />
+
+      {/* Static stars */}
+      {stars.map((s, i) => (
+        <span
+          key={i}
+          className="absolute rounded-full bg-white"
+          style={{
+            top: `${s.top}%`,
+            left: `${s.left}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            opacity: s.opacity,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageError, setImageError] = useState<Record<number, boolean>>({});
+  const [showAll, setShowAll] = useState(false);
+  const slideshowRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const AUTOPLAY_DELAY = 8000;
@@ -274,8 +376,9 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="min-h-screen py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-gray-950 via-black to-gray-950">
-      <div ref={ref} className="max-w-7xl mx-auto">
+    <section id="projects" className="relative min-h-screen overflow-hidden py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-br from-[#04140e] via-[#0a0a16] to-[#150a1e]">
+      <ProjectsSpaceBackground />
+      <div ref={ref} className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
           className="mb-16 text-center"
@@ -304,6 +407,7 @@ const Projects = () => {
 
         {/* Slideshow Container */}
         <motion.div
+          ref={slideshowRef}
           className="relative"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -329,7 +433,7 @@ const Projects = () => {
 
           {/* Main Slide Area */}
           <div className="relative mx-8 sm:mx-12">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               {projects.map((project, index) => {
                 if (index !== currentSlide) return null;
                 const Icon = project.icon;
@@ -502,6 +606,117 @@ const Projects = () => {
             <span>{String(projects.length).padStart(2, '0')}</span>
           </div>
         </motion.div>
+
+        {/* See All Projects toggle */}
+        <div className="mt-14 flex justify-center">
+          <motion.button
+            onClick={() => setShowAll((v) => !v)}
+            className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 text-gray-200 text-sm font-semibold backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <LayoutGrid className="w-4 h-4 text-cyan-400" />
+            {showAll ? 'Hide All Projects' : `See All ${projects.length} Projects`}
+            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
+          </motion.button>
+        </div>
+
+        {/* All Projects Grid */}
+        <AnimatePresence initial={false}>
+          {showAll && (
+            <motion.div
+              key="all-projects-grid"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-10">
+                {projects.map((project, index) => {
+                  const Icon = project.icon;
+                  const broken = imageError[index];
+                  return (
+                    <motion.div
+                      key={`grid-${project.title}`}
+                      className={`group relative flex flex-col rounded-2xl overflow-hidden border ${project.borderAccent} bg-white/[0.02] backdrop-blur-sm`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.04 }}
+                    >
+                      {/* Thumbnail — click to open in the showcase */}
+                      <button
+                        onClick={() => {
+                          goToSlide(index);
+                          setShowAll(false);
+                          slideshowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }}
+                        className="relative block w-full aspect-video overflow-hidden bg-black/40"
+                        aria-label={`Open ${project.title} in the showcase`}
+                      >
+                        {broken ? (
+                          <div className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${project.gradient}`}>
+                            <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${project.accentGradient}`}>
+                              <Icon className="h-6 w-6 text-white" />
+                            </div>
+                          </div>
+                        ) : (
+                          <img
+                            src={project.screenshot}
+                            alt={`${project.title} screenshot`}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onError={() => handleImageError(index)}
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      </button>
+
+                      {/* Body */}
+                      <div className="flex flex-1 flex-col p-4">
+                        <span className={`mb-2 inline-flex max-w-full items-center gap-1.5 self-start rounded-full px-2 py-0.5 ${project.tagBg} border ${project.borderAccent}`}>
+                          <Icon className={`h-3 w-3 shrink-0 ${project.tagText}`} />
+                          <span className={`truncate text-[10px] font-semibold uppercase tracking-wider ${project.tagText}`}>
+                            {project.iconLabel}
+                          </span>
+                        </span>
+
+                        <h4 className={`mb-2 bg-gradient-to-r text-base font-bold leading-snug text-transparent bg-clip-text ${project.textGradient}`}>
+                          {project.title}
+                        </h4>
+
+                        <p className="mb-4 text-xs leading-relaxed text-gray-400 line-clamp-3">
+                          {project.description}
+                        </p>
+
+                        {/* Links */}
+                        <div className="mt-auto flex items-center gap-2">
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r ${project.accentGradient} px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02]`}
+                          >
+                            View Live <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-gray-300 transition-colors hover:border-white/20 hover:bg-white/10"
+                            aria-label={`${project.title} source`}
+                          >
+                            <Github className="h-3.5 w-3.5" />
+                          </a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Digital Marketing Carousel */}
         <DigitalMarketingCarousel />

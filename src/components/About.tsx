@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { 
-  Briefcase, 
-  MapPin, 
+import {
+  Briefcase,
+  MapPin,
   Calendar,
   ChevronDown,
   Server,
@@ -13,12 +13,16 @@ import {
   Smartphone,
   CheckCircle2,
   Building2,
-  Award,
   Rocket,
   HardDrive,
-  Palette
+  Palette,
+  ArrowUpRight,
+  MousePointerClick,
 } from 'lucide-react';
 
+/* ------------------------------------------------------------------ */
+/*  Types & data                                                       */
+/* ------------------------------------------------------------------ */
 interface Experience {
   id: string;
   title: string;
@@ -135,20 +139,6 @@ const experiences: Experience[] = [
     accentColor: 'violet',
   },
   {
-    id: 'unlv',
-    title: 'Management Information Systems',
-    company: 'University of Nevada, Las Vegas',
-    location: 'Las Vegas, NV',
-    period: '',
-    type: 'education',
-    highlights: [
-      'Built a foundation at the intersection of business strategy and technology, combining core business principles with hands-on technical training',
-      'Coursework spanning database design (SQL, ER modeling), object-oriented programming (Java), systems analysis (Agile/Waterfall, SDLC), data analytics, IT project management, and IT business strategy',
-    ],
-    icon: Building2,
-    accentColor: 'red',
-  },
-  {
     id: 'csn',
     title: 'Associate of Applied Science in Computing & IT',
     company: 'College of Southern Nevada',
@@ -172,315 +162,346 @@ const skillCategories = [
     name: 'Languages',
     icon: Code2,
     skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'SQL', 'HTML', 'CSS'],
-    color: 'from-cyan-500 to-blue-500',
-    glowColor: 'rgba(6, 182, 212, 0.4)',
+    accent: '#22d3ee',
   },
   {
     name: 'Frontend',
     icon: Monitor,
     skills: ['React', 'Next.js', 'Tailwind CSS', 'Bootstrap', 'Framer Motion', 'Three.js', 'WebGL', 'Responsive Design'],
-    color: 'from-violet-500 to-purple-500',
-    glowColor: 'rgba(139, 92, 246, 0.4)',
+    accent: '#a78bfa',
   },
   {
     name: 'Backend',
     icon: Server,
     skills: ['Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL', 'REST APIs', 'CI/CD'],
-    color: 'from-emerald-500 to-teal-500',
-    glowColor: 'rgba(16, 185, 129, 0.4)',
+    accent: '#34d399',
   },
   {
     name: 'Cloud & Infrastructure',
     icon: Cloud,
     skills: ['Azure', 'AWS', 'Microsoft 365', 'Intune', 'Autopilot', 'MECM', 'VPN', 'VoIP'],
-    color: 'from-amber-500 to-orange-500',
-    glowColor: 'rgba(245, 158, 11, 0.4)',
+    accent: '#fbbf24',
   },
   {
     name: 'IT Administration',
     icon: Shield,
     skills: ['Active Directory', 'Device Management', 'Blancco', 'NIST 800-88', 'Network Administration', 'Firewall', 'RDP'],
-    color: 'from-rose-500 to-pink-500',
-    glowColor: 'rgba(244, 63, 94, 0.4)',
+    accent: '#fb7185',
   },
   {
     name: 'Platforms & Tools',
     icon: Smartphone,
     skills: ['Windows', 'macOS', 'Linux', 'iOS', 'Android', 'Git', 'Jira', 'Adobe Creative Suite'],
-    color: 'from-indigo-500 to-blue-500',
-    glowColor: 'rgba(99, 102, 241, 0.4)',
+    accent: '#818cf8',
   },
   {
     name: 'Enterprise Hardware',
     icon: HardDrive,
     skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'iLO 4', 'iDRAC', 'RAID', 'SAN Storage', 'PuTTY'],
-    color: 'from-orange-500 to-red-500',
-    glowColor: 'rgba(249, 115, 22, 0.4)',
+    accent: '#f97316',
   },
   {
     name: 'Design & Marketing',
     icon: Palette,
     skills: ['Figma', 'Graphic Design', 'Logo Design', 'SEO', 'UI/UX Design', 'Branding', 'Web Design'],
-    color: 'from-pink-500 to-fuchsia-500',
-    glowColor: 'rgba(236, 72, 153, 0.4)',
+    accent: '#ec4899',
   },
 ];
 
-const getAccentClasses = (color: string) => {
-  const colors: Record<string, { bg: string; border: string; text: string; shadow: string }> = {
-    cyan: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', shadow: 'rgba(6, 182, 212, 0.15)' },
-    emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', shadow: 'rgba(16, 185, 129, 0.15)' },
-    violet: { bg: 'bg-violet-500/10', border: 'border-violet-500/30', text: 'text-violet-400', shadow: 'rgba(139, 92, 246, 0.15)' },
-    amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', shadow: 'rgba(245, 158, 11, 0.15)' },
-    rose: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', shadow: 'rgba(244, 63, 94, 0.15)' },
-    fuchsia: { bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/30', text: 'text-fuchsia-400', shadow: 'rgba(217, 70, 239, 0.15)' },
-    red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', shadow: 'rgba(239, 68, 68, 0.15)' },
-  };
-  return colors[color] || colors.cyan;
+/* ------------------------------------------------------------------ */
+/*  Accent system (restrained — neutral glass base + single hue)       */
+/* ------------------------------------------------------------------ */
+const ACCENTS: Record<string, { hex: string; text: string }> = {
+  rose: { hex: '#fb7185', text: 'text-rose-300' },
+  fuchsia: { hex: '#e879f9', text: 'text-fuchsia-300' },
+  cyan: { hex: '#22d3ee', text: 'text-cyan-300' },
+  emerald: { hex: '#34d399', text: 'text-emerald-300' },
+  violet: { hex: '#a78bfa', text: 'text-violet-300' },
+  amber: { hex: '#fbbf24', text: 'text-amber-300' },
 };
+const getAccent = (c: string) => ACCENTS[c] ?? ACCENTS.cyan;
 
-interface ExperienceCardProps {
-  exp: Experience;
-  index: number;
-  isLeft: boolean;
-}
-
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isLeft }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isCardInView = useInView(cardRef, { 
-    once: true,
-    margin: '-30% 0px -30% 0px'
-  });
-  
-  const accent = getAccentClasses(exp.accentColor);
+/* ------------------------------------------------------------------ */
+/*  Detail panel (shared by desktop pane + mobile accordion)           */
+/* ------------------------------------------------------------------ */
+const RoleDetail: React.FC<{ exp: Experience }> = ({ exp }) => {
+  const accent = getAccent(exp.accentColor);
   const Icon = exp.icon;
 
   return (
-    <motion.div
-      ref={cardRef}
-      className={`relative flex flex-col md:flex-row items-start gap-8 ${
-        isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-      }`}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.5, delay: 0.1 * index }}
-    >
-      {/* Timeline Node */}
-      <motion.div
-        className={`absolute left-0 md:left-1/2 w-4 h-4 rounded-full border-2 ${accent.border} ${accent.bg} transform -translate-x-1/2 z-10`}
-        animate={
-          isCardInView 
-            ? { scale: 1.3 }
-            : { scale: 1 }
-        }
-        transition={{ duration: 0.3 }}
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] p-6 sm:p-8 backdrop-blur-sm">
+      {/* top sheen in accent */}
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: `linear-gradient(90deg, transparent, ${accent.hex}66, transparent)` }}
+      />
+      {/* faint corner glow */}
+      <div
+        className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl opacity-20"
+        style={{ background: accent.hex }}
       />
 
-      {/* Card */}
-      <motion.div
-        className={`ml-8 md:ml-0 md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-8' : 'md:pl-8'}`}
-        animate={isCardInView ? { scale: 1.02 } : { scale: 1 }}
-        transition={{ duration: 0.4 }}
-      >
-        <motion.div
-          className={`relative p-6 rounded-2xl bg-white/[0.02] border backdrop-blur-sm overflow-hidden transition-colors duration-500 ${
-            isCardInView ? accent.border : 'border-white/10'
-          }`}
-          animate={{ 
-            boxShadow: isCardInView 
-              ? `0 0 40px 0 ${accent.shadow}` 
-              : '0 0 0 0 rgba(0,0,0,0)'
-          }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Glow Effect */}
-          <motion.div 
-            className={`absolute inset-0 ${accent.bg} pointer-events-none`}
-            animate={{ opacity: isCardInView ? 0.5 : 0 }}
-            transition={{ duration: 0.5 }}
-          />
-          
-          {/* Header */}
-          <div className="relative flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2 flex-wrap">
-                <motion.div 
-                  className={`p-2 rounded-lg ${accent.bg} ${accent.border} border`}
-                  animate={isCardInView ? { rotate: [0, 5, -5, 0] } : { rotate: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Icon className={`w-5 h-5 ${accent.text}`} />
-                </motion.div>
-                {exp.current && (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
-                    Current
-                  </span>
-                )}
-                <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs">
-                  {exp.type === 'work' ? 'Work' : 'Education'}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">{exp.title}</h3>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
-                <span className="flex items-center gap-1">
-                  <Building2 className="w-3.5 h-3.5" />
-                  {exp.company}
-                </span>
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5" />
-                  {exp.location}
-                </span>
-                {exp.period && (
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {exp.period}
-                  </span>
-                )}
-              </div>
-              {exp.description && (
-                <p className="mt-2 text-sm text-gray-500">{exp.description}</p>
-              )}
-            </div>
-            <motion.div
-              animate={{ rotate: isCardInView ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronDown className={`w-5 h-5 transition-colors duration-300 ${isCardInView ? accent.text : 'text-gray-500'}`} />
-            </motion.div>
+      <div className="relative">
+        {/* header */}
+        <div className="flex items-start gap-4">
+          <div
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border"
+            style={{ borderColor: `${accent.hex}40`, background: `${accent.hex}14` }}
+          >
+            <Icon className={`h-6 w-6 ${accent.text}`} />
           </div>
 
-          {/* Expandable Content */}
-          <AnimatePresence>
-            {isCardInView && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="overflow-hidden"
+          <div className="min-w-0 flex-1">
+            <div className="mb-1.5 flex flex-wrap items-center gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
+                {exp.type === 'work' ? 'Experience' : 'Education'}
+              </span>
+              {exp.current && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  Current
+                </span>
+              )}
+            </div>
+            <h3 className="about-display text-xl font-bold leading-tight text-white sm:text-2xl">
+              {exp.title}
+            </h3>
+            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
+              <span className="flex items-center gap-1.5">
+                <Building2 className="h-3.5 w-3.5" />
+                {exp.company}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5" />
+                {exp.location}
+              </span>
+              {exp.period && (
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {exp.period}
+                </span>
+              )}
+            </div>
+            {exp.description && <p className="mt-2 text-sm text-gray-500">{exp.description}</p>}
+          </div>
+        </div>
+
+        {/* highlights */}
+        <ul className="mt-6 space-y-3 border-t border-white/[0.06] pt-6">
+          {exp.highlights.map((h, i) => (
+            <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-gray-300">
+              <CheckCircle2 className={`mt-0.5 h-4 w-4 shrink-0 ${accent.text}`} />
+              <span>{h}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* skills */}
+        {exp.skills && (
+          <div className="mt-6 flex flex-wrap gap-2">
+            {exp.skills.map((s) => (
+              <span
+                key={s}
+                className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs font-medium text-gray-300"
               >
-                <div className="pt-4 mt-4 border-t border-white/10">
-                  <ul className="space-y-2">
-                    {exp.highlights.map((highlight, i) => (
-                      <motion.li
-                        key={i}
-                        className="flex items-start gap-2 text-sm text-gray-300"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05, duration: 0.3 }}
-                      >
-                        <CheckCircle2 className={`w-4 h-4 ${accent.text} flex-shrink-0 mt-0.5`} />
-                        <span>{highlight}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-                  {exp.skills && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {exp.skills.map((skill, i) => (
-                        <motion.span
-                          key={skill}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-medium ${accent.bg} ${accent.text} border ${accent.border}`}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2 + i * 0.03, duration: 0.3 }}
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          {skill}
-                        </motion.span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </motion.div>
+/* ------------------------------------------------------------------ */
+/*  Left-rail list item                                                */
+/* ------------------------------------------------------------------ */
+const RoleListItem: React.FC<{
+  exp: Experience;
+  active: boolean;
+  mobileOpen: boolean;
+  onSelect: () => void;
+}> = ({ exp, active, mobileOpen, onSelect }) => {
+  const accent = getAccent(exp.accentColor);
+  const Icon = exp.icon;
 
-      <div className="hidden md:block md:w-[calc(50%-2rem)]" />
+  return (
+    <button
+      onClick={onSelect}
+      className={`group relative w-full overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 ${
+        active
+          ? 'border-white/20 bg-white/[0.05]'
+          : 'border-white/[0.08] bg-white/[0.015] hover:border-white/15 hover:bg-white/[0.03]'
+      }`}
+    >
+      {/* active accent bar */}
+      <span
+        className="absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full transition-all duration-300"
+        style={{
+          width: '3px',
+          height: active ? '62%' : '0%',
+          background: accent.hex,
+        }}
+      />
+      <div className="flex items-center gap-3.5">
+        <div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border transition-colors duration-300"
+          style={{
+            borderColor: active ? `${accent.hex}40` : 'rgba(255,255,255,0.08)',
+            background: active ? `${accent.hex}14` : 'rgba(255,255,255,0.02)',
+          }}
+        >
+          <Icon className={`h-5 w-5 ${active ? accent.text : 'text-gray-500'}`} />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className={`truncate text-sm font-semibold ${active ? 'text-white' : 'text-gray-300'}`}>
+            {exp.title}
+          </div>
+          <div className="truncate text-xs text-gray-500">
+            {exp.company}
+            {exp.period ? ` · ${exp.period}` : ''}
+          </div>
+        </div>
+
+        <div className="flex shrink-0 items-center gap-2">
+          {exp.current && <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />}
+          {/* mobile chevron */}
+          <ChevronDown
+            className={`h-4 w-4 text-gray-500 transition-transform duration-300 lg:hidden ${
+              mobileOpen ? 'rotate-180' : ''
+            }`}
+          />
+          {/* desktop arrow */}
+          <ArrowUpRight
+            className={`hidden h-4 w-4 transition-all duration-300 lg:block ${
+              active ? `${accent.text} translate-x-0` : 'text-gray-600 group-hover:text-gray-400'
+            }`}
+          />
+        </div>
+      </div>
+    </button>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/*  Skill card (cohesive dark glass)                                   */
+/* ------------------------------------------------------------------ */
+const SkillCard: React.FC<{
+  category: (typeof skillCategories)[0];
+  index: number;
+  hoveredSkill: string | null;
+  setHoveredSkill: (s: string | null) => void;
+}> = ({ category, index, hoveredSkill, setHoveredSkill }) => {
+  const Icon = category.icon;
+  return (
+    <motion.div
+      className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -4 }}
+    >
+      {/* top accent line */}
+      <div
+        className="absolute inset-x-0 top-0 h-px opacity-60"
+        style={{ background: `linear-gradient(90deg, transparent, ${category.accent}, transparent)` }}
+      />
+      {/* corner glow on hover */}
+      <div
+        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-25"
+        style={{ background: category.accent }}
+      />
+
+      <div className="relative mb-5 flex items-center gap-3">
+        <div
+          className="flex h-11 w-11 items-center justify-center rounded-xl border"
+          style={{ borderColor: `${category.accent}33`, background: `${category.accent}12` }}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+        <div>
+          <h3 className="about-display text-base font-bold text-white">{category.name}</h3>
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-gray-500">
+            {category.skills.length} skills
+          </span>
+        </div>
+      </div>
+
+      <div className="relative flex flex-wrap gap-2">
+        {category.skills.map((skill) => {
+          const hot = hoveredSkill === skill;
+          return (
+            <span
+              key={skill}
+              onMouseEnter={() => setHoveredSkill(skill)}
+              onMouseLeave={() => setHoveredSkill(null)}
+              className="cursor-default rounded-lg border px-2.5 py-1 text-xs font-medium transition-all duration-200"
+              style={{
+                borderColor: hot ? `${category.accent}66` : 'rgba(255,255,255,0.08)',
+                background: hot ? `${category.accent}1f` : 'rgba(255,255,255,0.03)',
+                color: hot ? '#fff' : '#d1d5db',
+              }}
+            >
+              {skill}
+            </span>
+          );
+        })}
+      </div>
     </motion.div>
   );
 };
 
-interface SkillCardProps {
-  category: typeof skillCategories[0];
-  index: number;
-  hoveredSkill: string | null;
-  setHoveredSkill: (skill: string | null) => void;
-}
+/* ------------------------------------------------------------------ */
+/*  Main section                                                       */
+/* ------------------------------------------------------------------ */
+const AboutSpaceBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
 
-const SkillCard: React.FC<SkillCardProps> = ({ category, index, hoveredSkill, setHoveredSkill }) => {
-  const Icon = category.icon;
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const starCount = isMobile ? 24 : 55;
+  const stars = useMemo(
+    () =>
+      Array.from({ length: starCount }, () => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        size: 1 + Math.random() * 1.6,
+        opacity: 0.15 + Math.random() * 0.4,
+      })),
+    [starCount]
+  );
 
   return (
-    <motion.div
-      className="group relative rounded-2xl overflow-hidden"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ 
-        scale: 1.03,
-        y: -4,
-      }}
-    >
-      <div 
-        className={`relative p-6 rounded-2xl border border-white/[0.12] h-full bg-gradient-to-br ${category.color} overflow-hidden`}
-        style={{
-          boxShadow: `0 4px 24px -4px ${category.glowColor}`,
-        }}
-      >
-        {/* Gradient overlay — black fading into the color */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/70 to-black/30 rounded-2xl" />
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Static minty-green + purple nebula glows */}
+      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-400/20 blur-[100px] sm:h-[30rem] sm:w-[30rem]" />
+      <div className="absolute top-1/4 -right-24 h-72 w-72 rounded-full bg-purple-600/25 blur-[110px] sm:h-[32rem] sm:w-[32rem]" />
+      <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-teal-400/15 blur-[100px] sm:h-[26rem] sm:w-[26rem]" />
+      <div className="absolute -bottom-16 right-1/4 h-64 w-64 rounded-full bg-fuchsia-600/15 blur-[100px] sm:h-96 sm:w-96" />
+      <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[130px]" />
 
-        {/* Icon + Title row */}
-        <div className="relative flex items-center gap-3 mb-5">
-          <div className="p-2.5 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 shadow-lg">
-            <Icon className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-white">{category.name}</h3>
-            <span className="text-xs text-gray-400">{category.skills.length} skills</span>
-          </div>
-        </div>
-
-        {/* Skill pills */}
-        <div className="relative flex flex-wrap gap-2">
-          {category.skills.map((skill, i) => (
-            <motion.span
-              key={skill}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium cursor-default transition-all duration-300 border ${
-                hoveredSkill === skill 
-                  ? 'bg-white/20 border-white/30 text-white' 
-                  : 'bg-white/[0.06] text-gray-300 border-white/[0.12]'
-              }`}
-              style={
-                hoveredSkill === skill ? { boxShadow: `0 0 16px -4px ${category.glowColor}` } : {}
-              }
-              onMouseEnter={() => setHoveredSkill(skill)}
-              onMouseLeave={() => setHoveredSkill(null)}
-              whileHover={{ scale: 1.08, y: -2 }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15 + i * 0.04 }}
-            >
-              {skill}
-            </motion.span>
-          ))}
-        </div>
-
-        {/* Bottom accent line */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-white/40 to-white/10"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 + index * 0.08, duration: 0.6, ease: 'easeOut' }}
-          style={{ transformOrigin: 'left' }}
+      {/* Static stars */}
+      {stars.map((s, i) => (
+        <span
+          key={i}
+          className="absolute rounded-full bg-white"
+          style={{
+            top: `${s.top}%`,
+            left: `${s.left}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            opacity: s.opacity,
+          }}
         />
-      </div>
-    </motion.div>
+      ))}
+    </div>
   );
 };
 
@@ -488,117 +509,203 @@ const About = () => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeTab, setActiveTab] = useState<'experience' | 'skills'>('experience');
+  const [selectedId, setSelectedId] = useState<string>('epc');
+  const [mobileOpen, setMobileOpen] = useState<string | null>('epc');
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
+  const workItems = experiences.filter((e) => e.type === 'work');
+  const eduItems = experiences.filter((e) => e.type === 'education');
+  const selectedExp = experiences.find((e) => e.id === selectedId) ?? experiences[0];
+
+  const groups = [
+    { label: 'Experience', anchor: undefined as string | undefined, items: workItems },
+    { label: 'Education', anchor: 'education', items: eduItems },
+  ];
+
+  const handleSelect = (id: string) => {
+    setSelectedId(id);
+    setMobileOpen((prev) => (prev === id ? null : id));
+  };
+
   return (
-    <section id="about" className="min-h-screen py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-black via-gray-950 to-black overflow-hidden">
-      <div ref={ref} className="max-w-6xl mx-auto">
-        {/* Section Header */}
+    <section
+      id="about"
+      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#04140e] via-[#0a0a16] to-[#150a1e] px-4 py-20 sm:px-6 sm:py-28"
+    >
+      {/* display font */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap');
+        .about-display { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; }
+      `}</style>
+
+      {/* atmospheric background */}
+      <AboutSpaceBackground />
+
+      <div ref={ref} className="relative mx-auto max-w-6xl">
+        {/* header */}
         <motion.div
-          className="mb-16 text-center"
+          className="mb-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <motion.span 
-            className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-gray-400">
             About Me
-          </motion.span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Background &{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+          </span>
+          <h2 className="about-display mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Background &amp;{' '}
+            <span className="bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               Experience
             </span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            IT professional and full-stack developer with a passion for building modern web experiences and managing enterprise infrastructure.
+          <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400 sm:text-lg">
+            Network &amp; infrastructure IT professional and full-stack developer — building
+            enterprise systems and modern web experiences.
           </p>
         </motion.div>
 
-        {/* CTA prompt */}
-        <motion.p
-          className="text-center text-sm text-gray-400 mb-3"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.25 }}
-        >
-          Explore my <span className="text-cyan-400 font-medium">work history</span> or see my <span className="text-cyan-400 font-medium">technical skills</span> — click to toggle
-        </motion.p>
-
-        {/* Tab Switcher */}
+        {/* tab switcher */}
         <motion.div
-          className="flex justify-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-10 flex justify-center"
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
-          <div className="inline-flex p-1 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+          <div className="inline-flex rounded-2xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-sm">
             {(['experience', 'skills'] as const).map((tab) => (
-              <motion.button
+              <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`relative px-6 py-3 rounded-xl text-sm font-medium transition-colors duration-300 ${
-                  activeTab === tab ? 'text-white' : 'text-gray-400 hover:text-gray-300'
+                className={`relative rounded-xl px-6 py-2.5 text-sm font-medium transition-colors duration-300 ${
+                  activeTab === tab ? 'text-white' : 'text-gray-400 hover:text-gray-200'
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
               >
                 {activeTab === tab && (
                   <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl border border-cyan-500/30"
+                    layoutId="aboutActiveTab"
+                    className="absolute inset-0 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-500/20 to-cyan-500/20"
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-2">
-                  {tab === 'experience' ? <Briefcase className="w-4 h-4" /> : <Code2 className="w-4 h-4" />}
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab === 'experience' ? <Briefcase className="h-4 w-4" /> : <Code2 className="h-4 w-4" />}
+                  {tab[0].toUpperCase() + tab.slice(1)}
                 </span>
-              </motion.button>
+              </button>
             ))}
           </div>
         </motion.div>
 
+        {/* click-to-explore CTA (experience only) */}
+        <AnimatePresence>
+          {activeTab === 'experience' && (
+            <motion.div
+              key="exp-cta"
+              className="mb-8 flex justify-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-teal-400/20 bg-teal-500/[0.06] px-4 py-2 text-sm text-teal-200">
+                <MousePointerClick className="h-4 w-4" />
+                <span className="lg:hidden">Tap a role to see the full breakdown</span>
+                <span className="hidden lg:inline">Select a role to explore the full breakdown</span>
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </motion.span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* content */}
         <AnimatePresence mode="wait">
           {activeTab === 'experience' ? (
             <motion.div
               key="experience"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
+              className="lg:grid lg:grid-cols-12 lg:gap-8"
             >
-              <div className="relative">
-                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-rose-500/50 via-cyan-500/50 to-amber-500/50 transform md:-translate-x-1/2" />
-
-                <div className="space-y-8">
-                  {experiences.map((exp, index) => (
-                    <div key={exp.id}>
-                      {exp.type === 'education' && (index === 0 || experiences[index - 1].type !== 'education') && (
-                        <div id="education" className="scroll-mt-24" />
-                      )}
-                      <ExperienceCard 
-                        exp={exp} 
-                        index={index} 
-                        isLeft={index % 2 === 0}
-                      />
+              {/* LEFT: role list */}
+              <div className="space-y-8 lg:col-span-5">
+                {groups.map((group) => (
+                  <div key={group.label}>
+                    <div
+                      id={group.anchor}
+                      className={`mb-3 flex items-center gap-3 ${group.anchor ? 'scroll-mt-24' : ''}`}
+                    >
+                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-gray-500">
+                        {group.label}
+                      </span>
+                      <span className="h-px flex-1 bg-white/[0.07]" />
                     </div>
-                  ))}
+
+                    <div className="space-y-2.5">
+                      {group.items.map((exp) => (
+                        <div key={exp.id}>
+                          <RoleListItem
+                            exp={exp}
+                            active={selectedId === exp.id}
+                            mobileOpen={mobileOpen === exp.id}
+                            onSelect={() => handleSelect(exp.id)}
+                          />
+                          {/* mobile inline detail */}
+                          <div className="lg:hidden">
+                            <AnimatePresence initial={false}>
+                              {mobileOpen === exp.id && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.35, ease: 'easeInOut' }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="pt-2.5">
+                                    <RoleDetail exp={exp} />
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* RIGHT: sticky detail (desktop) */}
+              <div className="hidden lg:col-span-7 lg:block">
+                <div className="sticky top-24">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={selectedExp.id}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -14 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <RoleDetail exp={selectedExp} />
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
             </motion.div>
           ) : (
             <motion.div
               key="skills"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
-              className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
             >
               {skillCategories.map((category, index) => (
                 <SkillCard
@@ -612,45 +719,6 @@ const About = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Stats Section */}
-        <motion.div
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {[
-            { label: 'Co-Founded Agency', value: 'Plexura', icon: Rocket },
-            { label: 'Enterprise Clients Served', value: 'Fortune 500', icon: Server },
-            { label: 'Devices Configured', value: '10,000+', icon: Smartphone },
-            { label: 'Years in IT', value: '3+', icon: Award },
-          ].map((stat, index) => {
-            const StatIcon = stat.icon;
-            return (
-              <motion.div
-                key={stat.label}
-                className="relative p-4 rounded-xl bg-white/[0.02] border border-white/10 text-center group overflow-hidden"
-                whileHover={{ scale: 1.03, borderColor: 'rgba(6, 182, 212, 0.3)' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <StatIcon className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
-                <motion.div 
-                  className="text-2xl sm:text-3xl font-bold text-white mb-1"
-                  initial={{ scale: 0.5 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1, type: 'spring' }}
-                >
-                  {stat.value}
-                </motion.div>
-                <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
       </div>
     </section>
   );

@@ -39,7 +39,7 @@ const values = [
   {
     icon: Target,
     label: 'Business-Minded',
-    description: 'Co-founded Plexura — combining technical expertise with entrepreneurial vision to deliver real results',
+    description: 'Founded Plexura — combining technical expertise with entrepreneurial vision to deliver real results',
     gradient: 'from-rose-500 to-pink-500',
   },
 ];
@@ -182,9 +182,9 @@ const Introduction = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              A passionate <span className="text-teal-400 font-semibold">Tech Professional</span> and{' '}
-              <span className="text-fuchsia-400 font-semibold">Entrepreneur</span> specializing in enterprise IT infrastructure, full-stack development, and digital marketing.
-              I co-founded <span className="text-emerald-400 font-semibold">Plexura</span>, a full-service digital agency, while building a career in cloud and network engineering.
+              A <span className="text-teal-400 font-semibold">Network &amp; Infrastructure IT professional</span> and{' '}
+              <span className="text-fuchsia-400 font-semibold">full-stack developer</span> with 3 years of hands-on experience spanning enterprise hardware configuration, secure data sanitization, system deployment, and web development.
+              I founded <span className="text-emerald-400 font-semibold">Plexura</span>, a full-service digital agency, where I design, build, and deploy production websites and web apps for real small business clients — handling everything from UI/UX and branding to hosting, DNS, and ongoing support.
             </motion.p>
 
             <motion.p
@@ -193,7 +193,7 @@ const Introduction = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              I believe in relentless growth, moving fast, and turning technical skill into business impact. Whether it&apos;s configuring Enterprise Infrastructure, shipping client websites, or studying for my next certification — I&apos;m always building toward the next level.
+              I&apos;m currently deepening my focus on networking, security, and cloud infrastructure while pursuing my CCNA, Security+, and Palo Alto certifications. I believe in relentless growth, moving fast, and turning technical skill into business impact — whether I&apos;m configuring enterprise infrastructure, shipping a client site, or studying for the next cert, I&apos;m always building toward the next level.
             </motion.p>
           </div>
         </div>
