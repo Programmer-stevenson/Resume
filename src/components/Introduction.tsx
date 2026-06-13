@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Cpu, Code2, Cloud, Linkedin, Github, TrendingUp, Zap, Target } from 'lucide-react';
+import StarfieldBackground from './StarfieldBackground';
 
 const roleCards = [
   {
@@ -51,15 +52,12 @@ const Introduction = () => {
   return (
     <section
       id="introduction"
-      className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden"
+      className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-black"
     >
-      {/* Space background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/textures/space-bg.jpg')" }}
-      />
-
-
+      {/* Animated starfield background (replaces static space-bg.jpg) */}
+      <div className="absolute inset-0">
+        <StarfieldBackground />
+      </div>
 
       {/* Subtle animated blobs on top */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -184,7 +182,8 @@ const Introduction = () => {
             >
               A <span className="text-teal-400 font-semibold">Network &amp; Infrastructure IT professional</span> and{' '}
               <span className="text-fuchsia-400 font-semibold">full-stack developer</span> with 3 years of hands-on experience spanning enterprise hardware configuration, secure data sanitization, system deployment, and web development.
-              I founded <span className="text-emerald-400 font-semibold">Plexura</span>, a full-service digital agency, where I design, build, and deploy production websites and web apps for real small business clients — handling everything from UI/UX and branding to hosting, DNS, and ongoing support.
+              I founded 
+               <span className="text-emerald-400 font-semibold">Plexura</span>, a full-service digital agency, where I design, build, and deploy production websites and web apps for real small small business clients — handling everything from UI/UX and branding to hosting, DNS, and ongoing support.
             </motion.p>
 
             <motion.p

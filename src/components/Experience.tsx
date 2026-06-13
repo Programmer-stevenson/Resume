@@ -4,7 +4,7 @@ import { CheckCircle } from 'lucide-react';
 
 const experiences = [
   {
-    title: 'IT Admin',
+    title: 'IT Operations Administrator',
     company: 'MAC.BID',
     period: 'Nov 2024 - Nov 2025',
     color: 'teal',

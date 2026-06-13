@@ -105,23 +105,7 @@ const projects = [
     iconLabel: 'Digital Marketing Landing Page',
     screenshot: '/plumb.png',
   },
-  {
-    title: 'Cosmic Skate - Real Client Front End Demo for Background Animation',
-    description: 'Interstellar space-themed front-end demo built for a real client — a galaxy-themed guitar shop. Features warp-speed stars, a floating Saturn overlay, shooting stars, and cinematic WebGL effects.',
-    tech: ['React', 'Three.js', 'WebGL', 'Tailwind CSS'],
-    liveUrl: 'https://cosmicskate.onrender.com',
-    githubUrl: 'https://github.com/Programmer-stevenson',
-    gradient: 'from-[#050510] via-[#0f0a1a] to-[#080812]',
-    accentGradient: 'from-violet-600 to-purple-500',
-    textGradient: 'from-violet-200 to-purple-100',
-    glowColor: 'shadow-violet-500/20',
-    borderAccent: 'border-violet-500/30',
-    tagBg: 'bg-violet-500/10',
-    tagText: 'text-violet-300',
-    icon: Rocket,
-    iconLabel: 'Real Client — Galaxy Guitar Shop',
-    screenshot: '/cosmic.png',
-  },
+
   {
     title: 'Plexura.net',
     description: 'Modern Full Service Digital Agency website showcasing stunning animations, responsive design, and cutting-edge frontend techniques.',
@@ -462,7 +446,7 @@ const Projects = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                       >
-                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-8">
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 sm:gap-6 lg:gap-8">
                           {/* Left side - Title and Badge */}
                           <div className="flex-1">
                             {/* Badge */}
@@ -481,19 +465,19 @@ const Projects = () => {
                             </h3>
 
                             {/* Description */}
-                            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl">
+                            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl line-clamp-4 sm:line-clamp-none">
                               {project.description}
                             </p>
                           </div>
 
                           {/* Right side - Tech & Buttons */}
-                          <div className="flex flex-col gap-4 lg:items-end">
+                          <div className="flex flex-col gap-5 lg:items-end">
                             {/* Tech Stack */}
                             <div className="flex flex-wrap gap-2 lg:justify-end">
                               {project.tech.map((tech) => (
                                 <span
                                   key={tech}
-                                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 text-gray-300 border border-white/10 hover:border-white/20 transition-colors"
+                                  className="px-2.5 py-1 text-[11px] sm:px-3 sm:py-1.5 sm:text-xs rounded-lg font-medium bg-white/5 text-gray-300 border border-white/10 hover:border-white/20 transition-colors"
                                 >
                                   {tech}
                                 </span>
@@ -501,12 +485,12 @@ const Projects = () => {
                             </div>
 
                             {/* Action Buttons */}
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex gap-3 w-full lg:w-auto">
                               <motion.a
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r ${project.accentGradient} text-white text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
+                                className={`inline-flex flex-1 lg:flex-none items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r ${project.accentGradient} text-white text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
                                 whileHover={{ scale: 1.03, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                               >
@@ -517,7 +501,7 @@ const Projects = () => {
                                 href={project.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm text-gray-300 text-sm font-semibold border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                                className="inline-flex flex-1 lg:flex-none items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm text-gray-300 text-sm font-semibold border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                                 whileHover={{ scale: 1.03, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                               >
