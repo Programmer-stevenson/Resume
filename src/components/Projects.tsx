@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Rocket, Palette, Wrench, Droplets, PawPrint, PenTool, Flower2, LayoutGrid, ChevronDown } from 'lucide-react';
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Palette, Wrench, Droplets, PawPrint, PenTool, Flower2, LayoutGrid, ChevronDown } from 'lucide-react';
 
 const projects = [
   {
