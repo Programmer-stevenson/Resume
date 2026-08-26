@@ -98,7 +98,7 @@ const experiences: Experience[] = [
   highlights: [
   'Served as the sole on-site IT administrator for the North Las Vegas facility, independently owning day-to-day IT operations as the single point of contact for all on-site staff, while coordinating with the broader IT team remotely',
   'Collaborated with the distributed IT team via Microsoft Teams on projects, deployments, escalations, and cross-site initiatives, contributing to organization-wide IT efforts beyond the local facility',
-  'Led workstation and IT infrastructure deployment for the facility, supporting 30+ onsite workstations and 30+ production mobile devices, plus printers, thermal/label printers, Bluetooth scanners, webcams, and operational-technology systems used in daily operations',
+  'Led workstation and IT infrastructure deployment for the facility, supporting 130+ onsite workstations and  production mobile devices, plus printers, thermal/label printers, Bluetooth scanners, webcams, and operational-technology systems used in daily operations',
   'Deployed and administered Microsoft Intune across the full device fleet — desktops, laptops, smartphones, and tablets — handling enrollment, device provisioning, endpoint security policies, configuration profiles, application deployment, and patch management for both corporate and mobile/production devices',
   'Administered Active Directory — user account creation, password resets, account unlocks, security group membership, and access permissions for on-site staff',
   'Provided multi-platform technical support across Windows, macOS, iOS, and Android, including proprietary business-critical production software and operational workflows, serving as both first and last line of support on site',
