@@ -12,7 +12,7 @@ const experiences = [
     borderColor: 'border-teal-500/30',
     hoverBorder: 'hover:border-teal-500',
     responsibilities: [
-      'Established and manage MAC.BID\'s IT infrastructure, overseeing more than on site 50 devices (PCs, laptops, mobile phones, and tablets). Utilize Microsoft Intune remote administration for centralized configuration, software deployment, device tracking, and compliance enforcement.',
+      'Established and manage MAC.BID\'s IT infrastructure, overseeing more than on site 130+ devices (PCs, laptops, mobile phones, and tablets). Utilize Microsoft Intune remote administration for centralized configuration, software deployment, device tracking, and compliance enforcement.',
       'Provide ongoing technical support for a wide range of systems and devices: workstations, printers, scanners, mobile devices, laptops, webcams, and company-specific applications, both on-site and remotely.',
       'Collaborate with distributed team members via Microsoft Teams to coordinate IT projects, address support requests, and ensure seamless operations across all locations.',
       'Develop and deliver training for employees on IT policies, procedures, and high-value product listing standards.',
