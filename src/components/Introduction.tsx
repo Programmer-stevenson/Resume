@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Cpu, Code2, Cloud, Linkedin, Github, TrendingUp, Zap, Target } from 'lucide-react';
+import { Cpu, Code2, Cloud, Linkedin, Github } from 'lucide-react';
 import StarfieldBackground from './StarfieldBackground';
 
 const roleCards = [
