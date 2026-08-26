@@ -7,43 +7,29 @@ const roleCards = [
   {
     icon: Cpu,
     title: 'IT Infrastructure Specialist',
-    description: 'Enterprise server platforms, ITAD processing, data sanitization, and multi-vendor hardware at scale',
+    description:
+      'Enterprise servers, Microsoft Intune, Active Directory, Cisco networking, endpoint deployment, secure data sanitization, and multi-vendor infrastructure support',
     gradient: 'from-teal-500 to-cyan-500',
   },
+
   {
     icon: Code2,
-    title: 'Full-Stack Developer',
-    description: 'Building modern web applications with React, Node.js, Three.js, and cutting-edge technologies',
+    title: 'Software Programmer',
+    description:
+      'Building modern web applications with React, Node.js, and Three.js while applying PowerShell, scripting, and automation to streamline IT operations and technical workflows',
     gradient: 'from-cyan-500 to-blue-500',
   },
+
   {
     icon: Cloud,
     title: 'Aspiring Cloud Engineer',
-    description: 'Pursuing a B.S. in Cloud & Network Engineering — architecting scalable solutions and automating infrastructure',
+    description:
+      'Pursuing a B.S. in Cloud & Network Engineering while building experience in Azure, Entra ID, Microsoft 365, endpoint management, networking, and infrastructure automation',
     gradient: 'from-blue-500 to-purple-500',
   },
 ];
 
-const values = [
-  {
-    icon: TrendingUp,
-    label: 'Growth-Driven',
-    description: 'Always leveling up — pursuing certifications, degrees, and new skills to stay ahead of the curve',
-    gradient: 'from-emerald-500 to-teal-500',
-  },
-  {
-    icon: Zap,
-    label: 'Agile Learner',
-    description: 'Rapidly adapting to new technologies, environments, and challenges with hands-on problem solving',
-    gradient: 'from-amber-500 to-orange-500',
-  },
-  {
-    icon: Target,
-    label: 'Business-Minded',
-    description: 'Founded Plexura — combining technical expertise with entrepreneurial vision to deliver real results',
-    gradient: 'from-rose-500 to-pink-500',
-  },
-];
+
 
 const Introduction = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -151,78 +137,51 @@ const Introduction = () => {
           </motion.div>
 
           {/* Intro Text */}
-          <div className="text-center lg:text-left flex-1">
-            <motion.div
-              className="inline-flex items-center gap-3 mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="w-12 h-[2px] bg-gradient-to-r from-transparent via-teal-500 to-teal-500" />
-              <span className="text-teal-400 font-mono text-sm tracking-wider uppercase">About Me</span>
-              <div className="w-12 h-[2px] bg-gradient-to-r from-teal-500 via-teal-500 to-transparent" />
-            </motion.div>
+          <div className="text-center lg:text-left flex-1"> 
+  <motion.div 
+    className="inline-flex items-center gap-3 mb-4" 
+    initial={{ opacity: 0, y: 20 }} 
+    animate={isInView ? { opacity: 1, y: 0 } : {}} 
+    transition={{ duration: 0.5 }} 
+  > 
+    <div className="w-12 h-[2px] bg-gradient-to-r from-transparent via-teal-500 to-teal-500" /> 
+    <span className="text-teal-400 font-mono text-sm tracking-wider uppercase">About Me</span> 
+    <div className="w-12 h-[2px] bg-gradient-to-r from-teal-500 via-teal-500 to-transparent" /> 
+  </motion.div> 
 
-            <motion.h2
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-                I&apos;m Brandon Stevenson
-              </span>
-            </motion.h2>
+  <motion.h2 
+    className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight" 
+    initial={{ opacity: 0, y: 20 }} 
+    animate={isInView ? { opacity: 1, y: 0 } : {}} 
+    transition={{ duration: 0.5, delay: 0.1 }} 
+  > 
+    <span className="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent"> 
+      I&apos;m Brandon Stevenson 
+    </span> 
+  </motion.h2> 
 
-            <motion.p
-              className="text-lg sm:text-xl text-gray-300 mb-6 max-w-2xl leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              A <span className="text-teal-400 font-semibold">Network &amp; Infrastructure IT professional</span> and{' '}
-              <span className="text-fuchsia-400 font-semibold">full-stack developer</span> with 3 years of hands-on experience spanning enterprise hardware configuration, secure data sanitization, system deployment, and web development.
-              I founded 
-               <span className="text-emerald-400 font-semibold">Plexura</span>, a full-service digital agency, where I design, build, and deploy production websites and web apps for real small small business clients — handling everything from UI/UX and branding to hosting, DNS, and ongoing support.
-            </motion.p>
+  <motion.p 
+    className="text-lg sm:text-xl text-gray-300 mb-6 max-w-2xl leading-relaxed" 
+    initial={{ opacity: 0, y: 20 }} 
+    animate={isInView ? { opacity: 1, y: 0 } : {}} 
+    transition={{ duration: 0.5, delay: 0.2 }} 
+  > 
+    IT professional with 2.5+ years of hands-on experience providing technical support across endpoint management, enterprise servers, and network hardware. Served as the sole on-site IT support contact for a 130+ device facility, with experience in Microsoft Intune, Active Directory, Dell and HPE servers, and Cisco infrastructure.
+  </motion.p> 
 
-            <motion.p
-              className="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              I&apos;m currently deepening my focus on networking, security, and cloud infrastructure while pursuing my CCNA, Security+, and Palo Alto certifications. I believe in relentless growth, moving fast, and turning technical skill into business impact — whether I&apos;m configuring enterprise infrastructure, shipping a client site, or studying for the next cert, I&apos;m always building toward the next level.
-            </motion.p>
-          </div>
-        </div>
+  <motion.p 
+    className="text-base sm:text-lg text-gray-400 max-w-2xl leading-relaxed" 
+    initial={{ opacity: 0, y: 20 }} 
+    animate={isInView ? { opacity: 1, y: 0 } : {}} 
+    transition={{ duration: 0.5, delay: 0.3 }} 
+  > 
+    Holds an A.A.S. in Software Programming and has delivered production client websites and full-stack web applications using modern JavaScript technologies.
+  </motion.p> 
+</div> 
+</div>
 
-        {/* Values row */}
-        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-16">
-          {values.map((value, index) => {
-            const Icon = value.icon;
-            return (
-              <motion.div
-                key={value.label}
-                className="group relative text-center p-6 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-white/20 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.35 + index * 0.1 }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br ${value.gradient} flex items-center justify-center`}>
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <h4 className={`text-lg font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r ${value.gradient}`}>
-                  {value.label}
-                </h4>
-                <p className="text-sm text-gray-400 leading-relaxed">
-                  {value.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
+        
+        
 
         {/* Roles — desktop: static row, mobile: auto-scroll ticker */}
         <motion.div

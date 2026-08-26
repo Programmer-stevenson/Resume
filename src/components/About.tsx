@@ -48,21 +48,21 @@ const experiences: Experience[] = [
     type: 'work',
     current: true,
     highlights: [
-  'Provision, recover, and redeploy hundreds of enterprise devices monthly — servers, switches, and access points — using out-of-band management (HP iLO 4, Dell iDRAC), serial/CLI console (PuTTY), and TFTP (Tftpd64) for image and firmware transfer, with remote console access, power management, network/IP configuration, and hardware health validation across multi-vendor platforms',
-  'Reimage, secure-wipe, and restore Cisco switches and access points across Nexus, Catalyst, and Meraki lines — booting from recovery, performing NIST 800-88-compliant secure wipes, and reloading firmware/OS images via TFTP and CLI to factory specification',
-  'Configure, diagnose, test, and validate enterprise infrastructure across multi-vendor server platforms (Dell PowerEdge, HP ProLiant, Lenovo, Supermicro, Cisco UCS, IBM, Oracle), networking equipment (Cisco, Juniper, Aruba, Meraki), and SAN storage arrays',
-  'Execute full server rebuilds — OS reimaging, BIOS/UEFI firmware updates, RAID array configuration, drive-pool initialization, and system-health validation prior to certified redeployment',
-  'Perform component-level hardware replacement on rack-mount and tower servers — RAM, SSD/HDD, CPUs, PSUs, NICs, RAID controllers, backplanes — resolving faults and upgrading configurations at scale',
-  'Perform secure data sanitization on all drive-bearing infrastructure prior to provisioning and redeployment — Blancco Drive Eraser and CLI-based tooling per NIST 800-88, including banking, government, and other regulated-industry equipment, with verified certificates of destruction for audit and compliance',
-  'Maintain rigorous asset documentation — hardware specs, test results, erasure verification, and chain-of-custody — within ERP and inventory systems to ensure audit readiness',
-  'Configure, diagnose, test, and validate enterprise IT infrastructure across multi-vendor server platforms (Dell PowerEdge, HP ProLiant, Lenovo, Supermicro, Cisco UCS, IBM, Oracle), networking equipment, SAN storage arrays, and endpoint devices',
-  'Execute certified data sanitization via Blancco Drive Eraser and CLI tooling in strict compliance with NIST 800-88, generating verified certificates of destruction for regulatory audit',
-  'Drive full-lifecycle ITAD processing — intake, assessment, sanitization, functional testing, grading, and certified disposition or remarketing',
-  'Restore and configure enterprise servers and network infrastructure to factory specifications leveraging out-of-band management (HP iLO 4, Dell iDRAC) and PuTTY serial console',
-  'Execute full server rebuilds — OS reimaging, BIOS/UEFI firmware updates, RAID array configuration, drive pool initialization, and system health validation',
-  'Perform component-level hardware replacements on rack-mount and tower servers — RAM, SSD/HDD, CPUs, PSUs, NICs, RAID controllers, backplanes',
-  'Wipe, reset, and restore high-volume multi-vendor enterprise IT equipment — managed switches, routers, firewalls, access points, POS systems, and docking stations',
-  'Maintain rigorous asset documentation — hardware specs, test results, erasure verification, chain-of-custody — within ERP and inventory systems',
+ 'Provision, rebuild, recover, and validate hundreds of enterprise servers, switches, and access points monthly across Dell, HP, Cisco, and Juniper platforms.',
+
+'Administer and securely repurpose Dell PowerEdge servers through iDRAC, Lifecycle Controller, and racadm over SSH — resetting BIOS/UEFI, PERC/RAID, TPM, job queues, core dumps, logs, management networking, firmware, and customer configurations.',
+
+'Administer and securely repurpose HPE ProLiant Gen8, Gen9, and Gen10 servers through iLO, RBSU, and Intelligent Provisioning — resetting BIOS/manufacturing defaults, TPM, users, OneView, and health/event logs; validate UEFI storage and hardware health.',
+
+'Recover, sanitize, and validate Cisco Nexus switches, Catalyst, ISR routers, and wireless access points through serial console, ROMMON, loader/switch boot, and IOS/NX-OS CLI; transfer images via TFTP/USB, erase configurations, crypto keys, and customer data, and restore equipment to factory specifications.',
+
+'Validate ports, modules, and hardware through interface initialization, loopback, SFP/transceiver, port-speed, line-card, and inventory testing; troubleshoot boot failures and preserve serial-console evidence in ERP audit records for regulated assets.',
+
+'Perform component-level hardware replacement on rack-mount and tower servers — RAM, SSD/HDD, CPUs, PSUs, NICs, RAID controllers, and backplanes — diagnosing faults and upgrading at scale.',
+
+'Perform NIST 800-88 sanitization using Blancco Drive Eraser on data-bearing HDDs and SSDs for banking and government assets; inspect hidden media, verify storage serials, export SupportAssist/TSR diagnostics, and document erasure results and chain of custody in ERP systems.',
+
+'Maintain rigorous asset documentation — hardware specs, test results, erasure verification, and chain of custody — in ERP and inventory systems for audit readiness.',
 ],
     skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'Blancco', 'iLO 4', 'iDRAC', 'PuTTY', 'NIST 800-88', 'RAID'],
     icon: HardDrive,
@@ -70,7 +70,7 @@ const experiences: Experience[] = [
   },
   {
     id: 'plexura',
-    title: 'Co-Founder - Lead Front-End Developer',
+    title: 'Front-End Developer',
     company: 'Plexura',
     location: 'Las Vegas, NV · Remote',
     period: 'Apr 2025 - Present',
@@ -89,34 +89,70 @@ const experiences: Experience[] = [
     accentColor: 'fuchsia',
   },
   {
-    id: 'macbid',
-    title: 'IT Operations Administrator',
-    company: 'MAC.BID',
-    location: 'Las Vegas, NV · Hybrid Remote',
-    period: 'Nov 2024 - Nov 2025',
-    type: 'work',
+  id: 'macbid',
+
+  title: 'IT Administrator / IT Facility Support',
+
+  company: 'MAC.BID',
+
+  location: 'Las Vegas, NV · Hybrid Remote',
+
+  period: 'Nov 2024 - Nov 2025',
+
+  type: 'work',
+
   highlights: [
-  'Served as the sole on-site IT administrator for the North Las Vegas facility, independently owning day-to-day IT operations as the single point of contact for all on-site staff, while coordinating with the broader IT team remotely',
-  'Collaborated with the distributed IT team via Microsoft Teams on projects, deployments, escalations, and cross-site initiatives, contributing to organization-wide IT efforts beyond the local facility',
-  'Led workstation and IT infrastructure deployment for the facility, supporting 130+ onsite workstations and  production mobile devices, plus printers, thermal/label printers, Bluetooth scanners, webcams, and operational-technology systems used in daily operations',
-  'Deployed and administered Microsoft Intune across the full device fleet — desktops, laptops, smartphones, and tablets — handling enrollment, device provisioning, endpoint security policies, configuration profiles, application deployment, and patch management for both corporate and mobile/production devices',
-  'Administered Active Directory — user account creation, password resets, account unlocks, security group membership, and access permissions for on-site staff',
-  'Provided multi-platform technical support across Windows, macOS, iOS, and Android, including proprietary business-critical production software and operational workflows, serving as both first and last line of support on site',
-  'Performed PC imaging, OS deployment, updates, hardware troubleshooting, and full endpoint lifecycle management to ensure operational continuity and deployment readiness',
-  'Owned IT asset inventory management — tracking, tagging, and maintaining lifecycle records for all hardware from intake through deployment, redeployment, and retirement',
-  'Managed IT equipment ordering and procurement — identifying hardware needs and sourcing and ordering devices and peripherals to keep the site stocked and operational',
-  'Supported IT infrastructure across multiple offices, maintaining 99.5% uptime for enterprise operations',
-  'Deployed and managed Microsoft Intune for device management and security across the organization',
-  'Provided multi-platform technical support (Windows, macOS, iOS, Android) with 95% SLA compliance',
-  'Managed Active Directory accounts, security groups, and user permissions',
-  'Deployed software updates, patches, and security rollouts using Intune and Microsoft 365',
-  'Negotiated with vendors for hardware procurement and licensing agreements',
-  'Created comprehensive IT documentation and SOPs to ensure compliance and operational efficiency',
-],
-    skills: ['Microsoft Intune', 'Active Directory', 'Microsoft 365', 'Windows', 'macOS', 'iOS', 'Android'],
-    icon: Server,
-    accentColor: 'cyan',
-  },
+    'Served as the sole on-site IT administrator for the North Las Vegas facility, independently owning day-to-day IT operations as the single point of contact for all on-site staff, while coordinating with the broader IT team remotely',
+
+    'Collaborated with the distributed IT team via Microsoft Teams on projects, deployments, escalations, and cross-site initiatives, contributing to organization-wide IT efforts beyond the local facility',
+
+    'Led workstation and IT infrastructure deployment for the facility, supporting 130+ onsite workstations and production mobile devices, plus printers, thermal/label printers, Bluetooth scanners, webcams, and operational-technology systems used in daily operations',
+
+    'Deployed and administered Microsoft Intune across the full device fleet — desktops, laptops, smartphones, and tablets — handling enrollment, device provisioning, endpoint security policies, configuration profiles, application deployment, and patch management for both corporate and mobile/production devices',
+
+    'Used PowerShell and Microsoft Graph to automate routine endpoint administration and maintenance tasks within Microsoft Intune, including device management, user and group administration, policy-related workflows, and repetitive desktop support processes',
+
+    'Administered Active Directory — user account creation, password resets, account unlocks, security group membership, and access permissions for on-site staff',
+
+    'Provided multi-platform technical support across Windows, basic desktop support for macOS, iOS, and Android, including proprietary business-critical production software and operational workflows, serving as both first and last line of support on site',
+
+    'Performed PC imaging, OS deployment, updates, hardware troubleshooting, and full endpoint lifecycle management to ensure operational continuity and deployment readiness',
+
+    'Owned IT asset inventory management — tracking, tagging, and maintaining lifecycle records for all hardware from intake through deployment, redeployment, and retirement',
+
+    'Managed IT equipment ordering and procurement — identifying hardware needs and sourcing and ordering devices and peripherals to keep the site stocked and operational',
+
+    'Supported IT infrastructure across multiple offices, maintaining 99.5% uptime for enterprise operations',
+
+    'Deployed and managed Microsoft Intune for device management and security across the organization',
+
+    'Provided multi-platform technical support (Windows, macOS, iOS, Android) with 95% SLA compliance',
+
+    'Managed Active Directory accounts, security groups, and user permissions',
+
+    'Deployed software updates, patches, and security rollouts using Intune and Microsoft 365',
+
+    'Negotiated with vendors for hardware procurement and licensing agreements',
+
+    'Created comprehensive IT documentation and SOPs to ensure compliance and operational efficiency',
+  ],
+
+  skills: [
+    'Microsoft Intune',
+    'PowerShell',
+    'Microsoft Graph API',
+    'Active Directory',
+    'Microsoft 365',
+    'Windows',
+    'macOS',
+    'iOS',
+    'Android'
+  ],
+
+  icon: Server,
+
+  accentColor: 'cyan',
+},
   {
     id: 'cdw',
     title: 'IT Configuration Technician',
