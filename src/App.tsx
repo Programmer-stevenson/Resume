@@ -29,8 +29,9 @@ function App() {
   return (
     <div className="bg-black text-white font-sans antialiased overflow-x-hidden">
       <Navigation />
-      <Introduction />
       <Hero />
+      <Introduction />
+      
       
       <Projects />
       <About />
