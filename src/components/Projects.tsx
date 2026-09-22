@@ -1,726 +1,454 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Sparkles, Code2, Globe, Palette, Wrench, Droplets, PawPrint, PenTool, Flower2, LayoutGrid, ChevronDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Pause, Play, ChevronDown, Palette } from 'lucide-react';
 
 const projects = [
   {
-    title: 'Vorus Luxury Cologne',
-    description: 'A fictional luxury cologne brand I designed and built end-to-end — I invented the product and brand identity, then handcrafted the entire web experience from scratch. Every visual, animation, and component is custom, with a complete cart, checkout flow, and sample subscription concept.',
-    tech: ['React', 'TypeScript', 'MERN Stack', 'Framer Motion'],
-    liveUrl: 'https://vorus.onrender.com',
-    githubUrl: 'https://github.com/Programmer-stevenson/Vorus',
-    gradient: 'from-[#0a0a0f] via-[#1a1520] to-[#0d0d12]',
-    accentGradient: 'from-amber-600 to-yellow-500',
-    textGradient: 'from-amber-200 to-yellow-100',
-    glowColor: 'shadow-amber-500/20',
-    borderAccent: 'border-amber-500/30',
-    tagBg: 'bg-amber-500/10',
-    tagText: 'text-amber-300',
-    icon: Sparkles,
-    iconLabel: 'Fictional Product & Brand Design',
-    screenshot: '/vorus.png',
+    "title": "KCKN Glass — Auto Glass & Repair",
+    "description": "Full-stack Utah Located auto glass business site with service booking, gallery, financing info, and a custom admin dashboard. Built for a real client with Twilio SMS integration and MongoDB backend.",
+    "liveUrl": "https://kcknglass.com/",
+    "githubUrl": "https://github.com/Programmer-stevenson/Los-s-Auto-Glass-",
+    "iconLabel": "Utah Auto Glass Business Site",
+    "screenshot": "/los.jpg",
+    "tech": [
+      "Next.js",
+      "Express",
+      "MongoDB",
+      "Twilio",
+      "Tailwind CSS"
+    ]
   },
   {
-    title: 'Pétale — Artisan Florist',
-    description: 'One of my first complex React builds — a fictional luxury florist concept where I designed the logo, created all of the imagery, and handcrafted the entire front end from scratch. Features a bouquet shop showcase, featured products, a weddings section, and a same-day delivery concept. Front-end demo only.',
-    tech: ['React', 'Framer Motion', 'Tailwind CSS', 'Responsive Design'],
-    liveUrl: 'https://petale-luxury-floral.onrender.com/',
-    githubUrl: 'https://github.com/Programmer-stevenson',
-    gradient: 'from-[#0a100c] via-[#121a14] to-[#0a0f0b]',
-    accentGradient: 'from-rose-400 to-pink-300',
-    textGradient: 'from-rose-200 to-pink-100',
-    glowColor: 'shadow-rose-500/20',
-    borderAccent: 'border-rose-500/30',
-    tagBg: 'bg-rose-500/10',
-    tagText: 'text-rose-300',
-    icon: Flower2,
-    iconLabel: 'Fictional Luxury Florist',
-    screenshot: '/Petale.jpg',
+    "title": "Vorus Luxury Cologne",
+    "description": "A fictional luxury cologne brand I designed and built end-to-end — I invented the product and brand identity, then handcrafted the entire web experience from scratch. Every visual, animation, and component is custom, with a complete cart, checkout flow, and sample subscription concept.",
+    "liveUrl": "https://vorus.onrender.com",
+    "githubUrl": "https://github.com/Programmer-stevenson/Vorus",
+    "iconLabel": "Fictional Product & Brand Design",
+    "screenshot": "/vorus.png",
+    "tech": [
+      "React",
+      "TypeScript",
+      "MERN Stack",
+      "Framer Motion"
+    ]
   },
   {
-    title: 'KCKN Glass — Auto Glass & Repair',
-    description: 'Full-stack Utah Located auto glass business site with service booking, gallery, financing info, and a custom admin dashboard. Built for a real client with Twilio SMS integration and MongoDB backend.',
-    tech: ['Next.js', 'Express', 'MongoDB', 'Twilio', 'Tailwind CSS'],
-    liveUrl: 'https://kcknglass.com/',
-    githubUrl: 'https://github.com/Programmer-stevenson/Los-s-Auto-Glass-',
-    gradient: 'from-[#060810] via-[#0a1220] to-[#080a12]',
-    accentGradient: 'from-blue-600 to-sky-500',
-    textGradient: 'from-blue-200 to-sky-100',
-    glowColor: 'shadow-blue-500/20',
-    borderAccent: 'border-blue-500/30',
-    tagBg: 'bg-blue-500/10',
-    tagText: 'text-blue-300',
-    icon: Wrench,
-    iconLabel: 'Utah Auto Glass Business Site',
-    screenshot: '/los.jpg',
+    "title": "Pétale — Artisan Florist",
+    "description": "One of my first complex React builds — a fictional luxury florist concept where I designed the logo, created all of the imagery, and handcrafted the entire front end from scratch. Features a bouquet shop showcase, featured products, a weddings section, and a same-day delivery concept. Front-end demo only.",
+    "liveUrl": "https://petale-luxury-floral.onrender.com/",
+    "githubUrl": "https://github.com/Programmer-stevenson",
+    "iconLabel": "Fictional Luxury Florist",
+    "screenshot": "/Petale.jpg",
+    "tech": [
+      "React",
+      "Framer Motion",
+      "Tailwind CSS",
+      "Responsive Design"
+    ]
   },
   {
-    title: 'Super Duper Scooper',
-    description: 'Front-end website for a real Utah dog waste removal and lawn protection company serving West Jordan and the Salt Lake Valley. Features a quote-request form wired to a serverless form service, service-area coverage, a photo-confirmation visit concept, and a clean, conversion-focused design.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Form API'],
-    liveUrl: 'https://super-duper-scoopers.onrender.com/',
-    githubUrl: 'https://github.com/Programmer-stevenson',
-    gradient: 'from-[#080f08] via-[#0f1a0d] to-[#0a0f0a]',
-    accentGradient: 'from-green-600 to-lime-500',
-    textGradient: 'from-green-200 to-lime-100',
-    glowColor: 'shadow-green-500/20',
-    borderAccent: 'border-green-500/30',
-    tagBg: 'bg-green-500/10',
-    tagText: 'text-green-300',
-    icon: PawPrint,
-    iconLabel: 'Utah Dog Waste + Lawn Care',
-    screenshot: '/superScoop.png',
+    "title": "Super Duper Scooper",
+    "description": "Live website demo built for a real Utah dog waste removal and lawn protection company serving West Jordan and the Salt Lake Valley. Features a quote-request form wired to a serverless form service, service-area coverage, a photo-confirmation visit concept, and a clean, conversion-focused design.",
+    "liveUrl": "https://super-duper-scoopers.onrender.com/",
+    "githubUrl": "https://github.com/Programmer-stevenson",
+    "iconLabel": "Real Client · Live Website Demo",
+    "screenshot": "/superScoop.png",
+    "tech": [
+      "React",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Form API"
+    ]
   },
   {
-    title: 'Hazey Tattoos',
-    description: 'Completely custom front-end portfolio site for a Utah tattoo artist. Features a filterable work gallery (illustrative B&G, realism, traditional, fine line, stippling), services, reviews, and a booking CTA — all in a bespoke dark-and-gold editorial design built entirely from scratch.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive Design'],
-    liveUrl: 'https://www.hazeytattoos.com',
-    githubUrl: 'https://github.com/Programmer-stevenson',
-    gradient: 'from-[#0c0a08] via-[#171310] to-[#0a0908]',
-    accentGradient: 'from-amber-500 to-orange-400',
-    textGradient: 'from-amber-200 to-orange-100',
-    glowColor: 'shadow-amber-500/20',
-    borderAccent: 'border-amber-500/30',
-    tagBg: 'bg-amber-500/10',
-    tagText: 'text-amber-300',
-    icon: PenTool,
-    iconLabel: 'Utah Tattoo Artist Portfolio',
-    screenshot: '/hazeyport.jpg',
+    "title": "Hazey Tattoos",
+    "description": "Completely custom front-end portfolio site for a Utah tattoo artist. Features a filterable work gallery (illustrative B&G, realism, traditional, fine line, stippling), services, reviews, and a booking CTA — all in a bespoke dark-and-gold editorial design built entirely from scratch.",
+    "liveUrl": "https://www.hazeytattoos.com",
+    "githubUrl": "https://github.com/Programmer-stevenson",
+    "iconLabel": "Utah Tattoo Artist Portfolio",
+    "screenshot": "/hazeyport.jpg",
+    "tech": [
+      "React",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Responsive Design"
+    ]
   },
   {
-    title: 'Kevin Inks — Original Tattoos',
-    description: 'Custom portfolio and booking experience built for a real Las Vegas tattoo artist. The site pairs a responsive React frontend with a headless WordPress CMS and custom REST API, allowing the client to manage artwork, available designs, images, and site content without changing the frontend code.',
-    tech: ['React', 'TypeScript', 'Headless WordPress', 'REST API', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://kevin-inks.vercel.app/',
-    githubUrl: 'https://github.com/Programmer-stevenson/Kevin-Inks',
-    gradient: 'from-[#080808] via-[#141311] to-[#090909]',
-    accentGradient: 'from-red-700 to-stone-300',
-    textGradient: 'from-stone-100 to-[#cfc3b0]',
-    glowColor: 'shadow-red-700/20',
-    borderAccent: 'border-red-700/30',
-    tagBg: 'bg-red-700/10',
-    tagText: 'text-stone-300',
-    icon: PenTool,
-    iconLabel: 'Las Vegas Tattoo Artist — Headless CMS',
-    screenshot: '/kevin-web.png',
+    "title": "Kevin Inks — Original Tattoos",
+    "description": "Custom portfolio and booking experience built for a real Las Vegas tattoo artist. The site pairs a responsive React frontend with a headless WordPress CMS and custom REST API, allowing the client to manage artwork, available designs, images, and site content without changing the frontend code.",
+    "liveUrl": "https://kevin-inks.vercel.app/",
+    "githubUrl": "https://github.com/Programmer-stevenson/Kevin-Inks",
+    "iconLabel": "Las Vegas Tattoo Artist — Headless CMS",
+    "screenshot": "/kevin-web.png",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Headless WordPress",
+      "REST API",
+      "Tailwind CSS",
+      "Framer Motion"
+    ]
   },
   {
-    title: 'Plexura Plumbing Marketing',
-    description: 'Conversion-focused digital marketing landing page built for plumbing companies. Features GBP optimization info, service packages, campaign creative showcases, and mobile-first conversion UX.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive Design'],
-    liveUrl: 'https://plexura-plumbing-marketing.onrender.com/',
-    githubUrl: 'https://github.com/Programmer-stevenson',
-    gradient: 'from-[#050a0f] via-[#0a1a1f] to-[#080f12]',
-    accentGradient: 'from-teal-600 to-cyan-500',
-    textGradient: 'from-teal-200 to-cyan-100',
-    glowColor: 'shadow-teal-500/20',
-    borderAccent: 'border-teal-500/30',
-    tagBg: 'bg-teal-500/10',
-    tagText: 'text-teal-300',
-    icon: Droplets,
-    iconLabel: 'Digital Marketing Landing Page',
-    screenshot: '/plumb.png',
-  },
-
-  {
-    title: 'Plexura.net',
-    description: 'Modern Full Service Digital Agency website showcasing stunning animations, responsive design, and cutting-edge frontend techniques.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://plexura.net',
-    githubUrl: 'https://github.com/Programmer-stevenson/Plexura',
-    gradient: 'from-[#0a100f] via-[#0f1a18] to-[#0a0f0e]',
-    accentGradient: 'from-emerald-600 to-teal-500',
-    textGradient: 'from-emerald-200 to-teal-100',
-    glowColor: 'shadow-emerald-500/20',
-    borderAccent: 'border-emerald-500/30',
-    tagBg: 'bg-emerald-500/10',
-    tagText: 'text-emerald-300',
-    icon: Code2,
-    iconLabel: ' My Agency Website',
-    screenshot: '/plexura.png',
+    "title": "Plexura.net",
+    "description": "Modern Full Service Digital Agency website showcasing stunning animations, responsive design, and cutting-edge frontend techniques.",
+    "liveUrl": "https://plexura.net",
+    "githubUrl": "https://github.com/Programmer-stevenson/Plexura",
+    "iconLabel": " My Agency Website",
+    "screenshot": "/plexura.png",
+    "tech": [
+      "React",
+      "Tailwind CSS",
+      "Framer Motion"
+    ]
   },
   {
-    title: 'My Portfolio Website',
-    description: 'Interactive MERN Stack personal portfolio featuring Three.js Saturn background, advanced animations, and modern design patterns showcasing skills and experience.',
-    tech: ['React', 'TypeScript', 'Three.js', 'Framer Motion'],
-    liveUrl: 'https://brandons-resume.com/',
-    githubUrl: 'https://github.com/Programmer-stevenson/Resume',
-    gradient: 'from-[#0a0a10] via-[#101020] to-[#0a0a12]',
-    accentGradient: 'from-cyan-600 to-blue-500',
-    textGradient: 'from-cyan-200 to-blue-100',
-    glowColor: 'shadow-cyan-500/20',
-    borderAccent: 'border-cyan-500/30',
-    tagBg: 'bg-cyan-500/10',
-    tagText: 'text-cyan-300',
-    icon: Globe,
-    iconLabel: 'Personal Site',
-    screenshot: '/resume.jpg',
+    "title": "My Portfolio Website",
+    "description": "Interactive MERN Stack personal portfolio featuring Three.js Saturn background, advanced animations, and modern design patterns showcasing skills and experience.",
+    "liveUrl": "https://brandons-resume.com/",
+    "githubUrl": "https://github.com/Programmer-stevenson/Resume",
+    "iconLabel": "Personal Site",
+    "screenshot": "/resume.jpg",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Three.js",
+      "Framer Motion"
+    ]
   },
   {
-  title: 'Tiger Paw Cleaning',
-  description: 'Front-end website built for a real Missouri cleaning business featuring premium animations, Radix UI components, and conversion-focused service pages designed to attract residential and commercial clients. Lead-generation forms are handled via Web3Forms, and all imagery was provided by the client.',
-  tech: ['React', 'TypeScript', 'Tailwind CSS', 'Radix UI', 'Framer Motion', 'Web3Forms'],
-  liveUrl: 'https://tigerpawcleaning.com/',
-  githubUrl: 'https://github.com/Programmer-stevenson/Tiger-Paw-Cleaning',
-  gradient: 'from-[#0a0a10] via-[#111111] to-[#0a0a0a]',
-  accentGradient: 'from-yellow-500 to-amber-400',
-  textGradient: 'from-yellow-200 to-amber-100',
-  glowColor: 'shadow-yellow-500/20',
-  borderAccent: 'border-yellow-500/30',
-  tagBg: 'bg-yellow-500/10',
-  tagText: 'text-yellow-300',
-  icon: Sparkles,
-  iconLabel: 'Cleaning Brand',
-  screenshot: '/tiger-paw.png',
-},
+    "title": "Tiger Paw Cleaning",
+    "description": "Front-end website built for a real Missouri cleaning business featuring premium animations, Radix UI components, and conversion-focused service pages designed to attract residential and commercial clients. Lead-generation forms are handled via Web3Forms, and all imagery was provided by the client.",
+    "liveUrl": "https://tigerpawcleaning.com/",
+    "githubUrl": "https://github.com/Programmer-stevenson/Tiger-Paw-Cleaning",
+    "iconLabel": "Cleaning Brand",
+    "screenshot": "/tiger-paw.png",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Radix UI",
+      "Framer Motion",
+      "Web3Forms"
+    ]
+  }
 ];
 
-// Generate digi image array: digi1.jpg through digi13.jpg + plumb.png
-const digiImages = [
-  ...Array.from({ length: 13 }, (_, i) => ({
-    src: `/digi${i + 1}.jpg`,
-    alt: `Digital Marketing Design ${i + 1}`,
-  })),
-  {
-    src: '/plumb.png',
-    alt: 'Plexura Plumbing Marketing Landing Page',
-  },
-];
+type Project = (typeof projects)[number];
 
-const DigitalMarketingCarousel = () => {
-  const carouselRef = useRef(null);
-  const isInView = useInView(carouselRef, { once: true, margin: '-100px' });
+const styles = `
+#projects.bs-projects {
+  --project-navy:#123253; --project-muted:#47637d; --project-line:#cadfee;
+  padding:96px 28px; scroll-margin-top:80px; color:var(--project-navy);
+  font-family:Inter,'Segoe UI',Arial,sans-serif;
+  background:radial-gradient(ellipse at 94% 8%,#c5e6fc 0%,transparent 35%),radial-gradient(ellipse at 0% 65%,#d8efff 0%,transparent 40%),linear-gradient(155deg,#fff 0%,#eff8ff 48%,#e1f1fd 78%,#fff 100%);
+}
+.bs-projects,.bs-projects * {box-sizing:border-box}
+.bs-projects h2,.bs-projects h3,.bs-projects p,.bs-projects figure {margin:0}
+.bs-projects a {text-decoration:none;color:inherit}
+.bs-projects button {font:inherit;cursor:pointer}
+.bs-projects svg {flex-shrink:0}
+.bs-projects .projects-wrap {max-width:1180px;margin:auto;min-width:0}
+.bs-projects .projects-eyebrow {display:flex;gap:16px;align-items:center;font-size:11px;line-height:1.5;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#305f88;margin-bottom:21px}
+.bs-projects .projects-eyebrow:after {content:'';width:64px;height:1px;background:#8bb6d6}
+.bs-projects .projects-heading {display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:38px}
+.bs-projects .projects-heading h2 {font-size:clamp(36px,4.7vw,60px);font-weight:600;line-height:1.08;letter-spacing:-.055em;color:var(--project-navy)}
+.bs-projects .projects-heading h2 span {color:#3b729e}
+.bs-projects .projects-heading p {max-width:470px;font-size:15px;line-height:1.85;color:var(--project-muted)}
+.bs-projects .project-card {display:flex;flex-direction:column;min-width:0;background:#ffffffed;border:1px solid #d0e3f1;border-radius:20px;overflow:hidden;box-shadow:0 12px 35px #254e7307}
+.bs-projects .project-featured {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);margin-bottom:45px;background:#fff;border-radius:24px;box-shadow:0 20px 55px #285c8710}
+.bs-projects .project-media {display:flex;flex-direction:column;background:#e8f3fb;border-bottom:1px solid #d0e3f1;min-width:0}
+.bs-projects .project-browser {display:flex;align-items:center;gap:5px;padding:12px 16px;background:#f5faff;border-bottom:1px solid #dcebf5;color:#58758e;min-width:0}
+.bs-projects .project-browser i {width:5px;height:5px;border-radius:50%;background:#aecadd;flex-shrink:0}
+.bs-projects .project-browser span {font-size:10px;letter-spacing:.01em;margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bs-projects .project-shot {display:block;width:100%;aspect-ratio:16/10;object-fit:contain;background:#e8f3fb}
+.bs-projects .project-fallback {display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;aspect-ratio:16/10;padding:24px;text-align:center;color:#456d8d;font-size:13px}
+.bs-projects .project-featured .project-media {border-bottom:0;border-right:1px solid #d0e3f1;justify-content:center;background:linear-gradient(135deg,#e9f5ff,#d2eafa)}
+.bs-projects .project-featured .project-browser {margin-top:auto}
+.bs-projects .project-featured .project-shot,.bs-projects .project-featured .project-fallback {margin-bottom:auto}
+.bs-projects .project-body {padding:26px;display:flex;flex-direction:column;flex:1;min-width:0}
+.bs-projects .project-featured .project-body {padding:36px}
+.bs-projects .project-label {display:flex;align-items:center;gap:7px;font-size:10px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:#426d8f;line-height:1.65;margin-bottom:13px}
+.bs-projects .project-featured .project-label {color:#245981}
+.bs-projects .project-card h3 {font-size:23px;line-height:1.25;letter-spacing:-.035em;font-weight:600;color:var(--project-navy);margin-bottom:14px;overflow-wrap:anywhere}
+.bs-projects .project-featured h3 {font-size:32px}
+.bs-projects .project-description {font-size:13px;line-height:1.85;color:var(--project-muted);margin-bottom:20px}
+.bs-projects .project-tags {display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;margin-bottom:24px}
+.bs-projects .project-tag {font-size:10px;line-height:1.5;padding:5px 9px;border:1px solid #d4e5f2;border-radius:6px;background:#edf6fd;color:#365f80}
+.bs-projects .project-links {display:flex;flex-wrap:wrap;gap:10px;padding-top:20px;border-top:1px solid #e1edf5}
+.bs-projects .project-link {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid #c9dfef;border-radius:9px;padding:10px 15px;font-size:12px;font-weight:600;line-height:1.4;background:#fff;color:#244f72}
+.bs-projects .project-link-primary {background:#143b5f;border-color:#143b5f;color:#fff}
+.bs-projects .project-link:hover {background:#e2f1fc}
+.bs-projects .project-link-primary:hover {background:#285e88;border-color:#285e88}
+.bs-projects a:focus-visible,.bs-projects button:focus-visible,.bs-projects [tabindex]:focus-visible {outline:3px solid #377eae;outline-offset:4px}
+.bs-projects .projects-subheading {display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:23px}
+.bs-projects .projects-subheading h3 {font-size:25px;font-weight:500;letter-spacing:-.035em}
+.bs-projects .projects-subheading p {font-size:12px;line-height:1.6;color:var(--project-muted)}
+.bs-projects .projects-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.bs-projects .projects-creative {margin-top:72px;padding-top:37px;border-top:1px solid #bfd9ed}
+.bs-projects .creative-header {display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:25px}
+.bs-projects .creative-header h3 {font-size:32px;line-height:1.2;font-weight:500;letter-spacing:-.04em;margin-bottom:12px}
+.bs-projects .creative-header p {font-size:14px;line-height:1.8;color:var(--project-muted);max-width:560px}
+.bs-projects .creative-controls {display:flex;gap:9px;flex-shrink:0}
+.bs-projects .creative-controls button {display:grid;place-items:center;width:44px;height:44px;border:1px solid #bcd8ec;border-radius:50%;background:#fff;color:#275475}
+.bs-projects .creative-controls button:hover {background:#deeffb}
+.bs-projects .creative-track {display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:4px 4px 18px;scrollbar-width:thin;scrollbar-color:#91b9d7 #e6f3fc}
+.bs-projects .creative-item {flex:0 0 30%;min-width:0;scroll-snap-align:start;border:1px solid #cce1f0;background:#fff;border-radius:16px;overflow:hidden}
+.bs-projects .creative-item img {display:block;width:100%;aspect-ratio:1;object-fit:contain;background:#f6fbff}
+.bs-projects .creative-item figcaption {padding:12px 16px;font-size:11px;color:#4b6b83;border-top:1px solid #e1edf5}
+.bs-projects .creative-fallback {aspect-ratio:1;display:grid;place-content:center;justify-items:center;gap:12px;color:#537795;font-size:12px;background:#f2f8fd}
+@media(max-width:1050px) {
+ .bs-projects .projects-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bs-projects .project-featured {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .bs-projects .project-featured .project-body {padding:27px}
+ .bs-projects .project-featured h3 {font-size:28px}
+ .bs-projects .creative-item {flex-basis:40%}
+}
+@media(max-width:760px) {
+ #projects.bs-projects {padding:64px 22px}
+ .bs-projects .projects-heading {grid-template-columns:1fr;gap:20px;margin-bottom:28px}
+ .bs-projects .projects-heading p {max-width:600px;font-size:14px}
+ .bs-projects .project-featured {grid-template-columns:1fr}
+ .bs-projects .project-featured .project-media {border-right:0;border-bottom:1px solid #d0e3f1}
+ .bs-projects .project-featured .project-shot {aspect-ratio:16/9}
+ .bs-projects .project-body {padding:22px}
+ .bs-projects .project-card h3 {font-size:22px}
+ .bs-projects .project-featured h3 {font-size:28px}
+ .bs-projects .projects-grid {gap:16px}
+ .bs-projects .creative-header {align-items:start;flex-direction:column;gap:18px}
+ .bs-projects .creative-item {flex-basis:70%}
+}
+@media(max-width:560px) {
+ #projects.bs-projects {padding:54px 18px}
+ .bs-projects .projects-grid {grid-template-columns:1fr;gap:22px}
+ .bs-projects .project-featured .project-body {padding:25px 22px}
+ .bs-projects .project-links .project-link {flex:1}
+ .bs-projects .creative-item {flex-basis:86%}
+ .bs-projects .projects-creative {margin-top:48px}
+ .bs-projects .creative-header h3 {font-size:28px}
+}
 
-  // Duplicate images for seamless infinite loop
-  const duplicatedImages = [...digiImages, ...digiImages];
+/* Open editorial layout: a desktop display beside project details. */
+.bs-projects .projects-heading {grid-template-columns:1.2fr 1fr;align-items:center;padding-bottom:30px;border-bottom:1px solid #c4ddec;margin-bottom:42px}
+.bs-projects .projects-heading h2 {font-size:clamp(35px,4vw,54px);letter-spacing:-.045em}
+.bs-projects .projects-heading p {font-size:14px;max-width:360px;justify-self:end}
+.bs-projects .project-world {width:40px;height:40px;object-fit:contain;flex-shrink:0}
+.bs-projects .project-stage {padding:0}
+.bs-projects .project-featured {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:42px;align-items:center;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible}
+.bs-projects .project-featured .project-media {position:relative;border:8px solid #e6edf3;border-bottom-width:16px;border-radius:15px;background:#e8f3fb;box-shadow:0 22px 42px #23476220;margin-bottom:40px;overflow:visible}
+.bs-projects .project-featured .project-media:after {content:'';position:absolute;left:39%;right:39%;bottom:-45px;height:28px;border-bottom:7px solid #c3d2df;background:linear-gradient(90deg,#e5edf4,#bfcddb,#e4edf4);border-radius:0 0 6px 6px}
+.bs-projects .project-featured .project-browser {margin:0;border-radius:7px 7px 0 0;padding:10px 12px}
+.bs-projects .project-featured .project-shot {aspect-ratio:16/10;margin:0;border-radius:0 0 3px 3px}
+.bs-projects .project-featured .project-body {padding:8px 0 8px 0}
+.bs-projects .project-featured h3 {font-size:clamp(25px,2.6vw,34px);line-height:1.15;margin-bottom:18px}
+.bs-projects .project-featured .project-description {font-size:13px;line-height:1.85}
+.bs-projects .project-featured .project-label {font-size:9px;letter-spacing:.1em;gap:10px;margin-bottom:19px}
+.bs-projects .stage-controls {display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:28px;padding:0 0 26px}
+.bs-projects .stage-navigation {display:flex;gap:8px}
+.bs-projects .stage-navigation button {width:44px;height:44px;display:grid;place-items:center;background:#fff;border:1px solid #bdd5e7;border-radius:50%;color:#234e70}
+.bs-projects .stage-navigation button:hover {background:#d9ecfa}
+.bs-projects .stage-dots {display:flex;flex-wrap:wrap}
+.bs-projects .stage-dots button {width:28px;height:44px;border:0;background:transparent;display:grid;place-items:center;padding:0}
+.bs-projects .stage-dots span {width:6px;height:6px;border-radius:10px;background:#a2bfd4}
+.bs-projects .stage-dots button[aria-pressed=true] span {width:18px;background:#235578}
+.bs-projects .collection-bar {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;border-top:1px solid #c4ddec;border-bottom:1px solid #c4ddec;margin:0 0 28px}
+.bs-projects .collection-bar p {font-size:12px;color:#53758e}
+.bs-projects .collection-toggle {display:flex;align-items:center;justify-content:center;gap:14px;border:0;background:#153b5e;color:#fff;padding:13px 19px;min-height:46px;border-radius:9px;font-size:12px;font-weight:600}
+.bs-projects .collection-toggle[aria-expanded=true] svg {transform:rotate(180deg)}
+.bs-projects .projects-creative {margin-top:48px;border-top:0;padding-top:10px}
+@media(max-width:960px) {
+ .bs-projects .project-featured {gap:27px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+ .bs-projects .project-featured .project-body {padding:0}
+}
+@media(max-width:760px) {
+ .bs-projects .projects-heading {grid-template-columns:1fr;gap:15px;margin-bottom:32px}
+ .bs-projects .projects-heading p {justify-self:start;max-width:500px}
+ .bs-projects .project-featured {grid-template-columns:1fr;gap:28px}
+ .bs-projects .project-featured .project-media {border-right:8px solid #e6edf3;border-bottom:16px solid #e6edf3;margin-bottom:24px}
+ .bs-projects .project-featured .project-body {padding:0}
+ .bs-projects .project-featured .project-shot {aspect-ratio:16/10}
+ .bs-projects .project-featured h3 {font-size:28px}
+}
+@media(max-width:430px) {
+ .bs-projects .stage-controls {justify-content:center;gap:5px}
+ .bs-projects .collection-bar {align-items:stretch;flex-direction:column}
+ .bs-projects .collection-bar p {text-align:center}
+}
 
+/* Seamless creative ribbon. Keep identical group widths for a clean loop. */
+.bs-projects .creative-ribbon {position:relative;min-width:0}
+.bs-projects .creative-track {gap:0;padding:8px 0 22px;scroll-snap-type:none;scroll-behavior:auto;scrollbar-width:none;overflow-x:auto}
+.bs-projects .creative-track::-webkit-scrollbar {display:none}
+.bs-projects .creative-ribbon-group {display:flex;flex:0 0 auto;gap:18px;padding-right:18px;width:max-content}
+.bs-projects .creative-ribbon-group .creative-item {flex:0 0 clamp(210px,24vw,300px);width:clamp(210px,24vw,300px);border-radius:14px;box-shadow:0 8px 18px #234b7108}
+.bs-projects .creative-item figcaption {display:none}
+.bs-projects .creative-ribbon:before,.bs-projects .creative-ribbon:after {content:'';position:absolute;top:0;bottom:0;width:35px;pointer-events:none;z-index:1}
+.bs-projects .creative-ribbon:before {left:0;background:linear-gradient(90deg,#eaf5fe,transparent)}
+.bs-projects .creative-ribbon:after {right:0;background:linear-gradient(270deg,#eaf5fe,transparent)}
+@media(max-width:560px) {
+ .bs-projects .creative-ribbon-group {gap:12px;padding-right:12px}
+ .bs-projects .creative-ribbon-group .creative-item {width:220px;flex-basis:220px}
+ .bs-projects .creative-ribbon:before,.bs-projects .creative-ribbon:after {width:16px}
+}
+@media(prefers-reduced-motion:reduce) {
+ .bs-projects .creative-track {scrollbar-width:thin}
+}
+`;
+
+function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const isRepo = project.githubUrl.replace(/\/$/, '').split('/').length > 4;
   return (
-    <motion.div
-      ref={carouselRef}
-      className="mt-28"
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-    >
-      {/* Section Header */}
-      <motion.div
-        className="mb-12 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <motion.span
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 text-sm text-fuchsia-300 mb-4"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-        >
-          <Palette className="w-3.5 h-3.5" />
-          Plexura Creative
-        </motion.span>
-        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3">
-          Digital Marketing {' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-pink-500">
-            For Plexura
-          </span>
-        </h3>
-        <p className="text-gray-400 max-w-xl mx-auto text-base sm:text-lg">
-          Brand graphics, Social Media content, and marketing assets designed for my business.
-        </p>
-      </motion.div>
-
-      {/* Auto-scrolling Carousel */}
-      <div className="relative overflow-hidden">
-        {/* Left fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#0a0a16] via-[#0a0a16]/80 to-transparent z-10 pointer-events-none" />
-        {/* Right fade */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#0a0a16] via-[#0a0a16]/80 to-transparent z-10 pointer-events-none" />
-
-        {/* Scrolling track */}
-        <div className="flex animate-scroll hover:[animation-play-state:paused]">
-          {duplicatedImages.map((img, index) => (
-            <div
-              key={`${img.src}-${index}`}
-              className="flex-shrink-0 px-2 sm:px-3"
-            >
-              <div className="relative group w-[280px] sm:w-[340px] md:w-[400px] rounded-2xl overflow-hidden border border-white/10 hover:border-fuchsia-500/40 transition-all duration-500 shadow-lg hover:shadow-fuchsia-500/10">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </div>
-            </div>
-          ))}
+    <article className={`project-card${featured ? ' project-featured' : ''}`}>
+      <div className="project-media">
+        <div className="project-browser" aria-hidden="true">
+          <i /><i /><i /><span>{project.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
+        </div>
+        {imageFailed ? (
+          <div className="project-fallback"><img className="project-world" src="/world.png" alt="" /><span>{project.title}</span><span>Preview unavailable · Explore the live website below</span></div>
+        ) : (
+          <img className="project-shot" src={project.screenshot} alt={`${project.title} website preview`} loading="lazy" decoding="async" width={960} height={600} onError={() => setImageFailed(true)} />
+        )}
+      </div>
+      <div className="project-body">
+        <div className="project-label"><img className="project-world" src="/world.png" alt="" />{project.iconLabel.trim()}</div>
+        <h3>{project.title}</h3>
+        <p className="project-description">{project.description}</p>
+        <div className="project-tags" aria-label="Technologies">{project.tech.map((tech) => <span className="project-tag" key={tech}>{tech}</span>)}</div>
+        <div className="project-links">
+          <a className="project-link project-link-primary" href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} live (opens in a new tab)`}>View website <ExternalLink size={14} aria-hidden="true" /></a>
+          <a className="project-link" href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`${isRepo ? 'Source code for ' + project.title : 'GitHub profile'} (opens in a new tab)`}><Github size={15} aria-hidden="true" />{isRepo ? 'Source code' : 'GitHub'}</a>
         </div>
       </div>
-
-      {/* CSS Keyframes for infinite scroll */}
-      <style>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-scroll {
-          animation: scroll 60s linear infinite;
-          width: max-content;
-        }
-        .animate-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-    </motion.div>
+    </article>
   );
-};
+}
 
-const ProjectsSpaceBackground = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const starCount = isMobile ? 24 : 55;
-  const stars = useMemo(
-    () =>
-      Array.from({ length: starCount }, () => ({
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        size: 1 + Math.random() * 1.6,
-        opacity: 0.15 + Math.random() * 0.4,
-      })),
-    [starCount]
-  );
-
+function CreativeImage({ index }: { index: number }) {
+  const [failed, setFailed] = useState(false);
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Static minty-green + purple nebula glows */}
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-400/20 blur-[100px] sm:h-[30rem] sm:w-[30rem]" />
-      <div className="absolute top-1/4 -right-24 h-72 w-72 rounded-full bg-purple-600/25 blur-[110px] sm:h-[32rem] sm:w-[32rem]" />
-      <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-teal-400/15 blur-[100px] sm:h-[26rem] sm:w-[26rem]" />
-      <div className="absolute -bottom-16 right-1/4 h-64 w-64 rounded-full bg-fuchsia-600/15 blur-[100px] sm:h-96 sm:w-96" />
-      <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[130px]" />
-
-      {/* Static stars */}
-      {stars.map((s, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{
-            top: `${s.top}%`,
-            left: `${s.left}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            opacity: s.opacity,
-          }}
-        />
-      ))}
-    </div>
+    <figure className="creative-item">
+      {failed ? <div className="creative-fallback"><Palette size={32} aria-hidden="true" /><span>Preview unavailable</span></div> : <img src={`/digi${index}.jpg`} alt={`Plexura brand and social media design ${index}`} width={600} height={600} loading="lazy" decoding="async" onError={() => setFailed(true)} />}
+      <figcaption>Plexura Creative</figcaption>
+    </figure>
   );
-};
+}
 
 const Projects = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [imageError, setImageError] = useState<Record<number, boolean>>({});
+  const [active, setActive] = useState(0);
   const [showAll, setShowAll] = useState(false);
-  const slideshowRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const AUTOPLAY_DELAY = 8000;
-
-  // Start or restart the autoplay timer
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % projects.length);
-    }, AUTOPLAY_DELAY);
-  }, []);
-
-  // Initialize autoplay
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
-    resetTimer();
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motion = () => setReducedMotion(query.matches);
+    const visibility = () => setVisible(!document.hidden);
+    motion(); visibility();
+    query.addEventListener('change', motion);
+    document.addEventListener('visibilitychange', visibility);
+    return () => { query.removeEventListener('change', motion); document.removeEventListener('visibilitychange', visibility); };
+  }, []);
+  const playing = !paused && !hovered && !focused && visible && !reducedMotion;
+  useEffect(() => {
+    if (!playing) return;
+    const timer = window.setTimeout(() => setActive((v) => (v + 1) % projects.length), 5000);
+    return () => window.clearTimeout(timer);
+  }, [active, playing]);
+  const creativeRef = useRef<HTMLDivElement>(null);
+  const [ribbonPaused, setRibbonPaused] = useState(false);
+  const [ribbonHovered, setRibbonHovered] = useState(false);
+  const [ribbonFocused, setRibbonFocused] = useState(false);
+  const [ribbonTouched, setRibbonTouched] = useState(false);
+  const ribbonResumeAt = useRef(0);
+  useEffect(() => {
+    if (reducedMotion || !visible || ribbonPaused || ribbonHovered || ribbonFocused || ribbonTouched) return;
+    const track = creativeRef.current;
+    if (!track) return;
+    let frame = 0;
+    let previous = 0;
+    let position = track.scrollLeft;
+    const tick = (time: number) => {
+      const elapsed = previous ? Math.min(time - previous, 50) : 0;
+      previous = time;
+      if (time >= ribbonResumeAt.current) {
+        const loopWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
+        if (loopWidth > 0) {
+          position += elapsed * 0.035;
+          if (position >= loopWidth) position %= loopWidth;
+          track.scrollLeft = position;
+        }
+      } else { position = track.scrollLeft; }
+      frame = window.requestAnimationFrame(tick);
     };
-  }, [resetTimer]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % projects.length);
-    resetTimer();
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
-    resetTimer();
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    resetTimer();
-  };
-
-  const handleImageError = (index: number) => {
-    setImageError((prev) => ({ ...prev, [index]: true }));
-  };
-
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [reducedMotion, visible, ribbonPaused, ribbonHovered, ribbonFocused, ribbonTouched]);
   return (
-    <section id="projects" className="relative min-h-screen overflow-hidden py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-br from-[#04140e] via-[#0a0a16] to-[#150a1e]">
-      <ProjectsSpaceBackground />
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Header */}
-        <motion.div
-          className="mb-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.span 
-            className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400 mb-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Portfolio
-          </motion.span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Featured{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-              Projects
-            </span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            A collection of work showcasing modern web development, stunning visuals, and seamless user experiences.
-          </p>
-        </motion.div>
-
-        {/* Slideshow Container */}
-        <motion.div
-          ref={slideshowRef}
-          className="relative"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {/* Navigation Arrows */}
-          <motion.button
-            className="absolute left-0 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-            onClick={prevSlide}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </motion.button>
-          <motion.button
-            className="absolute right-0 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-            onClick={nextSlide}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </motion.button>
-
-          {/* Main Slide Area */}
-          <div className="relative mx-8 sm:mx-12">
-            <AnimatePresence mode="popLayout">
-              {projects.map((project, index) => {
-                if (index !== currentSlide) return null;
-                const Icon = project.icon;
-                const showPlaceholder = imageError[index];
-
-                return (
-                  <motion.div
-                    key={project.title}
-                    className={`bg-gradient-to-br ${project.gradient} rounded-3xl overflow-hidden shadow-2xl ${project.glowColor}`}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
-                  >
-                    {/* Subtle Background Pattern */}
-                    <div className="absolute inset-0 opacity-30 pointer-events-none">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent" />
-                    </div>
-
-                    {/* Content - Stacked Layout */}
-                    <div className="relative p-6 sm:p-8 lg:p-10">
-                      {/* Top: Project Info */}
-                      <motion.div
-                        className="mb-6 lg:mb-8"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                      >
-                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 sm:gap-6 lg:gap-8">
-                          {/* Left side - Title and Badge */}
-                          <div className="flex-1">
-                            {/* Badge */}
-                            <div className="flex items-center gap-3 mb-3">
-                              <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${project.tagBg} border ${project.borderAccent}`}>
-                                <Icon className={`w-3.5 h-3.5 ${project.tagText}`} />
-                                <span className={`text-xs font-semibold ${project.tagText} uppercase tracking-wider`}>
-                                  {project.iconLabel}
-                                </span>
-                              </span>
-                            </div>
-
-                            {/* Title */}
-                            <h3 className={`text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${project.textGradient} leading-tight mb-3`}>
-                              {project.title}
-                            </h3>
-
-                            {/* Description */}
-                            <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl line-clamp-4 sm:line-clamp-none">
-                              {project.description}
-                            </p>
-                          </div>
-
-                          {/* Right side - Tech & Buttons */}
-                          <div className="flex flex-col gap-5 lg:items-end">
-                            {/* Tech Stack */}
-                            <div className="flex flex-wrap gap-2 lg:justify-end">
-                              {project.tech.map((tech) => (
-                                <span
-                                  key={tech}
-                                  className="px-2.5 py-1 text-[11px] sm:px-3 sm:py-1.5 sm:text-xs rounded-lg font-medium bg-white/5 text-gray-300 border border-white/10 hover:border-white/20 transition-colors"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex gap-3 w-full lg:w-auto">
-                              <motion.a
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`inline-flex flex-1 lg:flex-none items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r ${project.accentGradient} text-white text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
-                                whileHover={{ scale: 1.03, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                              >
-                                <span>View Live</span>
-                                <ExternalLink className="w-4 h-4" />
-                              </motion.a>
-                              <motion.a
-                                href={project.githubUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex flex-1 lg:flex-none items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm text-gray-300 text-sm font-semibold border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                                whileHover={{ scale: 1.03, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                              >
-                                <Github className="w-4 h-4" />
-                                <span>Source</span>
-                              </motion.a>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      {/* Bottom: Full Screenshot */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                      >
-                        <div className={`relative rounded-2xl overflow-hidden border ${project.borderAccent} bg-black/40 backdrop-blur-sm shadow-2xl group`}>
-                          {/* Screenshot Image or Placeholder */}
-                          {showPlaceholder ? (
-                            <div className="flex flex-col items-center justify-center py-32 bg-gradient-to-br from-gray-900/80 to-black/80">
-                              <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${project.accentGradient} flex items-center justify-center mb-4 shadow-lg`}>
-                                <Icon className="w-10 h-10 text-white" />
-                              </div>
-                              <p className="text-gray-500 text-sm font-medium">Screenshot Placeholder</p>
-                              <p className="text-gray-600 text-xs mt-1">{project.screenshot}</p>
-                            </div>
-                          ) : (
-                            <div className="relative">
-                              <img
-                                src={project.screenshot}
-                                alt={`${project.title} screenshot`}
-                                className="w-full h-auto max-h-[500px] object-contain bg-black/20"
-                                onError={() => handleImageError(index)}
-                              />
-                              
-                              {/* Gradient overlay at bottom */}
-                              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-                            </div>
-                          )}
-                          
-                          {/* Shine Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+    <section id="projects" className="bs-projects" aria-labelledby="projects-heading">
+      <style>{styles}</style>
+      <div className="projects-wrap">
+        <p className="projects-eyebrow">Development portfolio</p>
+        <header className="projects-heading">
+          <h2 id="projects-heading">Selected <span>Projects</span></h2>
+          <p>Client websites, custom applications, and original design concepts.</p>
+        </header>
+        <div className="project-stage" role="region" aria-roledescription="carousel" aria-label="Project showcase"
+          onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
+          <div aria-live={playing ? 'off' : 'polite'} aria-atomic="true">
+            <ProjectCard key={projects[active].title} project={projects[active]} featured />
           </div>
-
-          {/* Progress Dots */}
-          <div className="flex justify-center items-center gap-3 mt-8">
-            {projects.map((_, index) => (
-              <motion.button
-                key={index}
-                className="relative group"
-                onClick={() => goToSlide(index)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <span
-                  className={`block w-2.5 h-2.5 rounded-full transition-all duration-500 ${
-                    index === currentSlide
-                      ? `bg-gradient-to-r ${projects[index].accentGradient} scale-125`
-                      : 'bg-white/20 hover:bg-white/40'
-                  }`}
-                />
-                {index === currentSlide && (
-                  <motion.span
-                    className={`absolute inset-0 rounded-full bg-gradient-to-r ${projects[index].accentGradient} opacity-40`}
-                    initial={{ scale: 1 }}
-                    animate={{ scale: 2, opacity: 0 }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
-                )}
-              </motion.button>
-            ))}
+          <div className="stage-controls">
+            <div className="stage-navigation">
+              <button type="button" onClick={() => setActive((v) => (v - 1 + projects.length) % projects.length)} aria-label="Previous project"><ChevronLeft size={19} /></button>
+              {!reducedMotion && <button type="button" onClick={() => setPaused((v) => !v)} aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}>{paused ? <Play size={16} /> : <Pause size={16} />}</button>}
+              <button type="button" onClick={() => setActive((v) => (v + 1) % projects.length)} aria-label="Next project"><ChevronRight size={19} /></button>
+            </div>
+            <div className="stage-dots" aria-label="Select a project">{projects.map((project, index) => <button type="button" key={project.title} aria-label={`Show ${project.title}`} aria-pressed={active === index} onClick={() => setActive(index)}><span /></button>)}</div>
           </div>
-
-          {/* Project Counter */}
-          <div className="absolute -bottom-2 right-8 sm:right-12 text-gray-600 text-sm font-mono">
-            <span className="text-white">{String(currentSlide + 1).padStart(2, '0')}</span>
-            <span className="mx-1">/</span>
-            <span>{String(projects.length).padStart(2, '0')}</span>
-          </div>
-        </motion.div>
-
-        {/* See All Projects toggle */}
-        <div className="mt-14 flex justify-center">
-          <motion.button
-            onClick={() => setShowAll((v) => !v)}
-            className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 text-gray-200 text-sm font-semibold backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <LayoutGrid className="w-4 h-4 text-cyan-400" />
-            {showAll ? 'Hide All Projects' : `See All ${projects.length} Projects`}
-            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
-          </motion.button>
         </div>
-
-        {/* All Projects Grid */}
-        <AnimatePresence initial={false}>
-          {showAll && (
-            <motion.div
-              key="all-projects-grid"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.45, ease: 'easeInOut' }}
-              className="overflow-hidden"
-            >
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-10">
-                {projects.map((project, index) => {
-                  const Icon = project.icon;
-                  const broken = imageError[index];
-                  return (
-                    <motion.div
-                      key={`grid-${project.title}`}
-                      className={`group relative flex flex-col rounded-2xl overflow-hidden border ${project.borderAccent} bg-white/[0.02] backdrop-blur-sm`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: index * 0.04 }}
-                    >
-                      {/* Thumbnail — click to open in the showcase */}
-                      <button
-                        onClick={() => {
-                          goToSlide(index);
-                          setShowAll(false);
-                          slideshowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }}
-                        className="relative block w-full aspect-video overflow-hidden bg-black/40"
-                        aria-label={`Open ${project.title} in the showcase`}
-                      >
-                        {broken ? (
-                          <div className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${project.gradient}`}>
-                            <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${project.accentGradient}`}>
-                              <Icon className="h-6 w-6 text-white" />
-                            </div>
-                          </div>
-                        ) : (
-                          <img
-                            src={project.screenshot}
-                            alt={`${project.title} screenshot`}
-                            loading="lazy"
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            onError={() => handleImageError(index)}
-                          />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      </button>
-
-                      {/* Body */}
-                      <div className="flex flex-1 flex-col p-4">
-                        <span className={`mb-2 inline-flex max-w-full items-center gap-1.5 self-start rounded-full px-2 py-0.5 ${project.tagBg} border ${project.borderAccent}`}>
-                          <Icon className={`h-3 w-3 shrink-0 ${project.tagText}`} />
-                          <span className={`truncate text-[10px] font-semibold uppercase tracking-wider ${project.tagText}`}>
-                            {project.iconLabel}
-                          </span>
-                        </span>
-
-                        <h4 className={`mb-2 bg-gradient-to-r text-base font-bold leading-snug text-transparent bg-clip-text ${project.textGradient}`}>
-                          {project.title}
-                        </h4>
-
-                        <p className="mb-4 text-xs leading-relaxed text-gray-400 line-clamp-3">
-                          {project.description}
-                        </p>
-
-                        {/* Links */}
-                        <div className="mt-auto flex items-center gap-2">
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r ${project.accentGradient} px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02]`}
-                          >
-                            View Live <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-gray-300 transition-colors hover:border-white/20 hover:bg-white/10"
-                            aria-label={`${project.title} source`}
-                          >
-                            <Github className="h-3.5 w-3.5" />
-                          </a>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+        <div className="collection-bar">
+          <p>More to explore</p>
+          <button type="button" className="collection-toggle" aria-expanded={showAll} aria-controls="full-portfolio" onClick={() => setShowAll((v) => !v)}>
+            {showAll ? 'Close portfolio collection' : 'Explore full portfolio'}<ChevronDown size={18} />
+          </button>
+        </div>
+        <div id="full-portfolio" hidden={!showAll}>
+          {showAll && <div className="projects-grid">{projects.map((project) => <ProjectCard key={project.title} project={project} />)}</div>}
+        </div>
+        <section className="projects-creative" aria-labelledby="creative-heading">
+          <div className="creative-header">
+            <div>
+              <p className="projects-eyebrow">Plexura Creative</p>
+              <h3 id="creative-heading">Brand & Creative Work</h3>
+              <p>Brand graphics, social media content, and marketing assets designed for my business.</p>
+            </div>
+            <div className="creative-controls">
+              {!reducedMotion && <button type="button" onClick={() => setRibbonPaused((v) => !v)} aria-label={ribbonPaused ? 'Play creative ribbon' : 'Pause creative ribbon'} aria-controls="creative-gallery">{ribbonPaused ? <Play size={18} /> : <Pause size={18} />}</button>}
+            </div>
+          </div>
+          <div className="creative-ribbon">
+            <div id="creative-gallery" ref={creativeRef} className="creative-track" tabIndex={0} role="region" aria-label="Brand and creative work ribbon; swipe or scroll horizontally to browse"
+              onMouseEnter={() => setRibbonHovered(true)} onMouseLeave={() => setRibbonHovered(false)}
+              onFocusCapture={() => setRibbonFocused(true)}
+              onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setRibbonFocused(false); }}
+              onTouchStart={() => setRibbonTouched(true)}
+              onTouchEnd={() => { ribbonResumeAt.current = performance.now() + 1800; setRibbonTouched(false); }}
+              onTouchCancel={() => setRibbonTouched(false)}
+              onWheel={() => { ribbonResumeAt.current = performance.now() + 1800; }}>
+              <div className="creative-ribbon-group">
+                {Array.from({ length: 13 }, (_, i) => <CreativeImage key={i + 1} index={i + 1} />)}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Digital Marketing Carousel */}
-        <DigitalMarketingCarousel />
+              {!reducedMotion && <div className="creative-ribbon-group" aria-hidden="true">
+                {Array.from({ length: 13 }, (_, i) => <CreativeImage key={i + 1} index={i + 1} />)}
+              </div>}
+            </div>
+          </div>
+        </section>
       </div>
     </section>
   );

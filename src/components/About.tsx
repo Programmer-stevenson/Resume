@@ -1,788 +1,217 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import {
-  Briefcase,
-  MapPin,
-  Calendar,
-  ChevronDown,
-  Server,
-  Shield,
-  Cloud,
-  Code2,
-  Monitor,
-  Smartphone,
-  CheckCircle2,
-  Building2,
-  Rocket,
-  HardDrive,
-  Palette,
-  ArrowUpRight,
-  MousePointerClick,
-} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ChevronDown, MapPin, Calendar, Briefcase, GraduationCap, Award, Code2 } from 'lucide-react';
 
-/* ------------------------------------------------------------------ */
-/*  Types & data                                                       */
-/* ------------------------------------------------------------------ */
-interface Experience {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  period: string;
-  type: 'work' | 'education';
-  description?: string;
-  highlights: string[];
-  skills?: string[];
-  icon: React.ComponentType<{ className?: string }>;
-  accentColor: string;
-  current?: boolean;
-}
-
-const experiences: Experience[] = [
+const roles = [
   {
-    id: 'epc',
-    title: 'IT Infrastructure Technician (Production)',
-    company: 'Executive Personal Computers, Inc.',
-    location: 'Las Vegas, NV',
-    period: 'Jan 2026 - Present',
-    type: 'work',
-    current: true,
+    id: 'epc', logo: '/epc.jpg', company: 'Executive Personal Computers, Inc.', shortName: 'EPC',
+    title: 'IT Production Technician — Enterprise Server & Network Infrastructure',
+    location: 'Las Vegas, NV', period: 'Jan 2026 – Present', current: true,
+    summary: 'Hands-on enterprise server and network equipment configuration, recovery, and hardware troubleshooting.',
     highlights: [
- 'Provision, rebuild, recover, and validate hundreds of enterprise servers, switches, and access points monthly across Dell, HP, Cisco, and Juniper platforms.',
-
-'Administer and securely repurpose Dell PowerEdge servers through iDRAC, Lifecycle Controller, and racadm over SSH — resetting BIOS/UEFI, PERC/RAID, TPM, job queues, core dumps, logs, management networking, firmware, and customer configurations.',
-
-'Administer and securely repurpose HPE ProLiant Gen8, Gen9, and Gen10 servers through iLO, RBSU, and Intelligent Provisioning — resetting BIOS/manufacturing defaults, TPM, users, OneView, and health/event logs; validate UEFI storage and hardware health.',
-
-'Recover, sanitize, and validate Cisco Nexus switches, Catalyst, ISR routers, and wireless access points through serial console, ROMMON, loader/switch boot, and IOS/NX-OS CLI; transfer images via TFTP/USB, erase configurations, crypto keys, and customer data, and restore equipment to factory specifications.',
-
-'Validate ports, modules, and hardware through interface initialization, loopback, SFP/transceiver, port-speed, line-card, and inventory testing; troubleshoot boot failures and preserve serial-console evidence in ERP audit records for regulated assets.',
-
-'Perform component-level hardware replacement on rack-mount and tower servers — RAM, SSD/HDD, CPUs, PSUs, NICs, RAID controllers, and backplanes — diagnosing faults and upgrading at scale.',
-
-'Perform NIST 800-88 sanitization using Blancco Drive Eraser on data-bearing HDDs and SSDs for banking and government assets; inspect hidden media, verify storage serials, export SupportAssist/TSR diagnostics, and document erasure results and chain of custody in ERP systems.',
-
-'Maintain rigorous asset documentation — hardware specs, test results, erasure verification, and chain of custody — in ERP and inventory systems for audit readiness.',
-],
-    skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'Blancco', 'iLO 4', 'iDRAC', 'PuTTY', 'NIST 800-88', 'RAID'],
-    icon: HardDrive,
-    accentColor: 'rose',
-  },
-  {
-    id: 'plexura',
-    title: 'Front-End Developer',
-    company: 'Plexura',
-    location: 'Las Vegas, NV · Remote',
-    period: 'Apr 2025 - Present',
-    type: 'work',
-    current: true,
-    highlights: [
-      'Lead technical strategy, architecture, and delivery for client web and mobile applications, logo design, graphic design, and digital marketing campaigns',
-      'Oversee project execution, coding standards, and development team operations across the full software development lifecycle',
-      'Build internal tooling and automations to streamline agency workflows and improve delivery efficiency',
-      'Implement analytics, SEO, and marketing technology stacks for client campaigns to drive measurable growth',
-      'Create and manage social media content, digital marketing assets, and brand presence across platforms',
-      'Partner with Director of Strategy & Sales on client acquisition, proposals, brand positioning, partnerships, and business operations including budgeting and contracts',
+      'Provision, rebuild, recover, and validate hundreds of enterprise servers, switches, and access points monthly across Dell, HPE, Cisco, and Juniper platforms.',
+      'Configure and prepare Dell PowerEdge and HPE ProLiant servers for redeployment using iDRAC, Lifecycle Controller, racadm over SSH, iLO, RBSU, and Intelligent Provisioning. Reset BIOS/UEFI, RAID, TPM, management networking, firmware, users, logs, and customer configurations.',
+      'Reimage, recover, and validate Cisco Nexus and Catalyst switches, ISR routers, and wireless access points through serial console, ROMMON/loader, IOS/NX-OS CLI, and TFTP/USB image transfer.',
+      'Troubleshoot boot and hardware failures; validate ports, SFPs, modules, and line cards; replace RAM, storage, CPUs, PSUs, NICs, RAID controllers, and backplanes.',
+      'Perform NIST 800-88 sanitization with Blancco for banking and government assets, documenting erasure results, serial numbers, technical exceptions, and chain of custody in ERP systems.',
     ],
-    skills: ['React', 'Next.js', 'Node.js', 'Three.js', 'Tailwind CSS', 'MongoDB', 'SEO', 'Figma'],
-    icon: Rocket,
-    accentColor: 'fuchsia',
+    skills: ['Dell PowerEdge', 'HPE ProLiant', 'Cisco Nexus / Catalyst', 'iDRAC / iLO', 'racadm / SSH', 'IOS / NX-OS', 'RAID', 'Blancco'],
   },
   {
-  id: 'macbid',
-
-  title: 'IT Administrator / IT Facility Support',
-
-  company: 'MAC.BID',
-
-  location: 'Las Vegas, NV · Hybrid Remote',
-
-  period: 'Nov 2024 - Nov 2025',
-
-  type: 'work',
-
-  highlights: [
-    'Served as the sole on-site IT administrator for the North Las Vegas facility, independently owning day-to-day IT operations as the single point of contact for all on-site staff, while coordinating with the broader IT team remotely',
-
-    'Collaborated with the distributed IT team via Microsoft Teams on projects, deployments, escalations, and cross-site initiatives, contributing to organization-wide IT efforts beyond the local facility',
-
-    'Led workstation and IT infrastructure deployment for the facility, supporting 130+ onsite workstations and production mobile devices, plus printers, thermal/label printers, Bluetooth scanners, webcams, and operational-technology systems used in daily operations',
-
-    'Deployed and administered Microsoft Intune across the full device fleet — desktops, laptops, smartphones, and tablets — handling enrollment, device provisioning, endpoint security policies, configuration profiles, application deployment, and patch management for both corporate and mobile/production devices',
-
-    'Used PowerShell and Microsoft Graph to automate routine endpoint administration and maintenance tasks within Microsoft Intune, including device management, user and group administration, policy-related workflows, and repetitive desktop support processes',
-
-    'Administered Active Directory — user account creation, password resets, account unlocks, security group membership, and access permissions for on-site staff',
-
-    'Provided multi-platform technical support across Windows, basic desktop support for macOS, iOS, and Android, including proprietary business-critical production software and operational workflows, serving as both first and last line of support on site',
-
-    'Performed PC imaging, OS deployment, updates, hardware troubleshooting, and full endpoint lifecycle management to ensure operational continuity and deployment readiness',
-
-    'Owned IT asset inventory management — tracking, tagging, and maintaining lifecycle records for all hardware from intake through deployment, redeployment, and retirement',
-
-    'Managed IT equipment ordering and procurement — identifying hardware needs and sourcing and ordering devices and peripherals to keep the site stocked and operational',
-
-    'Supported IT infrastructure across multiple offices, maintaining 99.5% uptime for enterprise operations',
-
-    'Deployed and managed Microsoft Intune for device management and security across the organization',
-
-    'Provided multi-platform technical support (Windows, macOS, iOS, Android) with 95% SLA compliance',
-
-    'Managed Active Directory accounts, security groups, and user permissions',
-
-    'Deployed software updates, patches, and security rollouts using Intune and Microsoft 365',
-
-    'Negotiated with vendors for hardware procurement and licensing agreements',
-
-    'Created comprehensive IT documentation and SOPs to ensure compliance and operational efficiency',
-  ],
-
-  skills: [
-    'Microsoft Intune',
-    'PowerShell',
-    'Microsoft Graph API',
-    'Active Directory',
-    'Microsoft 365',
-    'Windows',
-    'macOS',
-    'iOS',
-    'Android'
-  ],
-
-  icon: Server,
-
-  accentColor: 'cyan',
-},
-  {
-    id: 'cdw',
-    title: 'IT Configuration Technician',
-    company: 'CDW',
-    location: 'Las Vegas, NV',
-    period: 'Apr 2024 - Nov 2024',
-    type: 'work',
+    id: 'macbid', logo: '/mac.jpg', company: 'MAC.BID', shortName: 'MAC.BID',
+    title: 'IT Administrator / IT Facility Support',
+    location: 'Las Vegas, NV', period: 'Nov 2024 – Nov 2025', current: false,
+    summary: 'Sole on-site IT administrator supporting 50+ users and 130+ devices, in coordination with a remote IT team.',
     highlights: [
-  'Imaged and deployed enterprise endpoints at high volume using PXE network boot, USB, and boot-media imaging, selecting the method per device and client requirement',
-  'Provisioned devices through Microsoft Autopilot, Zero-Touch Enrollment (ZTE), and Chrome White Glove workflows, building to strict, documented client specifications',
-  'Built and configured enterprise servers — iLO/iDRAC out-of-band management, BIOS configuration, web UI setup, and client credential/password configuration — to client build specifications',
-  'Performed server hardware upgrades and component installation — PCIe expansion cards, RAM upgrades, and related internal components — validating compatibility and function prior to deployment',
-  'Configured mobile devices across iOS (iPhone) and Android — provisioning, IMEI verification, and enrollment — alongside Windows desktops, laptops, and tablets',
-  'Applied pre-deployment security hardening — BitLocker encryption with recovery-key generation to USB, antivirus, and Windows patching',
-  'Performed basic network configuration via CLI — static IP assignment and switch settings — with connectivity validation',
-  'Performed hardware swaps and component-level replacement on desktops and laptops, diagnosing and resolving non-operational units',
-  'Managed asset tagging, IMEI verification, deployment verification, and lifecycle tracking under a formal QC process against client build specs',
-  'Configured and imaged 200+ devices daily — Windows laptops (Lenovo, Dell, HP), MacBooks, desktops, tablets, and mobile devices — for enterprise client deployments',
-  'Performed OS imaging and provisioning via PXE boot, USB boot media, Microsoft Autopilot, and Chrome White Glove enrollment across large-scale client orders',
-  'Activated and configured Apple iPhones, Android devices, and tablets including MDM enrollment, email setup, app deployment, and carrier activation',
-  'Serviced and configured high volumes of MacBooks and Windows/Lenovo laptops — firmware updates, user profile setup, domain joins, and client-specific application installs',
-  'Applied BitLocker encryption, antivirus deployment, security policies, and Windows/macOS updates prior to shipping',
-  'Provisioned devices using Autopilot, MECM, and various deployment methods according to client specifications for major enterprise accounts',
-  'Installed operating systems, business applications, and security software on new and refreshed hardware',
-  'Performed quality assurance testing and asset tagging to ensure all devices met strict client standards before deployment',
-],
-    skills: ['Intune', 'Autopilot', 'MECM', 'PXE Boot', 'Azure AD', 'Active Directory', 'BitLocker', 'Chrome White Glove', 'macOS', 'iOS', 'Android'],
-    icon: Monitor,
-    accentColor: 'emerald',
-  },
-  {
-    id: 'wgu',
-    title: 'Bachelor of Science in Cloud & Network Engineering',
-    company: 'Western Governors University',
-    location: 'Online',
-    period: 'Expected Graduation: Fall 2027',
-    type: 'education',
-    current: true,
-    highlights: [
-      'Cloud architecture and infrastructure',
-      'Network security and administration',
-      'DevOps practices and automation',
+      'Served as the sole on-site IT administrator and single point of contact for a 50+ user / 130+ device facility, providing daily end-user and site support while tracking incidents and requests in ServiceNow.',
+      'Administered Microsoft Intune across 100+ smartphones and tablets and 30+ desktops and laptops, including enrollment, provisioning, configuration profiles, endpoint security policies, application deployment, and patch management.',
+      'Administered Active Directory and Microsoft Entra ID for user provisioning, password resets and account unlocks, security groups, and access permissions; supported Microsoft 365 administration and end-user access.',
+      'Planned and executed a Windows 10 to Windows 11 migration across 30+ workstations and led imaging and deployment of workstations, mobile devices, printers, scanners, and operational systems.',
+      'Provided Windows, macOS, iOS, and Android support, troubleshooting business-critical production software, peripherals, connectivity, and access issues.',
+      'Owned IT asset lifecycle, inventory, equipment ordering, and procurement while coordinating projects, escalations, and deployments with the remote IT team.',
     ],
-    icon: Cloud,
-    accentColor: 'violet',
+    skills: ['Microsoft Intune', 'Entra ID', 'Active Directory', 'Microsoft 365', 'ServiceNow', 'Windows 11 Migration', 'Endpoint Deployment', 'Asset Management'],
   },
   {
-    id: 'csn',
-    title: 'Associate of Applied Science in Computing & IT',
-    company: 'College of Southern Nevada',
-    location: 'Las Vegas, NV',
-    period: '',
-    type: 'education',
-    description: 'Software Programming Concentration',
+    id: 'cdw', logo: '/cdw.jpg', company: 'CDW', shortName: 'CDW',
+    title: 'IT Configuration Technician (Contract)',
+    location: 'Las Vegas, NV', period: 'Apr 2024 – Nov 2024', current: false,
+    summary: 'Enterprise device configuration, imaging, provisioning, and deployment validation. Contract completed.',
     highlights: [
-      'Java, C++, SQL, JavaScript, Python',
-      'Networking fundamentals',
-      'Security principles',
-      'Cloud architecture basics',
+      'Configured and provisioned high volumes of enterprise desktops, laptops, servers, printers, tablets, and mobile devices for customer-specific deployments.',
+      'Deployed Windows images through PXE network boot and USB; installed drivers, applications, BIOS revisions, firmware, updates, and customer configuration packages.',
+      'Provisioned Windows endpoints through Microsoft Autopilot and White Glove pre-provisioning; applied BitLocker encryption and verified and exported recovery keys.',
+      'Configured BIOS/UEFI, hostnames, network parameters, credentials, and endpoint security settings; installed or upgraded RAM, storage, NICs, PCIe cards, and peripherals.',
+      'Troubleshot imaging, enrollment, drivers, hardware, network connectivity, encryption, and peripherals, then performed final quality-control validation and deployment documentation.',
     ],
-    icon: Code2,
-    accentColor: 'amber',
+    skills: ['Windows Autopilot', 'PXE / USB Imaging', 'Pre-provisioning', 'BitLocker', 'BIOS / UEFI', 'Hardware Configuration', 'Quality Control'],
+  },
+  {
+    id: 'plexura', logo: '/plexura_link.jpg', company: 'Plexura', shortName: 'Plexura',
+    title: 'Full Stack Developer (Part-Time)',
+    location: 'Las Vegas, NV', period: 'Apr 2025 – Jun 2026', current: false,
+    summary: 'Production client websites, application integrations, and deployment support.',
+    highlights: [
+      'Designed, built, and supported production client websites and web applications using React, Next.js, WordPress, JavaScript/TypeScript, HTML/CSS, and Tailwind CSS.',
+      'Built application features and integrations using Node.js, Express, MongoDB, REST APIs, headless WordPress, custom PHP endpoints, CRM and booking services, analytics, and contact-form workflows.',
+      'Managed Git/GitHub workflows and production deployments through Vercel and Render, including builds, environment variables, DNS and domain configuration, testing, debugging, and post-launch support.',
+    ],
+    skills: ['React / Next.js', 'TypeScript', 'Node.js / Express', 'MongoDB', 'REST APIs', 'Headless WordPress', 'Git / GitHub', 'Render / Vercel'],
   },
 ];
 
 const skillCategories = [
-  {
-    name: 'Languages',
-    icon: Code2,
-    skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#', 'SQL', 'HTML', 'CSS'],
-    accent: '#22d3ee',
-  },
-  {
-    name: 'Frontend',
-    icon: Monitor,
-    skills: ['React', 'Next.js', 'Tailwind CSS', 'Bootstrap', 'Framer Motion', 'Three.js', 'WebGL', 'Responsive Design'],
-    accent: '#a78bfa',
-  },
-  {
-    name: 'Backend',
-    icon: Server,
-    skills: ['Node.js', 'Express', 'MongoDB', 'MySQL', 'PostgreSQL', 'REST APIs', 'CI/CD'],
-    accent: '#34d399',
-  },
-  {
-    name: 'Cloud & Infrastructure',
-    icon: Cloud,
-    skills: ['Azure', 'AWS', 'Microsoft 365', 'Intune', 'Autopilot', 'MECM', 'VPN', 'VoIP'],
-    accent: '#fbbf24',
-  },
-  {
-    name: 'IT Administration',
-    icon: Shield,
-    skills: ['Active Directory', 'Device Management', 'Blancco', 'NIST 800-88', 'Network Administration', 'Firewall', 'RDP'],
-    accent: '#fb7185',
-  },
-  {
-    name: 'Platforms & Tools',
-    icon: Smartphone,
-    skills: ['Windows', 'macOS', 'Linux', 'iOS', 'Android', 'Git', 'Jira', 'Adobe Creative Suite'],
-    accent: '#818cf8',
-  },
-  {
-    name: 'Enterprise Hardware',
-    icon: HardDrive,
-    skills: ['Dell PowerEdge', 'HP ProLiant', 'Cisco UCS', 'iLO 4', 'iDRAC', 'RAID', 'SAN Storage', 'PuTTY'],
-    accent: '#f97316',
-  },
-  {
-    name: 'Design & Marketing',
-    icon: Palette,
-    skills: ['Figma', 'Graphic Design', 'Logo Design', 'SEO', 'UI/UX Design', 'Branding', 'Web Design'],
-    accent: '#ec4899',
-  },
+  { name: 'Endpoint & Identity', skills: ['Microsoft Intune', 'Entra ID', 'Active Directory', 'Group Policy / OUs', 'Microsoft 365', 'Microsoft Teams', 'ServiceNow', 'Autopilot', 'Pre-provisioning', 'Endpoint Security Policies', 'Patch Management', 'OS Imaging'] },
+  { name: 'Automation & Development', skills: ['PowerShell', 'Microsoft Graph API', 'REST APIs', 'Python', 'Bash', 'Git / GitHub', 'JavaScript / TypeScript', 'React / Next.js', 'Node.js / Express', 'MongoDB', 'WordPress / PHP'] },
+  { name: 'Servers & Infrastructure', skills: ['Dell PowerEdge', 'HPE ProLiant', 'iDRAC / iLO', 'racadm / SSH', 'BIOS / UEFI', 'PERC / RAID', 'Firmware Management', 'Hardware Diagnostics', 'Windows Server', 'Linux'] },
+  { name: 'Networking', skills: ['Cisco IOS / NX-OS', 'Catalyst / Nexus', 'Meraki', 'Juniper Junos', 'Aruba', 'VLANs / Trunking', 'TCP/IP', 'DNS / DHCP', 'Static IP', 'Wireless Access Points', 'PuTTY / Tera Term', 'Tftpd64'] },
+  { name: 'Security & Cloud', skills: ['Azure Fundamentals', 'Entra ID', 'NIST 800-88', 'Blancco Drive Eraser', 'BitLocker', 'Chain-of-Custody Documentation', 'Cloud & Network Coursework'] },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Accent system (restrained — neutral glass base + single hue)       */
-/* ------------------------------------------------------------------ */
-const ACCENTS: Record<string, { hex: string; text: string }> = {
-  rose: { hex: '#fb7185', text: 'text-rose-300' },
-  fuchsia: { hex: '#e879f9', text: 'text-fuchsia-300' },
-  cyan: { hex: '#22d3ee', text: 'text-cyan-300' },
-  emerald: { hex: '#34d399', text: 'text-emerald-300' },
-  violet: { hex: '#a78bfa', text: 'text-violet-300' },
-  amber: { hex: '#fbbf24', text: 'text-amber-300' },
-};
-const getAccent = (c: string) => ACCENTS[c] ?? ACCENTS.cyan;
+const styles = `
+#about.bs-about {--navy:#123253;--muted:#47637d;--line:#cbdfee;padding:90px 28px;background:radial-gradient(ellipse at 8% 12%,#f0faffcc 0%,transparent 39%),radial-gradient(ellipse at 94% 18%,#74acdccc 0%,transparent 48%),radial-gradient(ellipse at 12% 88%,#8bbce5b3 0%,transparent 43%),linear-gradient(145deg,#d9edfc 0%,#b9d9f2 34%,#93c0e5 69%,#c8e3f7 100%);color:var(--navy);font-family:Inter,'Segoe UI',Arial,sans-serif;scroll-margin-top:80px}
+.bs-about,.bs-about * {box-sizing:border-box}
+.bs-about h2,.bs-about h3,.bs-about h4,.bs-about p {margin:0}
+.bs-about button {font:inherit;cursor:pointer}
+.bs-about svg {flex-shrink:0}
+.bs-about .about-wrap {max-width:1180px;margin:auto}
+.bs-about .about-eyebrow {display:flex;align-items:center;gap:16px;font-size:11px;font-weight:700;letter-spacing:.19em;text-transform:uppercase;color:#3f6a8b;margin-bottom:20px}
+.bs-about .about-eyebrow:after {content:'';height:1px;width:60px;background:#95bad5}
+.bs-about .about-header {display:flex;justify-content:space-between;align-items:end;gap:36px;margin-bottom:32px}
+.bs-about .about-header h2 {font-size:clamp(35px,4.3vw,54px);line-height:1.08;letter-spacing:-.05em;font-weight:600}
+.bs-about .about-header h2 span {color:#42779f}
+.bs-about .about-header p {font-size:14px;line-height:1.85;color:var(--muted);max-width:390px}
+.bs-about .about-navigation {display:flex;flex-wrap:wrap;gap:8px;padding-bottom:24px;margin-bottom:32px;border-bottom:1px solid var(--line)}
+.bs-about .about-navigation button {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:12px 19px;border:1px solid #c7deee;background:#ffffffa6;color:#365b79;border-radius:10px;font-size:12px;font-weight:600}
+.bs-about .about-navigation button[aria-pressed=true] {background:#153b5e;border-color:#153b5e;color:#fff}
+.bs-about button:focus-visible,.bs-about summary:focus-visible {outline:3px solid #377eae;outline-offset:4px}
+.bs-about .career-layout {display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start}
+.bs-about .career-intro {position:sticky;top:100px}
+.bs-about .career-intro h3 {font-size:25px;font-weight:500;letter-spacing:-.035em;line-height:1.2;margin-bottom:13px}
+.bs-about .career-intro p {font-size:13px;line-height:1.85;color:var(--muted)}
+.bs-about .career-note {padding-top:23px;margin-top:23px;border-top:1px solid var(--line);font-size:11px;color:#55758d;line-height:1.7}
+.bs-about .role-group+.role-group {margin-top:26px}
+.bs-about .role-group-label {font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#466b89;margin-bottom:12px}
+.bs-about .role-card {border:1px solid #c9dfef;background:#ffffffde;border-radius:16px;margin-bottom:13px;overflow:hidden}
+.bs-about .role-card[open] {background:#fff;border-color:#a9cbe4;box-shadow:0 14px 34px #24577c08}
+.bs-about .role-card summary {display:grid;grid-template-columns:64px minmax(0,1fr) 24px;align-items:center;gap:16px;list-style:none;padding:23px 25px;cursor:pointer}
+.bs-about .role-card summary::-webkit-details-marker {display:none}
+.bs-about .role-card summary::marker {content:''}
+.bs-about .role-company {display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;font-weight:650;color:#386b94;margin-bottom:9px}
+.bs-about .role-status {font-size:9px;font-weight:600;letter-spacing:.04em;padding:4px 8px;border:1px solid #c8deef;border-radius:20px;background:#eff7fd;color:#315e80}
+.bs-about .role-card h4 {font-size:19px;font-weight:600;line-height:1.35;letter-spacing:-.025em;color:var(--navy)}
+.bs-about .role-meta {display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:11px;line-height:1.6;color:#5a758a}
+.bs-about .role-meta span {display:flex;align-items:center;gap:6px}
+.bs-about .role-chevron {color:#507795;transition:transform .2s}
+.bs-about .role-card[open] .role-chevron {transform:rotate(180deg)}
+.bs-about .role-detail {padding:0 25px 25px}
+.bs-about .role-summary {padding-top:20px;border-top:1px solid #e0edf5;font-size:14px;font-weight:500;line-height:1.8;color:#274f6e}
+.bs-about .role-detail ul {padding-left:19px;margin:19px 0 23px;display:grid;gap:13px}
+.bs-about .role-detail li {padding-left:4px;font-size:13px;line-height:1.85;color:var(--muted)}
+.bs-about .role-detail li::marker {color:#79a4c4}
+.bs-about .about-tags {display:flex;gap:7px;flex-wrap:wrap}
+.bs-about .about-tag {font-size:10px;line-height:1.5;padding:6px 9px;border:1px solid #d4e5f2;border-radius:6px;background:#edf6fd;color:#365f80;overflow-wrap:anywhere}
+.bs-about .earlier-work {margin-top:24px;border:1px solid #ccdfed;border-radius:12px;padding:18px 22px;background:#ffffff70}
+.bs-about .earlier-work summary {font-size:12px;font-weight:600;cursor:pointer;color:#3c6280}
+.bs-about .earlier-work p {margin-top:13px;font-size:12px;line-height:1.9;color:var(--muted)}
+.bs-about .education-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bs-about .education-card {padding:29px;border:1px solid #cadfee;border-radius:18px;background:#ffffffdf}
+.bs-about .education-card h3 {font-size:23px;font-weight:600;letter-spacing:-.035em;line-height:1.3;margin:18px 0 12px}
+.bs-about .education-card p {font-size:13px;line-height:1.8;color:var(--muted)}
+.bs-about .education-meta {display:flex;gap:10px;align-items:center;justify-content:space-between;font-size:11px;color:#4c7493}
+.bs-about .education-card .degree-emphasis {margin-top:10px;font-weight:600;color:#305f82}
+.bs-about .cert-heading {font-size:25px;letter-spacing:-.035em;font-weight:500;margin:35px 0 18px}
+.bs-about .cert-list {display:grid;gap:12px}
+.bs-about .cert-card {display:flex;align-items:center;gap:16px;padding:20px 24px;border:1px solid #cbdfee;border-radius:12px;background:#ffffffb5}
+.bs-about .cert-card h4 {font-size:15px;line-height:1.5;font-weight:600}
+.bs-about .cert-card p {font-size:11px;color:#56718a;margin-top:5px;line-height:1.6}
+.bs-about .cert-card>svg {color:#477697}
+.bs-about .skills-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bs-about .skill-card {padding:27px;background:#ffffffde;border:1px solid #cbdfee;border-radius:16px}
+.bs-about .skill-card h3 {font-size:21px;letter-spacing:-.025em;font-weight:600;margin-bottom:20px}
+.bs-about [hidden] {display:none!important}
+@media(max-width:900px) {.bs-about .career-layout {grid-template-columns:190px minmax(0,1fr);gap:24px}.bs-about .about-header {align-items:start;flex-direction:column;gap:18px}.bs-about .about-header p {max-width:600px}}
+@media(max-width:700px) {#about.bs-about {padding:60px 22px}.bs-about .career-layout {grid-template-columns:1fr;gap:24px}.bs-about .career-intro {position:static}.bs-about .career-note {display:none}.bs-about .education-grid,.bs-about .skills-grid {grid-template-columns:1fr}.bs-about .role-card summary {padding:20px}.bs-about .role-detail {padding:0 20px 22px}.bs-about .role-card h4 {font-size:18px}.bs-about .about-navigation {gap:7px}.bs-about .about-navigation button {padding:11px 13px;font-size:11px}.bs-about .education-card {padding:25px}.bs-about .cert-card {padding:20px}}
+@media(max-width:380px) {#about.bs-about {padding:50px 16px}.bs-about .about-navigation button {flex:1;gap:5px;padding:11px 8px}.bs-about .about-navigation button svg {display:none}}
+.bs-about .role-logo {display:grid;place-items:center;width:64px;height:64px;padding:7px;background:#fff;border:1px solid #d6e5f0;border-radius:12px;overflow:hidden}
+.bs-about .role-logo img {display:block;width:100%;height:100%;object-fit:contain}
+@media(max-width:700px) {.bs-about .role-card summary {grid-template-columns:48px minmax(0,1fr) 20px;gap:12px}.bs-about .role-logo {width:48px;height:48px;padding:5px;border-radius:9px}}
+@media(max-width:380px) {.bs-about .role-card summary {grid-template-columns:40px minmax(0,1fr) 16px;gap:9px;padding:17px 14px}.bs-about .role-logo {width:40px;height:40px;padding:4px}.bs-about .role-card h4 {font-size:16px}}
+@media(prefers-reduced-motion:reduce) {.bs-about .role-chevron {transition:none}}
+`;
 
-/* ------------------------------------------------------------------ */
-/*  Detail panel (shared by desktop pane + mobile accordion)           */
-/* ------------------------------------------------------------------ */
-const RoleDetail: React.FC<{ exp: Experience }> = ({ exp }) => {
-  const accent = getAccent(exp.accentColor);
-  const Icon = exp.icon;
-
+function RoleCard({ role }: { role: (typeof roles)[number] }) {
+  const [open, setOpen] = useState(role.id === 'epc');
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] p-6 sm:p-8 backdrop-blur-sm">
-      {/* top sheen in accent */}
-      <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: `linear-gradient(90deg, transparent, ${accent.hex}66, transparent)` }}
-      />
-      {/* faint corner glow */}
-      <div
-        className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl opacity-20"
-        style={{ background: accent.hex }}
-      />
-
-      <div className="relative">
-        {/* header */}
-        <div className="flex items-start gap-4">
-          <div
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border"
-            style={{ borderColor: `${accent.hex}40`, background: `${accent.hex}14` }}
-          >
-            <Icon className={`h-6 w-6 ${accent.text}`} />
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <div className="mb-1.5 flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
-                {exp.type === 'work' ? 'Experience' : 'Education'}
-              </span>
-              {exp.current && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  Current
-                </span>
-              )}
-            </div>
-            <h3 className="about-display text-xl font-bold leading-tight text-white sm:text-2xl">
-              {exp.title}
-            </h3>
-            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
-              <span className="flex items-center gap-1.5">
-                <Building2 className="h-3.5 w-3.5" />
-                {exp.company}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5" />
-                {exp.location}
-              </span>
-              {exp.period && (
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {exp.period}
-                </span>
-              )}
-            </div>
-            {exp.description && <p className="mt-2 text-sm text-gray-500">{exp.description}</p>}
-          </div>
-        </div>
-
-        {/* highlights */}
-        <ul className="mt-6 space-y-3 border-t border-white/[0.06] pt-6">
-          {exp.highlights.map((h, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-gray-300">
-              <CheckCircle2 className={`mt-0.5 h-4 w-4 shrink-0 ${accent.text}`} />
-              <span>{h}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* skills */}
-        {exp.skills && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {exp.skills.map((s) => (
-              <span
-                key={s}
-                className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs font-medium text-gray-300"
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/*  Left-rail list item                                                */
-/* ------------------------------------------------------------------ */
-const RoleListItem: React.FC<{
-  exp: Experience;
-  active: boolean;
-  mobileOpen: boolean;
-  onSelect: () => void;
-}> = ({ exp, active, mobileOpen, onSelect }) => {
-  const accent = getAccent(exp.accentColor);
-  const Icon = exp.icon;
-
-  return (
-    <button
-      onClick={onSelect}
-      className={`group relative w-full overflow-hidden rounded-xl border px-4 py-3.5 text-left transition-all duration-300 ${
-        active
-          ? 'border-white/20 bg-white/[0.05]'
-          : 'border-white/[0.08] bg-white/[0.015] hover:border-white/15 hover:bg-white/[0.03]'
-      }`}
-    >
-      {/* active accent bar */}
-      <span
-        className="absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full transition-all duration-300"
-        style={{
-          width: '3px',
-          height: active ? '62%' : '0%',
-          background: accent.hex,
-        }}
-      />
-      <div className="flex items-center gap-3.5">
-        <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border transition-colors duration-300"
-          style={{
-            borderColor: active ? `${accent.hex}40` : 'rgba(255,255,255,0.08)',
-            background: active ? `${accent.hex}14` : 'rgba(255,255,255,0.02)',
-          }}
-        >
-          <Icon className={`h-5 w-5 ${active ? accent.text : 'text-gray-500'}`} />
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <div className={`truncate text-sm font-semibold ${active ? 'text-white' : 'text-gray-300'}`}>
-            {exp.title}
-          </div>
-          <div className="truncate text-xs text-gray-500">
-            {exp.company}
-            {exp.period ? ` · ${exp.period}` : ''}
-          </div>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-2">
-          {exp.current && <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />}
-          {/* mobile chevron */}
-          <ChevronDown
-            className={`h-4 w-4 text-gray-500 transition-transform duration-300 lg:hidden ${
-              mobileOpen ? 'rotate-180' : ''
-            }`}
-          />
-          {/* desktop arrow */}
-          <ArrowUpRight
-            className={`hidden h-4 w-4 transition-all duration-300 lg:block ${
-              active ? `${accent.text} translate-x-0` : 'text-gray-600 group-hover:text-gray-400'
-            }`}
-          />
-        </div>
-      </div>
-    </button>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/*  Skill card (cohesive dark glass)                                   */
-/* ------------------------------------------------------------------ */
-const SkillCard: React.FC<{
-  category: (typeof skillCategories)[0];
-  index: number;
-  hoveredSkill: string | null;
-  setHoveredSkill: (s: string | null) => void;
-}> = ({ category, index, hoveredSkill, setHoveredSkill }) => {
-  const Icon = category.icon;
-  return (
-    <motion.div
-      className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4 }}
-    >
-      {/* top accent line */}
-      <div
-        className="absolute inset-x-0 top-0 h-px opacity-60"
-        style={{ background: `linear-gradient(90deg, transparent, ${category.accent}, transparent)` }}
-      />
-      {/* corner glow on hover */}
-      <div
-        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-25"
-        style={{ background: category.accent }}
-      />
-
-      <div className="relative mb-5 flex items-center gap-3">
-        <div
-          className="flex h-11 w-11 items-center justify-center rounded-xl border"
-          style={{ borderColor: `${category.accent}33`, background: `${category.accent}12` }}
-        >
-          <Icon className="h-5 w-5" />
-        </div>
+    <details className="role-card" open={open} onToggle={(event) => setOpen(event.currentTarget.open)}>
+      <summary>
+        <div className="role-logo"><img src={role.logo} alt="" width={64} height={64} loading="lazy" decoding="async" /></div>
         <div>
-          <h3 className="about-display text-base font-bold text-white">{category.name}</h3>
-          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-gray-500">
-            {category.skills.length} skills
-          </span>
+          <div className="role-company">{role.company}{role.current && <span className="role-status">Current role</span>}</div>
+          <h4>{role.title}</h4>
+          <div className="role-meta"><span><Calendar size={12} aria-hidden="true" />{role.period}</span><span><MapPin size={12} aria-hidden="true" />{role.location}</span></div>
         </div>
+        <ChevronDown className="role-chevron" size={19} aria-hidden="true" />
+      </summary>
+      <div className="role-detail">
+        <p className="role-summary">{role.summary}</p>
+        <ul>{role.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
+        <div className="about-tags" aria-label={`${role.shortName} technologies`}>{role.skills.map((skill) => <span className="about-tag" key={skill}>{skill}</span>)}</div>
       </div>
-
-      <div className="relative flex flex-wrap gap-2">
-        {category.skills.map((skill) => {
-          const hot = hoveredSkill === skill;
-          return (
-            <span
-              key={skill}
-              onMouseEnter={() => setHoveredSkill(skill)}
-              onMouseLeave={() => setHoveredSkill(null)}
-              className="cursor-default rounded-lg border px-2.5 py-1 text-xs font-medium transition-all duration-200"
-              style={{
-                borderColor: hot ? `${category.accent}66` : 'rgba(255,255,255,0.08)',
-                background: hot ? `${category.accent}1f` : 'rgba(255,255,255,0.03)',
-                color: hot ? '#fff' : '#d1d5db',
-              }}
-            >
-              {skill}
-            </span>
-          );
-        })}
-      </div>
-    </motion.div>
+    </details>
   );
-};
+}
 
-/* ------------------------------------------------------------------ */
-/*  Main section                                                       */
-/* ------------------------------------------------------------------ */
-const AboutSpaceBackground = () => {
-  const [isMobile, setIsMobile] = useState(false);
+const views = [
+  { id: 'experience', label: 'Experience', icon: Briefcase },
+  { id: 'education', label: 'Education', icon: GraduationCap },
+  { id: 'skills', label: 'Skills', icon: Code2 },
+] as const;
 
+export default function About() {
+  const [view, setView] = useState<'experience' | 'education' | 'skills'>(() => typeof window !== 'undefined' && window.location.hash === '#education' ? 'education' : 'experience');
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
+    const handleHash = () => { if (window.location.hash === '#education') setView('education'); };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
-
-  const starCount = isMobile ? 24 : 55;
-  const stars = useMemo(
-    () =>
-      Array.from({ length: starCount }, () => ({
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        size: 1 + Math.random() * 1.6,
-        opacity: 0.15 + Math.random() * 0.4,
-      })),
-    [starCount]
-  );
-
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Static minty-green + purple nebula glows */}
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-400/20 blur-[100px] sm:h-[30rem] sm:w-[30rem]" />
-      <div className="absolute top-1/4 -right-24 h-72 w-72 rounded-full bg-purple-600/25 blur-[110px] sm:h-[32rem] sm:w-[32rem]" />
-      <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-teal-400/15 blur-[100px] sm:h-[26rem] sm:w-[26rem]" />
-      <div className="absolute -bottom-16 right-1/4 h-64 w-64 rounded-full bg-fuchsia-600/15 blur-[100px] sm:h-96 sm:w-96" />
-      <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[130px]" />
-
-      {/* Static stars */}
-      {stars.map((s, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{
-            top: `${s.top}%`,
-            left: `${s.left}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            opacity: s.opacity,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-const About = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [activeTab, setActiveTab] = useState<'experience' | 'skills'>('experience');
-  const [selectedId, setSelectedId] = useState<string>('epc');
-  const [mobileOpen, setMobileOpen] = useState<string | null>('epc');
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  const workItems = experiences.filter((e) => e.type === 'work');
-  const eduItems = experiences.filter((e) => e.type === 'education');
-  const selectedExp = experiences.find((e) => e.id === selectedId) ?? experiences[0];
-
-  const groups = [
-    { label: 'Experience', anchor: undefined as string | undefined, items: workItems },
-    { label: 'Education', anchor: 'education', items: eduItems },
-  ];
-
-  const handleSelect = (id: string) => {
-    setSelectedId(id);
-    setMobileOpen((prev) => (prev === id ? null : id));
-  };
-
-  return (
-    <section
-      id="about"
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#04140e] via-[#0a0a16] to-[#150a1e] px-4 py-20 sm:px-6 sm:py-28"
-    >
-      {/* display font */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap');
-        .about-display { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; }
-      `}</style>
-
-      {/* atmospheric background */}
-      <AboutSpaceBackground />
-
-      <div ref={ref} className="relative mx-auto max-w-6xl">
-        {/* header */}
-        <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-gray-400">
-            About Me
-          </span>
-          <h2 className="about-display mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Background &amp;{' '}
-            <span className="bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400 sm:text-lg">
-            Network &amp; infrastructure IT professional and full-stack developer — building
-            enterprise systems and modern web experiences.
-          </p>
-        </motion.div>
-
-        {/* tab switcher */}
-        <motion.div
-          className="mb-10 flex justify-center"
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-        >
-          <div className="inline-flex rounded-2xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-sm">
-            {(['experience', 'skills'] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`relative rounded-xl px-6 py-2.5 text-sm font-medium transition-colors duration-300 ${
-                  activeTab === tab ? 'text-white' : 'text-gray-400 hover:text-gray-200'
-                }`}
-              >
-                {activeTab === tab && (
-                  <motion.div
-                    layoutId="aboutActiveTab"
-                    className="absolute inset-0 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-500/20 to-cyan-500/20"
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  {tab === 'experience' ? <Briefcase className="h-4 w-4" /> : <Code2 className="h-4 w-4" />}
-                  {tab[0].toUpperCase() + tab.slice(1)}
-                </span>
-              </button>
-            ))}
+    <section id="about" className="bs-about" aria-labelledby="about-heading">
+      <style>{styles}</style>
+      <div className="about-wrap">
+        <p className="about-eyebrow">Professional background</p>
+        <header className="about-header">
+          <h2 id="about-heading">Experience <span>&amp; Skills</span></h2>
+          <p>Enterprise infrastructure, endpoint administration, and software development — grounded in hands-on technical work.</p>
+        </header>
+        <nav id="education" className="about-navigation" aria-label="Explore professional background">
+          {views.map(({ id, label, icon: Icon }) => <button id={`about-${id}-button`} type="button" key={id} aria-pressed={view === id} aria-controls={`about-${id}-panel`} onClick={() => setView(id)}><Icon size={16} aria-hidden="true" />{label}</button>)}
+        </nav>
+        <div id="about-experience-panel" role="region" aria-labelledby="about-experience-button" hidden={view !== 'experience'}>
+          <div className="career-layout">
+            <aside className="career-intro"><h3>Professional experience</h3><p>From sole-site IT support to enterprise hardware and production web applications.</p><div className="career-note">Select a role to explore responsibilities and technologies.</div></aside>
+            <div>
+              <div className="role-group"><p className="role-group-label">IT &amp; Infrastructure</p>{roles.filter((role) => role.id !== 'plexura').map((role) => <RoleCard key={role.id} role={role} />)}</div>
+              <div className="role-group"><p className="role-group-label">Software Development &amp; Automation</p><RoleCard role={roles[3]} /></div>
+              <details className="earlier-work"><summary>Earlier experience</summary><p>Delivery Driver (Independent Contractor), Uber Eats · Mar 2020 – Apr 2024<br />Assistant Manager, Garrett Popcorn Shops · Apr 2017 – Mar 2020<br />General Manager, Burger King · Apr 2014 – Apr 2017</p></details>
+            </div>
           </div>
-        </motion.div>
-
-        {/* click-to-explore CTA (experience only) */}
-        <AnimatePresence>
-          {activeTab === 'experience' && (
-            <motion.div
-              key="exp-cta"
-              className="mb-8 flex justify-center"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-teal-400/20 bg-teal-500/[0.06] px-4 py-2 text-sm text-teal-200">
-                <MousePointerClick className="h-4 w-4" />
-                <span className="lg:hidden">Tap a role to see the full breakdown</span>
-                <span className="hidden lg:inline">Select a role to explore the full breakdown</span>
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <ArrowUpRight className="h-4 w-4" />
-                </motion.span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* content */}
-        <AnimatePresence mode="wait">
-          {activeTab === 'experience' ? (
-            <motion.div
-              key="experience"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
-              className="lg:grid lg:grid-cols-12 lg:gap-8"
-            >
-              {/* LEFT: role list */}
-              <div className="space-y-8 lg:col-span-5">
-                {groups.map((group) => (
-                  <div key={group.label}>
-                    <div
-                      id={group.anchor}
-                      className={`mb-3 flex items-center gap-3 ${group.anchor ? 'scroll-mt-24' : ''}`}
-                    >
-                      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-gray-500">
-                        {group.label}
-                      </span>
-                      <span className="h-px flex-1 bg-white/[0.07]" />
-                    </div>
-
-                    <div className="space-y-2.5">
-                      {group.items.map((exp) => (
-                        <div key={exp.id}>
-                          <RoleListItem
-                            exp={exp}
-                            active={selectedId === exp.id}
-                            mobileOpen={mobileOpen === exp.id}
-                            onSelect={() => handleSelect(exp.id)}
-                          />
-                          {/* mobile inline detail */}
-                          <div className="lg:hidden">
-                            <AnimatePresence initial={false}>
-                              {mobileOpen === exp.id && (
-                                <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: 'auto', opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.35, ease: 'easeInOut' }}
-                                  className="overflow-hidden"
-                                >
-                                  <div className="pt-2.5">
-                                    <RoleDetail exp={exp} />
-                                  </div>
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* RIGHT: sticky detail (desktop) */}
-              <div className="hidden lg:col-span-7 lg:block">
-                <div className="sticky top-24">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedExp.id}
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -14 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      <RoleDetail exp={selectedExp} />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="skills"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-            >
-              {skillCategories.map((category, index) => (
-                <SkillCard
-                  key={category.name}
-                  category={category}
-                  index={index}
-                  hoveredSkill={hoveredSkill}
-                  setHoveredSkill={setHoveredSkill}
-                />
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        </div>
+        <div id="about-education-panel" role="region" aria-labelledby="about-education-button" hidden={view !== 'education'}>
+          <div className="education-grid">
+            <article className="education-card"><div className="education-meta"><GraduationCap size={24} aria-hidden="true" /><span>In progress</span></div><h3>B.S. in Cloud &amp; Network Engineering</h3><p>Western Governors University · Remote</p></article>
+            <article className="education-card"><div className="education-meta"><GraduationCap size={24} aria-hidden="true" /><span>2022</span></div><h3>A.A.S. in Computer &amp; Information Technology</h3><p>College of Southern Nevada · Las Vegas, NV</p><p className="degree-emphasis">Software Programming emphasis</p></article>
+          </div>
+          <h3 className="cert-heading">Certifications</h3>
+          <div className="cert-list">
+            <article className="cert-card"><Award size={24} aria-hidden="true" /><div><h4>Microsoft Certified: Azure Fundamentals</h4><p>AZ-900 · Completed</p></div></article>
+            <article className="cert-card"><Award size={24} aria-hidden="true" /><div><h4>Cisco CCNA</h4><p>In progress</p></div></article>
+            <article className="cert-card"><Award size={24} aria-hidden="true" /><div><h4>Microsoft 365 Certified: Endpoint Administrator Associate</h4><p>MD-102 · In progress</p></div></article>
+          </div>
+        </div>
+        <div id="about-skills-panel" role="region" aria-labelledby="about-skills-button" hidden={view !== 'skills'}>
+          <div className="skills-grid">{skillCategories.map((category) => <article className="skill-card" key={category.name}><h3>{category.name}</h3><div className="about-tags">{category.skills.map((skill) => <span className="about-tag" key={skill}>{skill}</span>)}</div></article>)}</div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

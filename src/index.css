@@ -1,26 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================
-   BASE STYLES
+   BASE — BLACK / WHITE / SILVER
    ============================================ */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-html {
-  scroll-behavior: smooth; 
-  touch-action: manipulation;
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
+  html {
+    scroll-behavior: smooth;
+    touch-action: manipulation;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background: #000;
+    color: #f5f5f5;
+    font-family: 'Inter', sans-serif;
+  }
+
+  ::selection {
+    background: #dedede;
+    color: #080808;
+  }
+
+  :focus-visible {
+    outline: 2px solid #e5e5e5;
+    outline-offset: 4px;
+  }
 }
 
 /* ============================================
-   TYPEWRITER EFFECT
+   TYPEWRITER
    ============================================ */
+
 .typewriter {
   font-family: 'JetBrains Mono', monospace;
   border-right: 3px solid rgba(255, 255, 255, 0.75);
@@ -29,32 +50,42 @@ html {
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: rgba(255, 255, 255, 0.75); }
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.75);
+  }
 }
 
 /* ============================================
-   AURORA BACKGROUND EFFECTS
+   MONOCHROME AURORA
    ============================================ */
+
 .borealis-bg {
-  background: #000814;
-  background: radial-gradient(ellipse at top, #001d3d 0%, #000814 40%, #000000 100%);
   position: relative;
-  box-shadow: 
-    inset 0 0 200px rgba(16, 185, 129, 0.08),
-    inset 0 0 150px rgba(59, 130, 246, 0.08),
-    inset 0 0 100px rgba(139, 92, 246, 0.08);
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at top,
+    #202020 0%,
+    #090909 42%,
+    #000 100%
+  );
+  box-shadow:
+    inset 0 0 200px rgba(255, 255, 255, 0.035),
+    inset 0 0 100px rgba(180, 180, 180, 0.025);
 }
 
-/* Starfield Layer */
+/* Stars */
+
 .borealis-bg::before {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-image: 
+  inset: 0;
+  background-image:
     radial-gradient(2px 2px at 20px 30px, white, transparent),
     radial-gradient(2px 2px at 60px 70px, white, transparent),
     radial-gradient(1px 1px at 50px 50px, white, transparent),
@@ -66,63 +97,79 @@ html {
     radial-gradient(1px 1px at 240px 60px, white, transparent);
   background-repeat: repeat;
   background-size: 250px 250px;
-  opacity: 0.5;
-  z-index: 1;
+  opacity: 0.35;
+  z-index: -2;
   animation: twinkle 8s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
 }
 
-/* Aurora Wave Layer */
+/* Soft silver light */
+
 .borealis-bg::after {
   content: '';
   position: absolute;
-  width: 400%;
-  height: 400%;
-  top: -150%;
-  left: -150%;
-  z-index: 2;
+  inset: -50%;
+  z-index: -1;
   pointer-events: none;
-  background: 
-    radial-gradient(ellipse 1200px 500px at 25% 40%, rgba(5, 150, 105, 0.6) 0%, rgba(16, 185, 129, 0.4) 25%, transparent 60%),
-    radial-gradient(ellipse 1000px 450px at 75% 30%, rgba(59, 130, 246, 0.5) 0%, rgba(96, 165, 250, 0.3) 25%, transparent 60%),
-    radial-gradient(ellipse 900px 400px at 50% 70%, rgba(167, 139, 250, 0.45) 0%, rgba(139, 92, 246, 0.3) 25%, transparent 60%),
-    radial-gradient(ellipse 800px 350px at 15% 80%, rgba(6, 182, 212, 0.4) 0%, rgba(34, 211, 238, 0.25) 25%, transparent 60%);
-  animation: aurora-main 25s ease-in-out infinite;
+  background:
+    radial-gradient(
+      ellipse at 25% 40%,
+      rgba(230, 230, 230, 0.15),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 75% 30%,
+      rgba(150, 150, 150, 0.12),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 50% 75%,
+      rgba(255, 255, 255, 0.07),
+      transparent 50%
+    );
   filter: blur(60px);
   mix-blend-mode: screen;
+  animation: aurora-main 25s ease-in-out infinite;
 }
 
 @keyframes aurora-main {
-  0%, 100% {
-    transform: translate(0%, 0%) rotate(0deg) scale(1);
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.65;
+  }
+
+  33% {
+    transform: translate(5%, -3%) rotate(12deg) scale(1.05);
     opacity: 0.9;
   }
-  20% {
-    transform: translate(12%, 8%) rotate(72deg) scale(1.08);
-    opacity: 1;
-  }
-  40% {
-    transform: translate(25%, -10%) rotate(144deg) scale(1.05);
-    opacity: 0.95;
-  }
-  60% {
-    transform: translate(-8%, 15%) rotate(216deg) scale(1.1);
-    opacity: 1;
-  }
-  80% {
-    transform: translate(-18%, -5%) rotate(288deg) scale(1.06);
-    opacity: 0.92;
+
+  66% {
+    transform: translate(-5%, 4%) rotate(-10deg) scale(1.08);
+    opacity: 0.7;
   }
 }
 
 /* ============================================
    SCROLLING TEXT
    ============================================ */
+
+.scrolling-text-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
 .scrolling-text-wrapper::before,
 .scrolling-text-wrapper::after {
   content: '';
@@ -136,23 +183,31 @@ html {
 
 .scrolling-text-wrapper::before {
   left: 0;
-  background: linear-gradient(to right, rgba(0, 8, 20, 1) 0%, transparent 100%);
+  background: linear-gradient(to right, #000, transparent);
 }
 
 .scrolling-text-wrapper::after {
   right: 0;
-  background: linear-gradient(to left, rgba(0, 8, 20, 1) 0%, transparent 100%);
+  background: linear-gradient(to left, #000, transparent);
 }
 
 /* ============================================
-   SECTION TITLE STYLING
+   SILVER SECTION TITLES
    ============================================ */
+
 .section-title {
   position: relative;
-  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #5eead4 100%);
+  padding-left: 20px;
+  background: linear-gradient(
+    135deg,
+    #fff 0%,
+    #e5e5e5 35%,
+    #a3a3a3 70%,
+    #f5f5f5 100%
+  );
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .section-title::before {
@@ -161,105 +216,151 @@ html {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 5px;
+  width: 3px;
   height: 40px;
-  background: linear-gradient(180deg, #14b8a6 0%, #0d9488 50%, #5eead4 100%);
   border-radius: 3px;
-  box-shadow: 0 0 15px rgba(20, 184, 166, 0.6);
+  background: linear-gradient(
+    180deg,
+    #fff,
+    #a3a3a3,
+    #525252
+  );
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.18);
 }
 
 /* ============================================
-   GRADIENT TEXT ANIMATION
+   ANIMATED SILVER TEXT
    ============================================ */
+
 .gradient-text-animate {
-  background: linear-gradient(90deg, #14b8a6, #06b6d4, #3b82f6, #06b6d4, #14b8a6);
+  background: linear-gradient(
+    90deg,
+    #fff,
+    #b3b3b3,
+    #eee,
+    #a3a3a3,
+    #fff
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient 3s linear infinite;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 6s linear infinite;
 }
 
 @keyframes gradient {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
 }
 
 /* ============================================
-   SHIMMER EFFECT
+   SILVER SHIMMER
    ============================================ */
+
 .shimmer {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(20, 184, 166, 0.1) 25%,
-    rgba(20, 184, 166, 0.2) 50%,
-    rgba(20, 184, 166, 0.1) 75%,
+    rgba(255, 255, 255, 0.025) 25%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.025) 75%,
     transparent 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 5s linear infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ============================================
-   CARD HOVER EFFECTS
+   CARD HOVER
    ============================================ */
+
 .card-hover {
   position: relative;
+  isolation: isolate;
 }
 
 .card-hover::before {
   content: '';
   position: absolute;
   inset: -2px;
+  border-radius: inherit;
   background: linear-gradient(
     45deg,
-    #14b8a6,
-    #06b6d4,
-    #3b82f6,
-    #8b5cf6,
-    #ec4899,
-    #14b8a6
+    #404040,
+    #a3a3a3,
+    #fff,
+    #737373,
+    #404040
   );
   background-size: 400% 400%;
-  border-radius: inherit;
   opacity: 0;
   z-index: -1;
-  animation: gradient-shift 8s ease infinite;
   filter: blur(10px);
+  pointer-events: none;
+  animation: gradient-shift 10s ease infinite;
   transition: opacity 0.5s ease;
 }
 
 .card-hover:hover::before {
-  opacity: 0.6;
+  opacity: 0.22;
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* ============================================
-   PROJECT CARD EFFECTS
+   PROJECT CARD BORDER
    ============================================ */
+
+.project-card {
+  position: relative;
+}
+
 .project-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 1rem;
-  padding: 2px;
-  background: linear-gradient(135deg, transparent, rgba(20, 184, 166, 0.3), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
 
@@ -270,6 +371,7 @@ html {
 /* ============================================
    SHINE EFFECT
    ============================================ */
+
 .shine-effect {
   position: relative;
   overflow: hidden;
@@ -278,55 +380,72 @@ html {
 .shine-effect::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
   background: linear-gradient(
-    45deg,
+    110deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.08) 50%,
     transparent 70%
   );
-  animation: shine-sweep 3s infinite;
+  transform: translateX(-100%);
+  animation: shine-sweep 6s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes shine-sweep {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%,
+  30% {
+    transform: translateX(-100%);
+  }
+
+  70%,
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* ============================================
    TYPING CURSOR
    ============================================ */
+
+.typing {
+  position: relative;
+}
+
 .typing::after {
   content: '|';
   position: absolute;
   right: -8px;
-  color: #14b8a6;
+  color: #e5e5e5;
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-  from, to { opacity: 0; }
-  50% { opacity: 1; }
+  from,
+  to {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ============================================
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE
    ============================================ */
+
 @media (max-width: 767px) {
   .typewriter {
     white-space: normal;
     text-align: center;
     line-height: 1.2;
   }
-  
+
   .section-title::before {
     height: 28px;
   }
-  
+
   .scrolling-text-wrapper::before,
   .scrolling-text-wrapper::after {
     width: 50px;
@@ -342,6 +461,7 @@ html {
 /* ============================================
    THREE.JS CANVAS
    ============================================ */
+
 .three-canvas {
   position: absolute !important;
   top: 0;
@@ -350,4 +470,30 @@ html {
   height: 100%;
   z-index: 5;
   pointer-events: none;
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .typewriter,
+  .borealis-bg::before,
+  .borealis-bg::after,
+  .gradient-text-animate,
+  .shimmer,
+  .card-hover::before,
+  .shine-effect::after,
+  .typing::after {
+    animation: none;
+  }
+
+  .card-hover::before,
+  .project-card::before {
+    transition: none;
+  }
 }

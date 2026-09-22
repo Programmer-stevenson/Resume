@@ -32,9 +32,9 @@ function App() {
       <Navigation />
       <Hero />
       <Introduction />
-      
-      <Projects />
       <About />
+      <Projects />
+      
       <Education />
       <Contact />
       <Footer />

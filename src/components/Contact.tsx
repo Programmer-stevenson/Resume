@@ -1,400 +1,130 @@
-import { useRef, useCallback, useState } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import {
-  Mail,
-  Phone,
-  Linkedin,
-  MapPin,
-  Github,
-  Globe,
-  ArrowUpRight,
-  Copy,
-  Check,
-  Send,
-} from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Mail, Phone, Linkedin, MapPin, Github, Globe, ArrowUpRight, Copy, Check } from 'lucide-react';
 
-/* ------------------------------------------------------------------ */
-/*  Subtle magnetic effect — reserved for the single primary CTA       */
-/* ------------------------------------------------------------------ */
-const useMagnetic = (strength = 0.25) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springConfig = { damping: 18, stiffness: 200 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
+const email = 'brandon.stevensonn@outlook.com';
+const phone = '(725) 314-2660';
+const profiles = [
+  { name: 'LinkedIn', detail: 'Professional background', icon: Linkedin, href: 'https://www.linkedin.com/in/brandonstevensonprograms' },
+  { name: 'GitHub', detail: 'Code & technical projects', icon: Github, href: 'https://github.com/Programmer-stevenson' },
+  { name: 'Website', detail: 'My portfolio', icon: Globe, href: 'https://brandons-resume.com' },
+];
 
-  const handleMouse = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      x.set((e.clientX - cx) * strength);
-      y.set((e.clientY - cy) * strength);
-    },
-    [x, y, strength]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
-
-  return { springX, springY, handleMouse, handleMouseLeave };
-};
-
-/* ------------------------------------------------------------------ */
-/*  Contact data                                                       */
-/* ------------------------------------------------------------------ */
-interface ContactItem {
-  id: string;
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  meta: string;
-  href: string | null;
-  copyable: boolean;
+const styles = `
+#contact.bs-contact {
+  --contact-ink:#f3f8ff; --contact-muted:#b3c8dd; --contact-blue:#b8ddfa;
+  position:relative;isolation:isolate;overflow:hidden;scroll-margin-top:80px;
+  padding:96px 28px 44px;color:var(--contact-ink);
+  font-family:Inter,'Segoe UI',Arial,sans-serif;
+  background:radial-gradient(ellipse at 92% 10%,#234d7466 0%,transparent 48%),radial-gradient(ellipse at 0% 100%,#193d5f66 0%,transparent 45%),linear-gradient(130deg,#081727 0%,#102b46 54%,#0a1c30 100%);
 }
+#contact.bs-contact:before {content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#c3e3ff90,transparent)}
+.bs-contact,.bs-contact * {box-sizing:border-box}
+.bs-contact h2,.bs-contact h3,.bs-contact p {margin:0}
+.bs-contact a {text-decoration:none}
+.bs-contact button {font:inherit;cursor:pointer}
+.bs-contact svg {flex-shrink:0}
+.bs-contact .contact-wrap {max-width:1180px;margin:auto;position:relative}
+.bs-contact .contact-eyebrow {display:flex;align-items:center;gap:16px;color:#a7c9e5;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:30px}
+.bs-contact .contact-eyebrow:after {content:'';width:70px;height:1px;background:#5d85a6}
+.bs-contact .contact-layout {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);gap:70px;align-items:center}
+.bs-contact .contact-intro {min-width:0;padding-bottom:10px}
+.bs-contact .contact-intro h2 {font-size:clamp(44px,5.5vw,72px);font-weight:600;line-height:1.04;letter-spacing:-.055em;color:#f3f8ff;margin-bottom:26px}
+.bs-contact .contact-intro h2 span {display:block;color:#b7dafa;font-weight:400}
+.bs-contact .contact-intro>p {font-size:15px;line-height:1.9;color:var(--contact-muted);max-width:425px}
+.bs-contact .contact-cta {display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:54px;padding:15px 23px;border:1px solid #dbedfc;background:linear-gradient(130deg,#edf7ff,#add4f3);color:#113351;font-size:13px;font-weight:650;border-radius:10px;margin-top:30px;box-shadow:0 8px 28px #020c181a;transition:background .2s,box-shadow .2s}
+.bs-contact .contact-cta:hover {background:#fff;box-shadow:0 8px 32px #9ed2f52b}
+.bs-contact .contact-location {display:flex;align-items:flex-start;gap:11px;margin-top:34px;color:#b9cee1;font-size:12px;line-height:1.8}
+.bs-contact .contact-location svg {color:#92bce0;margin-top:3px}
+.bs-contact .contact-location strong {display:block;font-weight:500;color:#deebf6}
+.bs-contact .contact-location span {display:block;color:#a6bed3;font-size:11px}
+.bs-contact .contact-panel {min-width:0;padding:30px;border:1px solid #4e75944f;border-radius:22px;background:linear-gradient(145deg,#173754cc,#102a42dd);box-shadow:0 20px 60px #020b1729}
+.bs-contact .contact-panel-label {font-size:10px;text-transform:uppercase;letter-spacing:.17em;font-weight:600;color:#a3c4df;margin-bottom:10px}
+.bs-contact .contact-panel h3 {font-size:24px;line-height:1.3;letter-spacing:-.03em;font-weight:500;margin-bottom:27px;color:#f0f7ff}
+.bs-contact .contact-channel {padding:22px 0;border-top:1px solid #547b974d}
+.bs-contact .contact-channel-label {display:flex;align-items:center;gap:8px;color:#a9c9e3;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-bottom:13px}
+.bs-contact .contact-channel-line {display:flex;gap:12px;align-items:center;justify-content:space-between;min-width:0}
+.bs-contact .contact-value {color:#f1f7fd;font-size:clamp(14px,1.45vw,18px);font-weight:500;line-height:1.6;overflow-wrap:anywhere;min-width:0}
+.bs-contact .contact-value:hover {color:#afd8fa;text-decoration:underline;text-underline-offset:5px}
+.bs-contact .contact-copy {display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:1px solid #557f9e80;border-radius:9px;color:#bbd9ef;background:#0c233866}
+.bs-contact .contact-copy:hover {background:#274d6a;border-color:#89b5d5}
+.bs-contact .contact-channel-note {font-size:11px;line-height:1.7;color:#a8c0d5;margin-top:5px}
+.bs-contact .contact-profiles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;border-top:1px solid #547b974d;padding-top:23px;margin-top:1px}
+.bs-contact .contact-profile {display:flex;flex-direction:column;align-items:flex-start;gap:11px;padding:15px 12px;border:1px solid #517b984d;border-radius:10px;background:#0b22364d;color:#d7eafa;min-width:0;transition:background .2s,border-color .2s}
+.bs-contact .contact-profile:hover {background:#264c6c;border-color:#8eb9d7}
+.bs-contact .contact-profile span {font-size:11px;font-weight:500}
+.bs-contact a:focus-visible,.bs-contact button:focus-visible {outline:3px solid #b4dcfa;outline-offset:5px}
+.bs-contact .contact-footer {display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:27px;margin-top:65px;border-top:1px solid #476b884d;font-size:11px;color:#9fb9ce;line-height:1.8}
+.bs-contact .contact-footer strong {font-size:12px;font-weight:500;color:#dae9f5}
+.bs-contact .contact-feedback {min-height:22px;margin-top:15px;font-size:11px;line-height:1.7;color:#c7e4f9}
+@media(max-width:1000px) {.bs-contact .contact-layout {gap:35px;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}.bs-contact .contact-panel {padding:25px}.bs-contact .contact-intro h2 {font-size:56px}}
+@media(max-width:760px) {#contact.bs-contact {padding:65px 22px 32px}.bs-contact .contact-layout {grid-template-columns:1fr;gap:32px}.bs-contact .contact-intro h2 {font-size:clamp(43px,9vw,62px)}.bs-contact .contact-intro>p {max-width:570px;font-size:14px}.bs-contact .contact-value {font-size:17px}.bs-contact .contact-location {margin-top:23px}.bs-contact .contact-footer {margin-top:39px}.bs-contact .contact-eyebrow {margin-bottom:24px}}
+@media(max-width:400px) {#contact.bs-contact {padding-left:16px;padding-right:16px}.bs-contact .contact-panel {padding:22px 18px}.bs-contact .contact-value {font-size:14px}.bs-contact .contact-channel-line {gap:9px}.bs-contact .contact-profiles {gap:7px}.bs-contact .contact-profile {padding:14px 10px}.bs-contact .contact-cta {width:100%}.bs-contact .contact-footer {align-items:flex-start;flex-direction:column;gap:6px}}
+@media(prefers-reduced-motion:reduce) {.bs-contact .contact-cta,.bs-contact .contact-profile {transition:none}}
+`;
 
-const contactInfo: ContactItem[] = [
-  {
-    id: 'email',
-    icon: Mail,
-    label: 'Email',
-    value: 'brandon.stevensonn@outlook.com',
-    meta: 'Primary — fastest response',
-    href: 'mailto:brandon.stevensonn@outlook.com',
-    copyable: true,
-  },
-  {
-    id: 'phone',
-    icon: Phone,
-    label: 'Phone',
-    value: '(725) 314-2660',
-    meta: 'Call or text',
-    href: 'tel:+17253142660',
-    copyable: true,
-  },
-  {
-    id: 'linkedin',
-    icon: Linkedin,
-    label: 'LinkedIn',
-    value: 'in/brandonstevensonprograms',
-    meta: 'Professional network',
-    href: 'https://www.linkedin.com/in/brandonstevensonprograms',
-    copyable: false,
-  },
-  {
-    id: 'github',
-    icon: Github,
-    label: 'GitHub',
-    value: 'Programmer-stevenson',
-    meta: 'Code & projects',
-    href: 'https://github.com/Programmer-stevenson',
-    copyable: false,
-  },
-  {
-    id: 'location',
-    icon: MapPin,
-    label: 'Location',
-    value: 'Las Vegas, Nevada',
-    meta: 'Open to remote & on-site',
-    href: null,
-    copyable: false,
-  },
-];
+export default function Contact() {
+  const [copied, setCopied] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState('');
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const request = useRef(0);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); request.current += 1; }, []);
 
-const socials = [
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/brandonstevensonprograms', label: 'LinkedIn' },
-  { icon: Github, href: 'https://github.com/Programmer-stevenson', label: 'GitHub' },
-  { icon: Globe, href: 'https://brandons-resume.com', label: 'Website' },
-];
-
-/* ------------------------------------------------------------------ */
-/*  A single row in the contact ledger                                 */
-/* ------------------------------------------------------------------ */
-const ContactRow = ({
-  item,
-  index,
-  isInView,
-}: {
-  item: ContactItem;
-  index: number;
-  isInView: boolean;
-}) => {
-  const [copied, setCopied] = useState(false);
-  const Icon = item.icon;
-
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const copyContact = async (label: string, value: string) => {
+    const current = ++request.current;
+    if (timer.current) clearTimeout(timer.current);
+    setCopied(null);
+    setFeedback('');
     try {
-      await navigator.clipboard.writeText(item.value);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
+      await navigator.clipboard.writeText(value);
+      if (current !== request.current) return;
+      setCopied(label);
+      setFeedback(`${label} copied.`);
+      timer.current = setTimeout(() => { setCopied(null); setFeedback(''); }, 2400);
     } catch {
-      /* clipboard unavailable */
+      if (current !== request.current) return;
+      setFeedback(`Could not copy ${label.toLowerCase()}. Select and copy the text, or use the contact link.`);
     }
   };
 
-  const Wrapper: React.ElementType = item.href ? 'a' : 'div';
-  const linkProps = item.href
-    ? {
-        href: item.href,
-        target: item.href.startsWith('http') ? '_blank' : undefined,
-        rel: item.href.startsWith('http') ? 'noopener noreferrer' : undefined,
-      }
-    : {};
-
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 24 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.25 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <Wrapper
-        {...linkProps}
-        className={`group/row relative flex items-center gap-5 px-5 sm:px-6 py-5 ${
-          item.href ? 'cursor-pointer' : ''
-        }`}
-      >
-        {/* animated left accent bar */}
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-0 w-[2px] bg-gradient-to-b from-teal-400 to-cyan-500 transition-all duration-300 group-hover/row:h-2/3" />
-
-        {/* hover wash */}
-        <span className="absolute inset-0 bg-gradient-to-r from-teal-500/[0.06] to-transparent opacity-0 transition-opacity duration-300 group-hover/row:opacity-100" />
-
-        {/* icon */}
-        <div className="relative shrink-0">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-teal-300 transition-all duration-300 group-hover/row:border-teal-400/30 group-hover/row:bg-teal-400/10 group-hover/row:text-teal-200">
-            <Icon className="h-5 w-5" strokeWidth={1.75} />
+    <section id="contact" className="bs-contact" aria-labelledby="contact-heading">
+      <style>{styles}</style>
+      <div className="contact-wrap">
+        <p className="contact-eyebrow">Get in touch</p>
+        <div className="contact-layout">
+          <div className="contact-intro">
+            <h2 id="contact-heading">Let&apos;s connect.<span>Start a conversation.</span></h2>
+            <p>Have an IT opportunity, a development project, or a team you think I would be a good fit for? I would be glad to hear from you.</p>
+            <a className="contact-cta" href={`mailto:${email}`}><Mail size={18} aria-hidden="true" />Send me an email<ArrowUpRight size={18} aria-hidden="true" /></a>
+            <div className="contact-location"><MapPin size={17} aria-hidden="true" /><div><strong>Las Vegas, Nevada</strong><span>Open to remote &amp; on-site opportunities</span></div></div>
+          </div>
+          <div className="contact-panel">
+            <p className="contact-panel-label">Contact details</p>
+            <h3>Reach me directly</h3>
+            <div className="contact-channel">
+              <div className="contact-channel-label"><Mail size={14} aria-hidden="true" />Email</div>
+              <div className="contact-channel-line">
+                <a className="contact-value" href={`mailto:${email}`}>{email}</a>
+                <button type="button" className="contact-copy" aria-label="Copy email address" onClick={() => copyContact('Email', email)}>{copied === 'Email' ? <Check size={17} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}</button>
+              </div>
+              <p className="contact-channel-note">For opportunities, introductions, and project enquiries.</p>
+            </div>
+            <div className="contact-channel">
+              <div className="contact-channel-label"><Phone size={14} aria-hidden="true" />Phone</div>
+              <div className="contact-channel-line">
+                <a className="contact-value" href="tel:+17253142660">{phone}</a>
+                <button type="button" className="contact-copy" aria-label="Copy phone number" onClick={() => copyContact('Phone', phone)}>{copied === 'Phone' ? <Check size={17} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}</button>
+              </div>
+              <p className="contact-channel-note">Call or text.</p>
+            </div>
+            <nav className="contact-profiles" aria-label="Professional profiles">
+              {profiles.map(({ name, detail, icon: Icon, href }) => <a key={name} className="contact-profile" href={href} target="_blank" rel="noopener noreferrer" aria-label={`${name}: ${detail} (opens in a new tab)`}><Icon size={20} aria-hidden="true" /><span>{name}</span></a>)}
+            </nav>
+            <p className="contact-feedback" role="status" aria-live="polite">{feedback}</p>
           </div>
         </div>
-
-        {/* text */}
-        <div className="relative min-w-0 flex-1">
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
-            {item.label}
-          </div>
-          <div className="truncate text-[15px] font-medium text-gray-100 transition-colors duration-300 group-hover/row:text-white">
-            {item.value}
-          </div>
-          <div className="mt-0.5 truncate text-xs text-gray-600">{item.meta}</div>
-        </div>
-
-        {/* action */}
-        <div className="relative flex shrink-0 items-center gap-2">
-          {item.copyable && (
-            <button
-              onClick={handleCopy}
-              aria-label={`Copy ${item.label}`}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-gray-500 transition-all duration-200 hover:border-teal-400/40 hover:text-teal-300 active:scale-90"
-            >
-              {copied ? (
-                <Check className="h-4 w-4 text-teal-400" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
-            </button>
-          )}
-          {item.href && (
-            <ArrowUpRight className="h-5 w-5 text-gray-600 transition-all duration-300 group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5 group-hover/row:text-teal-300" />
-          )}
-        </div>
-      </Wrapper>
-    </motion.div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/*  Main section                                                       */
-/* ------------------------------------------------------------------ */
-const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const { springX, springY, handleMouse, handleMouseLeave } = useMagnetic(0.2);
-
-  const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 24 },
-    animate: isInView ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
-  });
-
-  return (
-    <section
-      id="contact"
-      ref={ref}
-      className="relative min-h-screen overflow-hidden bg-[#070709] px-4 py-24 sm:px-6 sm:py-32"
-    >
-      {/* embedded display font + tokens */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
-        .contact-display { font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; }
-      `}</style>
-
-      {/* ---------- atmospheric background ---------- */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* soft corner glow */}
-        <div className="absolute -right-40 -top-40 h-[640px] w-[640px] rounded-full bg-teal-500/10 blur-[160px]" />
-        <div className="absolute -bottom-48 -left-40 h-[560px] w-[560px] rounded-full bg-cyan-600/[0.07] blur-[150px]" />
-        {/* fine grid */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px)',
-            backgroundSize: '64px 64px',
-            maskImage: 'radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%)',
-            WebkitMaskImage:
-              'radial-gradient(ellipse 80% 80% at 50% 40%, black 40%, transparent 100%)',
-          }}
-        />
-        {/* grain */}
-        <div
-          className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-      </div>
-
-      <div className="relative mx-auto max-w-6xl">
-        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* ============== LEFT : headline block ============== */}
-          <div className="lg:col-span-5">
-            <motion.div
-              {...fadeUp(0)}
-              className="inline-flex items-center gap-2.5 rounded-full border border-teal-500/20 bg-teal-500/[0.06] px-3.5 py-1.5"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-400" />
-              </span>
-              <span className="text-xs font-medium tracking-wide text-teal-300">
-                Available for opportunities
-              </span>
-            </motion.div>
-
-            <motion.h2
-              {...fadeUp(0.08)}
-              className="contact-display mt-7 text-5xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl"
-            >
-              Let&apos;s
-              <br />
-              <span className="bg-gradient-to-br from-teal-300 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-                connect.
-              </span>
-            </motion.h2>
-
-            <motion.p
-              {...fadeUp(0.16)}
-              className="mt-6 max-w-md text-base leading-relaxed text-gray-400 sm:text-lg"
-            >
-              Whether you&apos;re scaling infrastructure, shipping a product, or
-              hiring for your team — I&apos;d love to hear what you&apos;re building.
-            </motion.p>
-
-            {/* primary CTA — the one magnetic element */}
-            <motion.div {...fadeUp(0.24)} className="mt-9">
-              <motion.a
-                href="mailto:brandon.stevensonn@outlook.com"
-                onMouseMove={handleMouse}
-                onMouseLeave={handleMouseLeave}
-                style={{ x: springX, y: springY }}
-                whileTap={{ scale: 0.97 }}
-                className="group/cta relative inline-flex items-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-500 px-7 py-4 font-semibold text-[#04110f] shadow-[0_8px_40px_-8px_rgba(45,212,191,0.5)] transition-shadow duration-300 hover:shadow-[0_12px_50px_-6px_rgba(45,212,191,0.65)]"
-              >
-                <span
-                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full"
-                  aria-hidden
-                />
-                <Send className="relative h-5 w-5" strokeWidth={2} />
-                <span className="relative">Start a conversation</span>
-              </motion.a>
-            </motion.div>
-
-            {/* response time + socials */}
-            <motion.div
-              {...fadeUp(0.32)}
-              className="mt-10 flex flex-col gap-6 border-t border-white/5 pt-8"
-            >
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-600">
-                  Response time
-                </span>
-                <span className="h-px flex-1 bg-white/5" />
-                <span className="text-sm font-medium text-teal-300">Within 24 hours</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                {socials.map((s) => {
-                  const SIcon = s.icon;
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] text-gray-400 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-400/40 hover:bg-teal-400/10 hover:text-teal-300"
-                    >
-                      <SIcon className="h-5 w-5" strokeWidth={1.75} />
-                    </a>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ============== RIGHT : contact ledger ============== */}
-          <div className="lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-sm"
-            >
-              {/* top sheen */}
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-              {/* panel header */}
-              <div className="flex items-center justify-between px-5 py-5 sm:px-6">
-                <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
-                    Direct channels
-                  </div>
-                  <div className="contact-display mt-1 text-xl font-bold text-white">
-                    Reach me directly
-                  </div>
-                </div>
-                <div className="hidden items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 sm:flex">
-                  <span className="h-1.5 w-1.5 rounded-full bg-teal-400" />
-                  <span className="text-[11px] font-medium text-gray-400">Online</span>
-                </div>
-              </div>
-
-              {/* rows */}
-              <div className="divide-y divide-white/[0.06] border-t border-white/[0.06]">
-                {contactInfo.map((item, i) => (
-                  <ContactRow key={item.id} item={item} index={i} isInView={isInView} />
-                ))}
-              </div>
-            </motion.div>
-
-            {/* small footnote */}
-            <motion.p
-              {...fadeUp(0.7)}
-              className="mt-5 text-center text-xs text-gray-600 lg:text-right"
-            >
-              Prefer email? Hit{' '}
-              <span className="font-medium text-gray-400">Start a conversation</span> — it opens
-              a pre-addressed draft.
-            </motion.p>
-          </div>
-        </div>
+        <div className="contact-footer"><strong>Brandon Stevenson</strong><span>IT Infrastructure · Endpoint Management · Development &amp; Automation</span></div>
       </div>
     </section>
   );
-};
-
-export default Contact;
+}
