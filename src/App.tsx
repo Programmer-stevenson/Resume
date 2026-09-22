@@ -8,6 +8,7 @@ import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+
 function App() {
   useEffect(() => {
     const blockPinch = (e: TouchEvent) => {
@@ -31,7 +32,6 @@ function App() {
       <Navigation />
       <Hero />
       <Introduction />
-      
       
       <Projects />
       <About />

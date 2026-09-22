@@ -107,7 +107,7 @@ const Introduction = () => {
               transition={{ duration: 0.4, delay: 0.3 }}
             >
               <a
-                href="https://www.linkedin.com/in/brandonstevensonprograms/"
+                href="https://www.linkedin.com/in/brandon-in-tech/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0A66C2] text-white text-xs font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-transform duration-200"
