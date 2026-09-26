@@ -5,7 +5,7 @@ const email = 'brandon.stevensonn@outlook.com';
 const phone = '(725) 314-2660';
 const profiles = [
   { name: 'LinkedIn', detail: 'Professional background', icon: Linkedin, href: 'https://www.linkedin.com/in/brandonstevensonprograms' },
-  { name: 'GitHub', detail: 'Code & technical projects', icon: Github, href: 'https://github.com/Programmer-stevenson' },
+  { name: 'GitHub', detail: 'Code & technical projects', icon: Github, href: 'https://github.com/Programmer-stevenson?tab=stars' },
   { name: 'Website', detail: 'My portfolio', icon: Globe, href: 'https://brandons-resume.com' },
 ];
 

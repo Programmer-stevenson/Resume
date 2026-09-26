@@ -147,7 +147,7 @@ const Introduction = () => (
             <a className="intro-social" href="https://www.linkedin.com/company/plexura/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="Plexura on LinkedIn (opens in a new tab)">
               <Linkedin size={14} aria-hidden="true" /> Plexura
             </a>
-            <a className="intro-social" href="https://github.com/Programmer-stevenson" target="_blank" rel="noopener noreferrer" aria-label="Brandon on GitHub (opens in a new tab)">
+            <a className="intro-social" href="https://github.com/Programmer-stevenson?tab=stars" target="_blank" rel="noopener noreferrer" aria-label="Brandon on GitHub (opens in a new tab)">
               <Github size={14} aria-hidden="true" /> GitHub
             </a>
           </nav>
