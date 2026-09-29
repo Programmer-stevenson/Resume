@@ -24,11 +24,38 @@ const roleCards = [
 // Scoped styles keep this component independent of the site's existing dark theme.
 const styles = `
 #introduction.bs-intro {
-  --navy:#123253; --muted:#47637d; --line:#cadfee;
-  position:relative; isolation:isolate; overflow:hidden;
-  background:radial-gradient(ellipse at 90% 12%,#b4dcf8 0%,transparent 44%),radial-gradient(ellipse at 5% 62%,#d2ebfc 0%,transparent 47%),linear-gradient(145deg,#fff 5%,#edf7ff 49%,#dcefff 75%,#fff 100%);
-  color:var(--navy); padding:100px 28px 70px;
-  font-family:Inter,'Segoe UI',Arial,sans-serif; scroll-margin-top:80px;
+  --navy: #123253;
+  --muted: #47637d;
+  --line: #b8cfdf;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 90% 12%,
+      #8dbbda 0%,
+      transparent 44%
+    ),
+    radial-gradient(
+      ellipse at 5% 62%,
+      #b5d5e9 0%,
+      transparent 47%
+    ),
+    linear-gradient(
+      145deg,
+      #dce8f0 5%,
+      #cbddeb 49%,
+      #b8d2e5 75%,
+      #d4e3ed 100%
+    );
+
+  color: var(--navy);
+  padding: 100px 28px 70px;
+
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  scroll-margin-top: 80px;
 }
 .bs-intro,.bs-intro * {box-sizing:border-box}
 .bs-intro h2,.bs-intro h3,.bs-intro p {margin:0}
