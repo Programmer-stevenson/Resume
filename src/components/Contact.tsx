@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Mail, Phone, Linkedin, MapPin, Github, Globe, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { Mail, Phone, Linkedin, MapPin, Github, ArrowUpRight, Copy, Check } from 'lucide-react';
 
 const email = 'brandon.stevensonn@outlook.com';
 const phone = '(725) 314-2660';
