@@ -5,8 +5,7 @@ const email = 'brandon.stevensonn@outlook.com';
 const phone = '(725) 314-2660';
 const profiles = [
   { name: 'LinkedIn', detail: 'Professional background', icon: Linkedin, href: 'https://www.linkedin.com/in/brandonstevensonprograms' },
-  { name: 'GitHub', detail: 'Code & technical projects', icon: Github, href: 'https://github.com/Programmer-stevenson?tab=stars' },
-  { name: 'Website', detail: 'My portfolio', icon: Globe, href: 'https://brandons-resume.com' },
+  { name: 'GitHub', detail: 'Code & technical projects', icon: Github, href: 'https://github.com/Programmer-stevenson?tab=stars' }
 ];
 
 const styles = `
@@ -100,7 +99,7 @@ export default function Contact() {
           </div>
           <div className="contact-panel">
             <p className="contact-panel-label">Contact details</p>
-            <h3>Reach me directly</h3>
+            <h3>Reach Me Directly</h3>
             <div className="contact-channel">
               <div className="contact-channel-label"><Mail size={14} aria-hidden="true" />Email</div>
               <div className="contact-channel-line">

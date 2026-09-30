@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import LinkedInConnect from './components/LinkedInConnect';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
       <Education />
       <Contact />
       <Footer />
+      <LinkedInConnect />
     </div>
   );
 }

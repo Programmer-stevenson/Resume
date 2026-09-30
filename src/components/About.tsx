@@ -530,7 +530,7 @@ const styles = `
 
 function RoleCard({ role }: { role: (typeof roles)[number] }) {
 
-  const [open, setOpen] = useState(role.id === 'epc');
+  const [open, setOpen] = useState(role.id === '');
 
   return (
 

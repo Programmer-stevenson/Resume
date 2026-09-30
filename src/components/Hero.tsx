@@ -50,7 +50,7 @@ const Hero = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/textures/space-bg.jpg)',
+        backgroundImage: 'url(/textures/space-bg2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -124,60 +124,71 @@ const Hero = () => {
         </motion.div>
 
         {/* CTA Buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto mt-[8px] sm:mt-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 20 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
-        >
-          <motion.a
-            href="#skills"
-            onClick={(e) => handleNavClick(e, '#skills')}
-            className="hidden group relative px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg font-medium text-base shadow-lg shadow-teal-500/30 overflow-hidden w-full sm:w-auto"
-            whileHover={{ scale: 1.05, boxShadow: '0 20px 25px -5px rgba(20, 184, 166, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              View Technologies
-              <motion.svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                whileHover={{ x: 5 }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </motion.svg>
-            </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.a>
+<motion.div
+  className="flex flex-col gap-3 justify-center items-center max-w-sm mx-auto mt-[8px] sm:mt-0"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{
+    opacity: showContent ? 1 : 0,
+    y: showContent ? 0 : 20,
+  }}
+  transition={{ duration: 0.5, delay: 0.9 }}
+>
+  <motion.a
+    href="#projects"
+    onClick={(e) => handleNavClick(e, '#projects')}
+    className="group flex w-full items-center justify-center gap-2 rounded-lg border border-teal-500/30 bg-gray-800/50 px-6 py-3 text-sm font-medium text-teal-300 backdrop-blur-sm sm:text-base"
+    whileHover={{
+      scale: 1.03,
+      borderColor: 'rgba(20, 184, 166, 0.5)',
+      backgroundColor: 'rgba(31, 41, 55, 0.8)',
+    }}
+    whileTap={{ scale: 0.97 }}
+  >
+    View Projects
+    <svg
+      className="h-4 w-4 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M13 7l5 5m0 0l-5 5m5-5H6"
+      />
+    </svg>
+  </motion.a>
 
-          <motion.a
-            href="#projects"
-            onClick={(e) => handleNavClick(e, '#projects')}
-            className="group relative px-6 py-3 bg-gray-800/50 backdrop-blur-sm border border-teal-500/30 rounded-lg font-medium text-base text-teal-300 w-full sm:w-auto"
-            whileHover={{ scale: 1.05, borderColor: 'rgba(20, 184, 166, 0.5)', backgroundColor: 'rgba(31, 41, 55, 0.8)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="flex items-center justify-center gap-2">
-              View Projects
-              <motion.svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                whileHover={{ x: 5 }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </motion.svg>
-            </span>
-          </motion.a>
-        </motion.div>
+  <motion.a
+    href="#about"
+    onClick={(e) => handleNavClick(e, '#about')}
+    className="group flex w-full items-center justify-center gap-2 rounded-lg border border-blue-400/30 bg-blue-950/50 px-6 py-3 text-sm font-medium text-blue-200 backdrop-blur-sm sm:text-base"
+    whileHover={{
+      scale: 1.03,
+      borderColor: 'rgba(96, 165, 250, 0.6)',
+      backgroundColor: 'rgba(23, 37, 84, 0.8)',
+    }}
+    whileTap={{ scale: 0.97 }}
+  >
+    View Professional Experience
+    <svg
+      className="h-4 w-4 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 5v14m0 0 7-7m-7 7-7-7"
+      />
+    </svg>
+  </motion.a>
+</motion.div>
       </div>
     </section>
   );
