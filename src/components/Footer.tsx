@@ -30,7 +30,7 @@ const Footer = () => {
                 <a className={linkClass} href="https://github.com/Programmer-stevenson" target="_blank" rel="noopener noreferrer">GitHub</a>
               </li>
               <li>
-                <a className={linkClass} href="https://github.com/Programmer-stevenson/IT-Study-Material" target="_blank" rel="noopener noreferrer">Study Materials</a>
+                <a className={linkClass} href="https://programmer-stevenson.github.io/IT-Study-Material/" target="_blank" rel="noopener noreferrer">Study Materials</a>
               </li>
               <li><a className={linkClass} href="mailto:brandon.stevensonn@outlook.com">Email Me</a></li>
             </ul>
