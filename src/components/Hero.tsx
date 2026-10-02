@@ -201,6 +201,34 @@ const Hero = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0 7-7m-7 7-7-7" />
             </svg>
           </motion.a>
+          <motion.a
+  href="https://programmer-stevenson.github.io/IT-Study-Material/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="group flex w-full items-center justify-center gap-2 rounded-lg border border-blue-300/30 bg-slate-900/60 px-6 py-3 text-sm font-medium text-blue-100 backdrop-blur-sm sm:text-base"
+  whileHover={{
+    scale: 1.03,
+    borderColor: 'rgba(147, 197, 253, 0.6)',
+    backgroundColor: 'rgba(30, 58, 95, 0.8)',
+  }}
+  whileTap={{ scale: 0.97 }}
+>
+  View IT Study Collection
+  <svg
+    className="h-4 w-4 shrink-0"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M7 17 17 7M7 7h10v10"
+    />
+  </svg>
+</motion.a>
         </motion.div>
       </div>
     </section>
